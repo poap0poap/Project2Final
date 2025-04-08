@@ -45,6 +45,7 @@ Charcters (array per player)
     ]
   ]
 ]
+
 Advisor Power
 [
   Initilize advisors
@@ -65,7 +66,7 @@ Menu
 repeat until all reach end
 [
   \n x12
-  Display player name + points(factor stats) in order
+  Display player name + points in order of points decending
   Display current board
 
   player 1 menus
