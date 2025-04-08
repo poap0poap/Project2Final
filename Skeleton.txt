@@ -93,5 +93,5 @@ once both players reach end
     10 for each 1 in stamina, strength or wisdom
   Display winner
   sort player(s) based on points
-  create file - 
+  create file - Stats_[Playercount]_[date/time]
 ]
