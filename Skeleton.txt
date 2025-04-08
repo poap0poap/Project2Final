@@ -7,15 +7,18 @@ Setup board
 - Purple - Riddle tile - correct gain 5 points and 1 in each stat - incorect lose 5 pts and 1 in stats
 - Blue - gain 2 in each stat
 - Pink - gain 3 in each stat
-- Red - move back 10 tiles and -1 each stat
+- Green - move back 10 tiles and -1 each stat
 - Brown - -current_roll spaces -3 stamina
 - each path has custom positive and negitive tile
   -Main
-    -Maroon - -5 each stat -50% Points - Poached by hunters
+    -Red - -5 each stat -50% Points - Poached by hunters
     -Cyan - +5 each stat +50% - Gain food
   -Cub
-    -Maroon - -5 each stat -50% Points - Fell off cliff
+    -Red - -5 each stat -50% Points - Fell off cliff
     -Cyan - +5 each stat +50% - Gain Mate
+
+- Orange - End
+- Greay - Start
 ]
 
 Charcters (array per player)
