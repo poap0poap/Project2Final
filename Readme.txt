@@ -6,6 +6,12 @@ Project report - 5/3
 
 We will include sorting of charcters based on Pride Points. We will also add more to riddles for a more in depth experience. 
 
+Contains:
+Special tiles for each path
+Multiplayer (2-4)
+Boost based on advisor
+Same tile Constraint - if both player on same tile and not start/finish battle. flip coin winner +5 points, loser - 5 points\
+Factors that alter outcome - age change loss %wise
 
 Tile Information and Effects:
 Green - Grassland/Regular Tiles
