@@ -10,7 +10,7 @@ We will include sorting of charcters based on Pride Points. We will also add mor
 Each turn +age
 main path +5 to age
 
-Extra Credit Stuff Contains:
+## Extra Credit Stuff Contains:
 Special tiles for each path
 Multiplayer (2-4)
 Boost based on advisor
@@ -19,13 +19,13 @@ Factors that alter outcome - age change loss %wise
   wisdom + age at end
 
 
-Tile Information and Effects:
-Green - Grassland/Regular Tiles
+## Tile Information and Effects:
+### Green - Grassland/Regular Tiles
   - Must have 20 at least on each path.
   - A random event from "random_events.txt" occurs that can help/hurt the player. 
   - There is a 50% chance for the random event to occur.
   - Make sure to make it so that the player's advisor can protect against the random event if it harms the player.
-Special Tiles:
+### Special Tiles:
         Blue - Oasis Tile
           - This gives the player an extra turn to keep moving forward
           - Add 2 points each to the Stamina, Strength, and Wisdom Stat.
