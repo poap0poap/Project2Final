@@ -6,14 +6,13 @@ Project report - 5/3
 
 We will include sorting of charcters based on Pride Points. We will also add more to riddles for a more in depth experience. 
 
-Tile Information and Effects:
 
+Tile Information and Effects:
 Green - Grassland/Regular Tiles
   - Must have 20 at least on each path.
   - A random event from "random_events.txt" occurs that can help/hurt the player. 
   - There is a 50% chance for the random event to occur.
   - Make sure to make it so that the player's advisor can protect against the random event if it harms the player.
-
 Special Tiles:
         Blue - Oasis Tile
           - This gives the player an extra turn to keep moving forward
@@ -32,6 +31,7 @@ Special Tiles:
         Purple - Challenge Tile
           - Answer a question from "riddles.txt". If you answer correctly, add 500 points to the Wisdom Stat.
           - Note: Riddles are supposed to be c++ related.
+
 
 NOTE: These odds are from the workbook and that we can change them if we want.
 Tile Odds for Both Paths:
@@ -60,4 +60,7 @@ Cub Training:
             - 15% Chance for a Special Tile to be an Oasis Tile
             - 30% Chance for a Challenge Tile to appear
 
-
+Final Evaluation of Pride Points by the end.
+For every 100 points in the Stamina, Strenght, or Wisdom Stat, add 1000 Pride Points to the total.
+Whoever has the greatest ammount of Pride Points by the end will be declared the winner. 
+Make sure to display the name of the lion with the highest Pride Points as the winner, along with each player’s final stats.
