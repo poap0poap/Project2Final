@@ -12,6 +12,7 @@ Multiplayer (2-4)
 Boost based on advisor
 Same tile Constraint - if both player on same tile and not start/finish battle. flip coin winner +5 points, loser - 5 points\
 Factors that alter outcome - age change loss %wise
+  wisdom + age at end
 
 Tile Information and Effects:
 Green - Grassland/Regular Tiles
