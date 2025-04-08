@@ -38,6 +38,7 @@ Charcters (array per player)
       if main path
       +50 points
       +2 to stamina, strenth, and wisdom
+      +5 to age
     ]
   ]
 ]
@@ -83,6 +84,7 @@ repeat until all reach end
   random event affects players
   check advisor 
   apply event
+  +1 to all age
 ]
 
 once both players reach end
