@@ -6,6 +6,8 @@ Project report - 5/3
 
 We will include sorting of charcters based on Pride Points. We will also add more to riddles for a more in depth experience. 
 
+Each turn +age
+
 Contains:
 Special tiles for each path
 Multiplayer (2-4)
