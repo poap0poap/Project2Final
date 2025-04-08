@@ -1,6 +1,22 @@
 Import Boards, Sorting, Charcters, Events, Tiles, and Riddles
 
 Setup board
+[
+- Black tile - does nothing
+- Yellow - tile to add/change advisor - costs 10 points
+- Purple - Riddle tile - correct gain 5 points and 1 in each stat - incorect lose 5 pts and 1 in stats
+- Blue - gain 2 in each stat
+- Pink - gain 3 in each stat
+- Red - move back 10 tiles and -1 each stat
+- Brown - -current_roll spaces -3 stamina
+- each path has custom positive and negitive tile
+  -Main
+    -Maroon - -5 each stat -50% Points - Poached by hunters
+    -Cyan - +5 each stat +50% - Gain food
+  -Cub
+    -Maroon - -5 each stat -50% Points - Fell off cliff
+    -Cyan - +5 each stat +50% - Gain Mate
+]
 
 Charcters (array per player)
 [
@@ -15,16 +31,23 @@ Charcters (array per player)
     apply picked path effects
     [
       if cub path
-      -5000 points
+      -50 points
       Display advisors and stats
       pick advisor
 
       if main path
-      +5000 points
-      +200 to stamina, strenth, and wisdom
+      +50 points
+      +2 to stamina, strenth, and wisdom
     ]
   ]
 ]
+Advisor Power
+[
+  Initilize advisors
+  apply effect for when event effect advisor
+  gain stats if advisor helps
+]
+
 Menu
 [
   1 Display Points and stats
@@ -32,6 +55,7 @@ Menu
   3 Display board
   4 Display advisor - If none display 'No advisor selected'
   5 Take turn
+  6 Battle - only if tiles = same other player and not start/finish
 ]
 
 repeat until all reach end
@@ -64,7 +88,7 @@ repeat until all reach end
 once both players reach end
 [
   scores players points 
-    1000 for each 100 in stamina, strength or wisdom
+    10 for each 1 in stamina, strength or wisdom
   Display winner
   sort player(s) based on points
   create file - 
