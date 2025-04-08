@@ -1,5 +1,31 @@
-import board
-import sorting
-import tile
-import charcter
+Import Boards, Sorting, Charcters, Events, Tiles, and Riddles
 
+Setup board
+
+Charcters
+  Pick charcters
+  display stats
+  confirm charcter
+
+  Display advisors and stats
+  pick advisor
+
+start players on board
+
+repeat 
+[
+player 1 spins
+player 1 moves
+player 1 takes action
+
+player 2 spins
+player 2 moves
+player 2 takes action
+
+chance for random event occurs
+randomo event affects players
+check advisor
+apply event
+]
+
+Events
