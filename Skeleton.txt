@@ -2,30 +2,57 @@ Import Boards, Sorting, Charcters, Events, Tiles, and Riddles
 
 Setup board
 
-Charcters
-  Pick charcters
-  display stats
-  confirm charcter
+Charcters (array per player)
+[
+  Chose number of players (2-4)
+  repeat for each player
+  [
+    Pick charcters
+    display stats
+    confirm charcter
 
-  Display advisors and stats
-  pick advisor
+    pick path
+    apply picked path effects
+    [
+      if cub path
+      -5000 points
+      Display advisors and stats
+      pick advisor
+
+      if main path
+      +5000 points
+      +200 to stamina, strenth, and wisdom
+    ]
+  ]
+]
+
 
 start players on board
 
-repeat 
+repeat until all reach end
 [
-player 1 spins
-player 1 moves
-player 1 takes action
+  player 1 spins
+  player 1 moves
+  player 1 takes action
 
-player 2 spins
-player 2 moves
-player 2 takes action
+  player 2 spins
+  player 2 moves
+  player 2 takes action
 
-chance for random event occurs
-randomo event affects players
-check advisor
-apply event
+  player x spins
+  player x moves
+  player x takes action
+
+  chance for random event occurs
+  randomo event affects players
+  check advisor 
+  apply event
 ]
 
-Events
+once both players reach end
+[
+  scores players points 
+    1000 for each 100 in stamina, strength or wisdom
+  Display winner
+  sort player(s) based on points
+]
