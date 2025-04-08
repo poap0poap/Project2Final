@@ -94,4 +94,6 @@ once both players reach end
   Display winner
   sort player(s) based on points
   create file - Stats_[Playercount]_[date/time]
+      saved stats
+      {[player number],[charcter name],[charcter age],[total point],[stamina],[strength],[wisdom]}
 ]
