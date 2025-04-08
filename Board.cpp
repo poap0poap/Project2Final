@@ -127,35 +127,47 @@ void Board::displayTile(int player_index, int pos)
     // Template for displaying a tile: <line filler space> <color start> |<player symbol or blank space>| <reset color> <line filler space> <endl>
 
     // Determine color to display
-    if (_tiles[player_index][pos].color == 'R')
-    {
-        color = RED;
-    }
-    else if (_tiles[player_index][pos].color == 'G')
+    if (_tiles[player_index][pos].color == 'B')
     {
         color = BLACK;
     }
-    else if (_tiles[player_index][pos].color == 'B')
+    else if (_tiles[player_index][pos].color == 'Y')
     {
-        color = BLUE;
-    }
-    else if (_tiles[player_index][pos].color == 'U')
-    {
-        color = PURPLE;
-    }
-    else if (_tiles[player_index][pos].color == 'N')
-    {
-        color = BROWN;
+        color = YELLOW;
     }
     else if (_tiles[player_index][pos].color == 'P')
     {
+        color = PURPLE;
+    }
+    else if (_tiles[player_index][pos].color == 'L')
+    {
+        color = BLUE;
+    }
+    else if (_tiles[player_index][pos].color == 'I')
+    {
         color = PINK;
+    }
+    else if (_tiles[player_index][pos].color == 'G')
+    {
+        color = GREEN;
     }
     else if (_tiles[player_index][pos].color == 'O')
     {
+        color = BROWN;
+    }
+    else if (_tiles[player_index][pos].color == 'R')
+    {
+        color = RED;
+    }
+    else if (_tiles[player_index][pos].color == 'C')
+    {
+        color = CYAN;
+    }
+    else if (_tiles[player_index][pos].color == 'E')
+    {
         color = ORANGE;
     }
-    else if (_tiles[player_index][pos].color == 'Y')
+    else if (_tiles[player_index][pos].color == 'S')
     {
         color = GREY;
     }
