@@ -6,9 +6,35 @@ Project report - 5/3
 
 We will include sorting of charcters based on Pride Points. We will also add more to riddles for a more in depth experience. 
 
+Tile Information and Effects:
+
+Green - Grassland/Regular Tiles
+  - Must have 20 at least on each path.
+  - A random event from "random_events.txt" occurs that can help/hurt the player. 
+  - There is a 50% chance for the random event to occur.
+  - Make sure to make it so that the player's advisor can protect against the random event if it harms the player.
+
+Special Tiles:
+        Blue - Oasis Tile
+          - This gives the player an extra turn to keep moving forward
+          - Add 200 points each to the Stamina, Strength, and Wisdom Stat.
+        Pink - Counseling Tile
+          - Add 300 points each to the Stamina, Strength, and Wisdom Stat.
+          - Choose an advisor from the following advisors.
+          - If you already have and advisor, you can change to a different one from the list or keep the same one.
+          - Friendly Reminder that the Advisor can protect the player against the random events.
+        Red - Graveyard Tile
+          - Player goes back 10 Tiles
+          - Subtract 100 points each from the Stamina, Strength, and Wisdom Stat.
+        Brown - Hyena Tile
+          - Hyenas drag you back to where you came from.
+          - Subtract 300 points from the Stamina Stat
+        Purple - Challenge Tile
+          - Answer a question from "riddles.txt". If you answer correctly, add 500 points to the Wisdom Stat.
+          - Note: Riddles are supposed to be c++ related.
+
 NOTE: These odds are from the workbook and that we can change them if we want.
 Tile Odds for Both Paths:
-
   Straight to the Pridelands:
     - 52 Total Tiles: 20 Grasslands, 30 Special, 1 Start and 1 End
         - 20% Chance to find an Advisor
