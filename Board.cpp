@@ -133,7 +133,7 @@ void Board::displayTile(int player_index, int pos)
     }
     else if (_tiles[player_index][pos].color == 'G')
     {
-        color = GREEN;
+        color = BLACK;
     }
     else if (_tiles[player_index][pos].color == 'B')
     {
