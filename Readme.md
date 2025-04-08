@@ -15,16 +15,11 @@ Each turn +age
 main path +5 to age
 
 ## Extra Credit Stuff Contains:
-Special tiles for each path
-
-Multiplayer (2-4)
-
-Boost based on advisor
-
+Special tiles for each path\
+Multiplayer (2-4)\
+Boost based on advisor\
 Same tile Constraint - if both player on same tile and not start/finish battle. flip coin winner +5 points, loser - 5 points\
-
-Factors that alter outcome - age change loss %wise
-  
+Factors that alter outcome - age change loss %wise\
   wisdom + age at end
 
 
