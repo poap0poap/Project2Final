@@ -1,17 +1,13 @@
 # Dates
-Board.cpp - 4/9
-
-Skeleton.txt - 4/11
-
-Sign up - 4/25
-
-Final Submision - 4/30
-
+Board.cpp - 4/9\
+Skeleton.txt - 4/11\
+Sign up - 4/25\
+Final Submision - 4/30\
 Project report - 5/3
 
 We will include sorting of charcters based on Pride Points. We will also add more to riddles for a more in depth experience. 
 
-Each turn +age
+Each turn +age\
 main path +5 to age
 
 ## Extra Credit Stuff Contains:
@@ -50,6 +46,7 @@ Factors that alter outcome - age change loss %wise\
 
 
 NOTE: These odds are from the workbook and that we can change them if we want.
+```
 Tile Odds for Both Paths:
   Straight to the Pridelands:
     - 52 Total Tiles: 20 Grasslands, 30 Special, 1 Start and 1 End
@@ -75,10 +72,9 @@ Cub Training:
         - Second Half
             - 15% Chance for a Special Tile to be an Oasis Tile
             - 30% Chance for a Challenge Tile to appear
+```
 
-
-
-Final Evaluation of Pride Points by the end.
-For every 100 points in the Stamina, Strenght, or Wisdom Stat, add 1000 Pride Points to the total.
-Whoever has the greatest ammount of Pride Points by the end will be declared the winner. 
-Make sure to display the name of the lion with the highest Pride Points as the winner, along with each player’s final stats.
+Final Evaluation of Pride Points by the end.  
+For every 100 points in the Stamina, Strenght, or Wisdom Stat, add 1000 Pride Points to the total.  
+Whoever has the greatest ammount of Pride Points by the end will be declared the winner.   
+Make sure to display the name of the lion with the highest Pride Points as the winner, along with each player’s final stats.  
