@@ -25,27 +25,38 @@ Charcters (array per player)
     ]
   ]
 ]
-
-
-start players on board
+Menu
+[
+  1 Display Points and stats
+  2 Display Charcter information
+  3 Display board
+  4 Display advisor - If none display 'No advisor selected'
+  5 Take turn
+]
 
 repeat until all reach end
 [
-  Menu
+  \n x12
+  Display player name + points(factor stats) in order
+  Display current board
+
+  player 1 menus
   player 1 spins
   player 1 moves
   player 1 takes action
 
+  plater 2 menus
   player 2 spins
   player 2 moves
   player 2 takes action
 
+  player x menus
   player x spins
   player x moves
   player x takes action
 
   chance for random event occurs
-  randomo event affects players
+  random event affects players
   check advisor 
   apply event
 ]
@@ -56,4 +67,5 @@ once both players reach end
     1000 for each 100 in stamina, strength or wisdom
   Display winner
   sort player(s) based on points
+  create file - 
 ]
