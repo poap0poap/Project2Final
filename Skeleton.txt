@@ -31,6 +31,7 @@ start players on board
 
 repeat until all reach end
 [
+  Menu
   player 1 spins
   player 1 moves
   player 1 takes action
