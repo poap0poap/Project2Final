@@ -88,7 +88,7 @@ int main(){
 
         switch (choice) {
             case 1:{
-                displayStats(game, current_player,playerData);
+                cout << "Player Stats:\n" << endl;
             break;
             }
 
