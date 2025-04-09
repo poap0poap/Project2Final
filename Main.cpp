@@ -8,15 +8,24 @@
 #include <ctime>
 #include <cstdlib>
 #include <conio.h>
+#include <thread>
+#include <atomic>
 #include "Board.h"
+#include "GameExit.h"
 
 using namespace std;
+
+//rolling dice. any size - determned by int value
+int diceRoll(int dice_size){
+    return 1 + rand() % dice_size;
+    
+};
 
 //check for what tile you are on and applys effects
 string tileCheck(Board& game, int player_position, int player_path)
 {
-    char p = game.getTileIndex(player_path,player_position);
-    //cout << p;
+    char p = game.getTileIndex(player_path,player_position);// find landed tile using chosen path and current position
+    //describes events based on landed tile
     if (p == 'B')
     {
         return "nothing happend";
@@ -59,44 +68,65 @@ string tileCheck(Board& game, int player_position, int player_path)
     }
 };
 
-int main(){
-    // number of players and size of board and moves
-    int players,board,move;
-    int player[2];
-    // get number of players
-    players = 1;
-    //inilize board under name game
+int main() {
+    //multi threading
+    //allows game to always check for esc
+    atomic<bool> running(true);
+    thread quitThread(checkExit, ref(running));
+
+    srand(time(0)); // Seed RNG once
+
+    //data/variables
+    int players = 1;
+    int player[2] = {0}; // Initialize player positions
     Board game(players);
-    board = game.getBoardSize();
-    move = 0;
-    game.displayBoard();
-    for (int i=0;i<board;i++)//runs for total number or tiles
-    {
-        for (int b=0;b<players+1;b++)//gives each player a chance to move
-        {
-            //labels and displays path
-            cout << "player "<< b+1 <<" path: "; 
-            //input number for spaces moved
-            cout << "how many spaces to move: ";
-            cin >> move;
-            game.movePlayer(b,move);
-            game.displayTrack(b);
-            //tile check
-            player [b]  = player[b] + move;
-            cout << tileCheck(game,player[b],b) << endl;
-            //overflow check
-            if (game.getPlayerPosition(b)>=board){
-                cout << "game over" << endl;
-                goto end;
+    int board = game.getBoardSize();
+
+    game.displayBoard(); // display board
+
+    while (running) {
+        for (int i = 0; i < board; i++) {//loop for each tile - if get unlucky will reach end
+            for (int b = 0; b < players + 1; b++) {//loop for each player - changes between 0 & 1 for each path/player
+                cout << "Player " << b + 1 << " path: ";
+                cout << "Press space to roll" << endl;
+                //only rolling if space pressed
+                while (running){
+                    char keypress = _getch();
+                    if (keypress == ' '){
+                        int move = diceRoll(6);//dice size is 6 may change later
+                        game.movePlayer(b, move);
+                        game.displayTrack(b);
+                        //move player based on dice
+                        player[b] += move;
+                        cout << tileCheck(game, player[b], b) << endl;
+
+                        // if pos is farther then board stop
+                        if (game.getPlayerPosition(b) >= board) {
+                            cout << "Game over\n";
+                            running = false;
+                            break;
+                        }
+                        break;
+                    }
+                    //if esc press stop
+                    if (keypress == 27){running = false; break;}
+                }
             }
+            if (!running) break;
         }
-        //clears terminal after each turn
-        for (int i=0;i<3;i++){
+
+        // make space
+        for (int i = 0; i < 3; i++) {
             cout << endl;
         }
         game.displayBoard();
     }
-    end:
-    cout << "press any key to exit";
+
+    running = false; // tell all threads to stop
+    quitThread.join(); // wait for all threads to stop
+    cout << "Game terminated.\n";
+
+    cout << "Press any key to exit";
     _getch();
+    return 0;
 }
