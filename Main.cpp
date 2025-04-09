@@ -7,6 +7,7 @@
 #include <vector>
 #include <ctime>
 #include <cstdlib>
+#include <conio.h>
 #include "Board.h"
 
 using namespace std;
@@ -85,7 +86,7 @@ int main(){
             //overflow check
             if (game.getPlayerPosition(b)>=board){
                 cout << "game over";
-                return 0;
+                goto end;
             }
         }
         //clears terminal after each turn
@@ -93,4 +94,7 @@ int main(){
             cout << endl;
         }
     }
+    end:
+    cout << "press any key to exit";
+    _getch();
 }
