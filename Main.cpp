@@ -24,6 +24,7 @@ int diceRoll(int dice_size){
 string tileAction(Board& game, int player_position, int player_path)
 {
     char p = game.getTileIndex(player_path,player_position);// find landed tile using chosen path and current position
+    cout << endl;
     //describes events based on landed tile
     if (p == 'B')
     {
@@ -147,6 +148,8 @@ int turn(Board& game,int current_player,int board, int* player){
 }
 
 
+
+
 int main() {
     bool running = true;
 
@@ -177,6 +180,7 @@ int main() {
                     else if (run == 1){}
                 }
             }
+
             if (rand() % 2 == 0){
                 cout << endl;
                 cout << "random event occurs" << endl;
@@ -187,8 +191,10 @@ int main() {
         
     }
 
+    //ending text
     cout << "Game terminated.\n";
     cout << "Press any key to exit";
-    _getch();
+    _getch();//waits until keypress to end
     return 0;
+
 }
