@@ -18,7 +18,7 @@
 void Board::initializeBoard(int player_count)
 {
     // Seed random number generator in your main function once
-    for (int i = 0; i < player_count; i++)
+    for (int i = 0; i < 2; i++)
     {
         initializeTiles(i);  // This ensures each lane has a unique tile distribution
     }
@@ -131,6 +131,11 @@ bool Board::isPlayerOnTile(int player_index, int pos)
         return true;
     }
     return false;
+}
+
+char Board::getTileIndex(int player_index, int pos)
+{
+    return _tiles[player_index][pos].color;
 }
 
 void Board::displayTile(int player_index, int pos)
