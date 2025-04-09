@@ -1,4 +1,6 @@
 #include "Board.h"
+#include <iostream>
+#include <string>
 #define BLACK "\033[48;2;0;0;0m" // Grassland Tile
 #define YELLOW "\033[48;2;255;255;0m" // Change Advisor
 #define PURPLE "\033[48;2;128;0;128m" // Riddle Tile
@@ -85,6 +87,8 @@ void Board::initializeTiles(int player_index)
 }
 
 
+
+
 Board::Board()
 {
     _player_count = 1;
@@ -92,9 +96,8 @@ Board::Board()
     // Initialize player position
     _player_position[0] = 0;
     // Initialize tiles
-    initializeTiles();
+    initializeBoard();
 }
-
 Board::Board(int player_count)
 {
     if (player_count > _MAX_PLAYERS)
@@ -129,7 +132,7 @@ bool Board::isPlayerOnTile(int player_index, int pos)
 void Board::displayTile(int player_index, int pos)
 {
     // string space = "                                       ";
-    string color = "";
+    std::string color = "";
     int player = isPlayerOnTile(player_index, pos);
 
     // Template for displaying a tile: <line filler space> <color start> |<player symbol or blank space>| <reset color> <line filler space> <endl>
@@ -182,11 +185,11 @@ void Board::displayTile(int player_index, int pos)
 
      if (player == true)
     {
-        cout << color << "|" << (player_index + 1) << "|" << RESET;
+        std::cout << color << "|" << (player_index + 1) << "|" << RESET;
     }
     else
     {
-        cout << color << "| |" << RESET;
+        std::cout << color << "| |" << RESET;
     }
 }
 
@@ -196,7 +199,7 @@ void Board::displayTrack(int player_index)
     {
         displayTile(player_index, i);
     }
-    cout << endl;
+    std::cout << std::endl;
 }
 
 void Board::displayBoard()
@@ -205,28 +208,28 @@ void Board::displayBoard()
     {
         displayTrack(i);
         if (i == 0) {
-            cout << endl;  // Add an extra line between the two lanes
+            std::cout << std::endl;  // Add an extra line between the two lanes
         }
     }
 }
 
-// bool Board::movePlayer(int player_index)
-// {
-//     // Increment player position
-//     _player_position[player_index]++;
-//     if (_player_position[player_index] == _BOARD_SIZE - 1)
-//     {
-//         // Player reached last tile
-//         return true;
-//     }
-//     return false;
-// }
+bool Board::movePlayer(int player_index)
+{
+        // Increment player position
+    _player_position[player_index]++;
+    if (_player_position[player_index] == _BOARD_SIZE - 1)
+        {
+             // Player reached last tile
+             return true;
+        }
+    return false;
+}
 
-// int Board::getPlayerPosition(int player_index) const
-// {
-//     if (player_index >= 0 && player_index <= _player_count)
-//     {
-//         return _player_position[player_index];
-//     }
-//     return -1;
-// }
+int Board::getPlayerPosition(int player_index) const
+{
+    if (player_index >= 0 && player_index <= _player_count)
+    {
+        return _player_position[player_index];
+    }
+    return -1;
+}

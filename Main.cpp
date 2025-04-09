@@ -7,5 +7,12 @@
 #include <vector>
 #include <ctime>
 #include <cstdlib>
+#include "Board.h"
 
 using namespace std;
+
+int main(){
+    Board game;
+    game.displayBoard();
+    return 0;
+}
