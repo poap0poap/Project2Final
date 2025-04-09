@@ -78,13 +78,13 @@ int main() {
 
     //data/variables
     int players = 1;
-    int player[2] = {0}; // Initialize player positions
+    int player[2] = {0}; // initlize player positions
     Board game(players);
     int board = game.getBoardSize();
 
     game.displayBoard(); // display board
 
-    while (running) {
+    while (running){
         for (int i = 0; i < board; i++) {//loop for each tile - if get unlucky will reach end
             for (int b = 0; b < players + 1; b++) {//loop for each player - changes between 0 & 1 for each path/player
                 cout << "Player " << b + 1 << " path: ";
@@ -101,7 +101,7 @@ int main() {
                         cout << tileCheck(game, player[b], b) << endl;
 
                         // if pos is farther then board stop
-                        if (game.getPlayerPosition(b) >= board) {
+                        if (game.getPlayerPosition(b) >= board){
                             cout << "Game over\n";
                             running = false;
                             break;
@@ -109,17 +109,22 @@ int main() {
                         break;
                     }
                     //if esc press stop
-                    if (keypress == 27){running = false; break;}
+                    if (keypress == 27){
+                        running = false; 
+                        break;
+                    }
                 }
             }
             if (!running) break;
+
+            // make space
+            for (int i = 0; i < 3; i++) {
+                cout << endl;
+            }
+            game.displayBoard();
         }
 
-        // make space
-        for (int i = 0; i < 3; i++) {
-            cout << endl;
-        }
-        game.displayBoard();
+        
     }
 
     running = false; // tell all threads to stop
