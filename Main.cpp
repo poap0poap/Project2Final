@@ -49,20 +49,24 @@ void displayMenu(){
 
 int main(){
     int choice;
-    int Players = 0;
+    int players = 0;
     int ready = 0;
-    Board game(Players);
-    game.initializeBoard();
-    cout << "How many players are there? (1-4)" << endl;
-    cin >> Players;
-    if (Players < 0 && Players > 4){
-        cout << "Invalid ammount of players. Please choose a number between 1 to 4." << endl;
+
+    cout << "How many players are there? (2-4)" << endl;
+    cin >> players;
+
+    if (players < 2 || players > 4){
+        cout << "Invalid ammount of players. Please choose a number between 2 to 4." << endl;
     }    else {
-        cout << "There are " << Players << " Players." << endl;
+        cout << "There are " << players << " Players." << endl;
         ready = 1;
     };
 
-    
+    Board game(players);
+    game.initializeBoard(players);
+ 
+
+
     while (ready == 1) {
         displayMenu();
         cin >> choice;
