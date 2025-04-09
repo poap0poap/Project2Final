@@ -50,22 +50,26 @@ void displayMenu(){
 int main(){
     int choice;
     int players = 0;
-    int ready = 0;
+    bool ready = false;
 
     for (int i = 0; i < 1;){
     cout << "How many players are there? (2-4)" << endl;
     cin >> players;
 
+    while (cin.fail()) {
+        cin.clear(); // reset fail flag
+        cin.ignore(1000, '\n'); // discard invalid input
+        cout << "Invalid input. Please enter a number between 2 and 4." << endl;
+        cin >> players;
+    }
+
     if (players < 2 || players > 4){
         cout << "Invalid ammount of players. Please choose a number between 2 to 4.\n" << endl;
     }    else {
         cout << "There are " << players << " Players.\n" << endl;
-    };
-
-    if (players >= 2 && players <= 4){
-        ready = 1;
+        ready = true;
         i++;
-    }
+    };
 }
     Board game(players);
     game.initializeBoard(players);
@@ -73,7 +77,7 @@ int main(){
  
 
 
-    while (ready == 1) {
+    while (ready == true) {
         displayMenu();
         cin >> choice;
 
@@ -84,7 +88,7 @@ int main(){
 
         switch (choice) {
             case 1:{
-                cout << "Player Stats:\n" << endl;
+                displayStats(game, current_player,playerData);
             break;
             }
 

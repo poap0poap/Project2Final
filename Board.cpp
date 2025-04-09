@@ -18,7 +18,7 @@
 void Board::initializeBoard(int player_count)
 {
     // Seed random number generator in your main function once
-    for (int i = 0; i < 2; i++)
+    for (int i = 0; i < player_count; i++)
     {
         initializeTiles(i);  // This ensures each lane has a unique tile distribution
     }
@@ -107,6 +107,10 @@ Board::Board(int player_count)
     if (player_count > _MAX_PLAYERS)
     {
         _player_count = _MAX_PLAYERS;
+    } 
+    else if (player_count < _MIN_PLAYERS)
+    {
+        _player_count = _MIN_PLAYERS;
     }
     else
     {
@@ -213,7 +217,7 @@ void Board::displayTrack(int player_index)
 
 void Board::displayBoard()
 {
-    for (int i = 0; i < 2; i++)
+    for (int i = 0; i < _player_count; i++)
     {
         displayTrack(i);
         if (i == 0) {
