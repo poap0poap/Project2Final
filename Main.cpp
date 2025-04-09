@@ -58,7 +58,7 @@ int main(){
     if (players < 2 || players > 4){
         cout << "Invalid ammount of players. Please choose a number between 2 to 4." << endl;
     }    else {
-        cout << "There are " << players << " Players." << endl;
+        cout << "There are " << players << " Players.\n" << endl;
         ready = 1;
     };
 
