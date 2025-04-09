@@ -7,8 +7,8 @@ Bennett Guzman 5 10 10 2 21
 Ezra Costa 7 10 6 2 22
 Britt Curtis 5 6 9 5 24
 Jordan Duran 7 2 9 8 19
-Octavio Weber 5 4 4 1 15
-Esteban Key 10 7 4 7 15
+Octavio Weber 5 4 4 1 17
+Esteban Key 10 7 4 7 16
 Isabelle Gould 6 2 3 8 25
 Lily Todd 9 7 3 4 17
 Frederic Norris 5 2 10 7 19

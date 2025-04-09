@@ -17,7 +17,7 @@ private:
 public:
     Board();
     Board(int player_count);
-    int getBoardSize() const; // Declaration of the getter method
+    int getBoardSize() const;
     void displayTrack(int player_index);
     void initializeBoard(int player_count);
     void displayBoard();
