@@ -52,17 +52,19 @@ int main(){
     int players = 0;
     int ready = 0;
 
+    for (int ready = 0; ready < 1;){
     cout << "How many players are there? (2-4)" << endl;
     cin >> players;
-    Board game(players);
-    game.initializeBoard(players);
 
     if (players < 2 || players > 4){
-        cout << "Invalid ammount of players. Please choose a number between 2 to 4." << endl;
+        cout << "Invalid ammount of players. Please choose a number between 2 to 4.\n" << endl;
     }    else {
         cout << "There are " << players << " Players.\n" << endl;
-        ready = 1;
+        ready++;
     };
+}
+    Board game(players);
+    game.initializeBoard(players);
 
  
 
