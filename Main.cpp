@@ -76,6 +76,7 @@ int main(){
             cout << "player "<< b+1 <<" path: "; 
             game.displayTrack(b);
             //input number for spaces moved
+            cout << "how many spaces to move: ";
             cin >> move;
             game.movePlayer(b,move);
             //tile check
