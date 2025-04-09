@@ -7,10 +7,34 @@
 #include <vector>
 #include <ctime>
 #include <cstdlib>
+#include <conio.h>
+#include <thread>
 #include "Board.h"
 
 using namespace std;
 
+//Rolling dice. any size - determned by int value
+int diceRoll(int dice_size){
+    return 1 + rand() % dice_size;
+    
+};
+
+struct playerInfo {
+    string firstName;
+    string lastName;
+    int age;
+    int strength;
+    int stamina;
+    int wisdom;
+    int points;
+};
+
+void displayStats(Board& game,int player,playerInfo* playerData){
+    cout << "Strength: " << playerData[player].strength << endl;
+    cout << "Stamina: " << playerData[player].stamina << endl;
+    cout << "Wisdom: " << playerData[player].wisdom << endl;
+    cout << "Points: " << playerData[player].points << endl;
+}
 void displayMenu(){
     cout << "--- Cub Leveling ---\n";
     cout << "1. Player Stats\n";
