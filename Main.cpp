@@ -162,9 +162,6 @@ int turn(Board& game,int current_player,int board, int* player, playerInfo* play
 }
 
 
-
-
-
 int main() {
    
     bool running = true;
@@ -173,7 +170,8 @@ int main() {
     //data/variables
     int players = 1;
 
-    //random player data
+    // random player data
+    // need to make it a class
     fstream characterFile("charcter.txt");
     int randomLine;
     int lineCount = 0;
