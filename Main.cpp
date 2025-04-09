@@ -31,7 +31,7 @@ struct playerInfo {
 };
 
 //check for what tile you are on and applys effects
-string tileAction(Board& game, int player_position, int player_path)
+string tileAction(Board& game, int player_position, int player_path, int player, playerInfo* playerData)
 {
     char p = game.getTileIndex(player_path,player_position);// find landed tile using chosen path and current position
     cout << endl;
@@ -50,10 +50,16 @@ string tileAction(Board& game, int player_position, int player_path)
     }
     else if (p == 'L')
     {
+        playerData[player].strength += 2;
+        playerData[player].stamina += 2;
+        playerData[player].wisdom += 2;
         return "+2 to stats";
     }
     else if (p == 'I')
     {
+        playerData[player].strength += 3;
+        playerData[player].stamina += 3;
+        playerData[player].wisdom += 3;
         return "+3 to stats";
     }
     else if (p == 'G')
@@ -124,7 +130,7 @@ int turn(Board& game,int current_player,int board, int* player, playerInfo* play
         game.displayTrack(current_player);
         //move player current_playerased on dice
         player[current_player] += move;
-        cout << tileAction(game, player[current_player], current_player) << endl;
+        cout << tileAction(game, player[current_player], current_player, current_player,  playerData) << endl;
 
         //if pos is farther then board stop
         if (game.getPlayerPosition(current_player) >= board){
