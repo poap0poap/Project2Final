@@ -69,6 +69,7 @@ int main(){
     Board game(players);
     board = game.getBoardSize();
     move = 0;
+    game.displayBoard();
     for (int i=0;i<board;i++)//runs for total number or tiles
     {
         for (int b=0;b<players+1;b++)//gives each player a chance to move
@@ -85,14 +86,15 @@ int main(){
             cout << tileCheck(game,player[b],b) << endl;
             //overflow check
             if (game.getPlayerPosition(b)>=board){
-                cout << "game over";
+                cout << "game over" << endl;
                 goto end;
             }
         }
         //clears terminal after each turn
-        for (int i=0;i<6;i++){
+        for (int i=0;i<3;i++){
             cout << endl;
         }
+        game.displayBoard();
     }
     end:
     cout << "press any key to exit";
