@@ -54,6 +54,8 @@ int main(){
 
     cout << "How many players are there? (2-4)" << endl;
     cin >> players;
+    Board game(players);
+    game.initializeBoard(players);
 
     if (players < 2 || players > 4){
         cout << "Invalid ammount of players. Please choose a number between 2 to 4." << endl;
@@ -62,8 +64,6 @@ int main(){
         ready = 1;
     };
 
-    Board game(players);
-    game.initializeBoard(players);
  
 
 
