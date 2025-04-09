@@ -5,3 +5,7 @@ Still need to do for the board
   - path chosing
   - menuing - complete
   - skip turn after reach end
+
+# Changes
+created struct to hold player data
+need to make classes
