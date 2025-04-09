@@ -7,7 +7,7 @@ class Board
 private:
     static const int _BOARD_SIZE = 52;
     Tile _tiles[2][_BOARD_SIZE];
-    static const int _MAX_PLAYERS = 2;
+    static const int _MAX_PLAYERS = 4;
     int _player_count;
     int _player_position[_MAX_PLAYERS];
     void displayTile(int player_index, int pos);
