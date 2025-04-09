@@ -84,12 +84,12 @@ int main(){
 
         switch (choice) {
             case 1:{
-                cout << "Player Stats:" << endl;
+                cout << "Player Stats:\n" << endl;
             break;
             }
 
             case 2:{
-                cout << "Character Information:" << endl;
+                cout << "Character Information:\n" << endl;
             break;
             }
 
@@ -99,16 +99,17 @@ int main(){
             }
 
             case 4:{
-                cout << "Your Advisor:" << endl;
+                cout << "Your Advisor:\n" << endl;
+                break;
             }
 
             case 5:{
-                cout << "Roll the dice." << endl;
+                cout << "Roll the dice.\n" << endl;
             break;
             }
 
             default:
-                cout << "Invalid Option. Please select a valid option." << endl;
+                cout << "Invalid Option. Please select a valid option.\n" << endl;
             break;
         }
     }
