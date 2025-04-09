@@ -54,7 +54,7 @@ string tileCheck(Board& game, int player_position, int player_path)
     }
     else
     {
-        return "something happend";
+        return "Exceeded Board Size Ending";
     }
 };
 
@@ -74,11 +74,11 @@ int main(){
         {
             //labels and displays path
             cout << "player "<< b+1 <<" path: "; 
-            game.displayTrack(b);
             //input number for spaces moved
             cout << "how many spaces to move: ";
             cin >> move;
             game.movePlayer(b,move);
+            game.displayTrack(b);
             //tile check
             player [b]  = player[b] + move;
             cout << tileCheck(game,player[b],b) << endl;
