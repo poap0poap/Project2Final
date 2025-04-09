@@ -21,7 +21,7 @@ Factors that alter outcome - age change loss %wise\
 
 
 ## Tile Information and Effects:
-### Green - Grassland/Regular Tiles
+### Black - Grassland/Regular Tiles
   - Must have 20 at least on each path.
   - A random event from "random_events.txt" occurs that can help/hurt the player. 
   - There is a 50% chance for the random event to occur.
@@ -76,6 +76,6 @@ Cub Training:
 ```
 
 Final Evaluation of Pride Points by the end.  
-For every 100 points in the Stamina, Strenght, or Wisdom Stat, add 1000 Pride Points to the total.  
+For every 1 points in the Stamina, Strenght, or Wisdom Stat, add 10 Pride Points to the total.  
 Whoever has the greatest ammount of Pride Points by the end will be declared the winner.   
 Make sure to display the name of the lion with the highest Pride Points as the winner, along with each player’s final stats.  
