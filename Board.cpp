@@ -28,44 +28,53 @@ void Board::initializeBoard()
 void Board::initializeTiles(int player_index)
 {
     Tile temp;
-    int green_count = 0;
+    int black_count = 0;
     int total_tiles = _BOARD_SIZE;
 
     // Keep track of green tile positions to ensure we place exactly 30 greens
     for (int i = 0; i < total_tiles; i++)
     {
         if (i == total_tiles - 1) {
-            // Set the last tile as Orange for "Pride Rock"
-            temp.color = 'O';
+            // Set the last tile as Orange
+            temp.color = 'E';
         } 
         else if (i == 0) {
-            // Set the last tile as Orange for "Pride Rock"
-            temp.color = 'Y';
+            // Set the Start tile as Grey
+            temp.color = 'S';
         } 
-        else if (green_count < 30 && (rand() % (total_tiles - i) < 30 - green_count)) {
-            temp.color = 'G';
-            green_count++;
+        else if (black_count < 20 && (rand() % (total_tiles - i) < 20 - black_count)) {
+            temp.color = 'B';
+            black_count++;
         }
         else
         {
-            // Randomly assign one of the other colors: Blue, Pink, Brown, Red, Purple
-            int color_choice = rand() % 5;
+            // Randomly assign one of the other colors: Yellow,Purple,BLue,Pink,Green,Brown,Red,Cyan
+            int color_choice = rand() % 8;
             switch (color_choice)
             {
                 case 0:
-                    temp.color = 'B'; // Blue
+                    temp.color = 'Y'; // Yellow
                     break;
                 case 1:
-                    temp.color = 'P'; // Pink
+                    temp.color = 'P'; // Purple
                     break;
                 case 2:
-                    temp.color = 'N'; // Brown
+                    temp.color = 'L'; // Blue
                     break;
                 case 3:
-                    temp.color = 'R'; // Red
+                    temp.color = 'I'; // Pink
                     break;
                 case 4:
-                    temp.color = 'U'; // Purple
+                    temp.color = 'G'; // Green
+                    break;
+                case 5:
+                    temp.color = 'O'; //Brown
+                    break;
+                case 6:
+                    temp.color = 'R'; //Red
+                    break;
+                case 7:
+                    temp.color = 'C'; //Cyan
                     break;
             }
         }
