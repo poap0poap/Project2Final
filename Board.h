@@ -17,10 +17,11 @@ private:
 public:
     Board();
     Board(int player_count);
+    int getBoardSize() const; // Declaration of the getter method
     void displayTrack(int player_index);
-    void initializeBoard();
+    void initializeBoard(int player_count);
     void displayBoard();
-    bool movePlayer(int player_index);
+    bool movePlayer(int player_index, int spaces);
     int getPlayerPosition(int player_index) const;
 };
 

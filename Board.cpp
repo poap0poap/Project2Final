@@ -15,10 +15,10 @@
 #define GREY "\033[48;2;128;128;128m" // Start Tile
 #define RESET "\033[0m"
 
-void Board::initializeBoard()
+void Board::initializeBoard(int player_count)
 {
     // Seed random number generator in your main function once
-    for (int i = 0; i < 2; i++)
+    for (int i = 0; i < player_count; i++)
     {
         initializeTiles(i);  // This ensures each lane has a unique tile distribution
     }
@@ -87,6 +87,10 @@ void Board::initializeTiles(int player_index)
 }
 
 
+int Board::getBoardSize() const
+{
+    return _BOARD_SIZE; // Returns the board size
+}
 
 
 Board::Board()
@@ -96,7 +100,7 @@ Board::Board()
     // Initialize player position
     _player_position[0] = 0;
     // Initialize tiles
-    initializeBoard();
+    initializeBoard(_player_count);
 }
 Board::Board(int player_count)
 {
@@ -110,14 +114,14 @@ Board::Board(int player_count)
     }
 
     // Initialize player position
-    for (int i = 0; i < _player_count; i++)
+    for (int i = 0; i < _player_count+1; i++)
     {
         _player_position[i] = 0;
     }
 
     // Initialize tiles
 
-    initializeBoard();
+    initializeBoard(_player_count);
 }
 
 bool Board::isPlayerOnTile(int player_index, int pos)
@@ -213,10 +217,10 @@ void Board::displayBoard()
     }
 }
 
-bool Board::movePlayer(int player_index)
+bool Board::movePlayer(int player_index,int spaces)
 {
         // Increment player position
-    _player_position[player_index]++;
+    _player_position[player_index] = _player_position[player_index]+spaces;
     if (_player_position[player_index] == _BOARD_SIZE - 1)
         {
              // Player reached last tile

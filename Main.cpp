@@ -12,21 +12,29 @@
 using namespace std;
 
 int main(){
-    int Players = 0;
+    int Players,board;
+    Players = 3;
     Board game(Players);
-    game.initializeBoard();
-    game.displayBoard();
-    int i=0;
-    bool b;
-    while (true){
-        cout << "move 0-1" << endl;
-        cin >> i;
-        if (i == 0){
-           goto alex;
+    board = game.getBoardSize();
+    game.initializeBoard(Players);
+    int move = 0;
+    cout << "board1";
+    game.displayTrack(1);
+    cout << endl;
+    for (int i=0;i<board;i++){
+        cout << endl;
+        for (int b=0;b<Players+1;b++){
+            cout << "player "<< b+1 <<" spot: ";
+            game.displayTrack(b);
+            //cout << "starting pos " << game.getPlayerPosition(b) << endl;
+            cin >> move;
+            game.movePlayer(b,move);
+            if (game.getPlayerPosition(b)>=board){
+                return 0;
+            }
         }
-        game.movePlayer(3);
-        game.displayBoard();
+        for (int i=0;i<6;i++){
+            cout << endl;
+        }
     }
-    alex:
-    return 0;
 }
