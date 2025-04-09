@@ -20,6 +20,16 @@ int diceRoll(int dice_size){
     
 };
 
+struct playerInfo {
+    string firstName;
+    string lastName;
+    int age;
+    int strength;
+    int stamina;
+    int wisdom;
+    int points;
+};
+
 //check for what tile you are on and applys effects
 string tileAction(Board& game, int player_position, int player_path)
 {
@@ -80,13 +90,17 @@ void menuDisplay(){
 }
 
 //stat display
-void displayStats(Board& game,int player){
-    cout << "Stats are work in progress" << endl;
+void displayStats(Board& game,int player,playerInfo* playerData){
+    cout << "Strength: " << playerData[player].strength << endl;
+    cout << "Stamina: " << playerData[player].stamina << endl;
+    cout << "Wisdom: " << playerData[player].wisdom << endl;
+    cout << "Points: " << playerData[player].points << endl;
 }
 
 //charcter inforemation
-void charInfo(Board& game,int player){
-    cout << "Charcters are a work in progress" << endl;
+void charInfo(Board& game,int player, playerInfo* playerData){
+    cout << "Name: " << playerData[player].firstName << " " << playerData[player].lastName << endl;
+    cout << "Age: " << playerData[player].age << endl;
 }
 
 //display board
@@ -101,7 +115,7 @@ void displayAdvisor(Board& game,int player){
 }
 
 //rolling turn actions
-int turn(Board& game,int current_player,int board, int* player){
+int turn(Board& game,int current_player,int board, int* player, playerInfo* playerData){
     char keypress = _getch();
     if (keypress == ' '){
         int move = diceRoll(6);//dice size is 6 may change later
@@ -122,10 +136,10 @@ int turn(Board& game,int current_player,int board, int* player){
     else{
         switch (keypress){
             case '1':
-                displayStats(game, current_player);
+                displayStats(game, current_player,playerData);
                 break;
             case '2':
-                charInfo(game, current_player);
+                charInfo(game, current_player, playerData);
                 break;
             case '3':
                 displayBoard(game, current_player);
@@ -150,13 +164,39 @@ int turn(Board& game,int current_player,int board, int* player){
 
 
 
-int main() {
-    bool running = true;
 
+int main() {
+   
+    bool running = true;
     srand(time(0)); //Seed RNG once
 
     //data/variables
     int players = 1;
+
+    //random player data
+    fstream characterFile("charcter.txt");
+    int randomLine;
+    int lineCount = 0;
+    string line;
+    playerInfo playerData[4];
+    while(getline(characterFile,line)){lineCount++;}
+    for (int i = 0;i<players+1;i++){
+        randomLine = 1 + rand() % lineCount;
+        characterFile.clear();
+        characterFile.seekg(0, ios::beg);
+        int currentLine = 0;
+        while(getline(characterFile,line)){
+            currentLine++;
+            if (currentLine == randomLine){
+                istringstream lineStream(line);
+                lineStream >> playerData[i].firstName >> playerData[i].lastName >> playerData[i].age 
+                           >> playerData[i].strength >> playerData[i].stamina >> playerData[i].wisdom >> playerData[i].points;
+                break;
+            }    
+        }
+    }
+    characterFile.close();
+
     int player[2] = {0}; //initlize player positions
     Board game(players);
     int board = game.getBoardSize();
@@ -169,7 +209,7 @@ int main() {
                 //only rolling if space pressed
                 menuDisplay();
                 while (running){
-                    int run = turn(game,b,board,player);
+                    int run = turn(game, b, board, player, playerData);
                     if (run == -1){
                         running = false;
                         break;

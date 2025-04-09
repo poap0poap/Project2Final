@@ -1,0 +1,26 @@
+Charcter first name   charcter last Name   Age (5-10)   Strenth (0-10)   Stamina (0-10)   wisdom (0-10)   Starting Points (0-200)
+Charlie Myers 5 4 6 1 24
+Guillermo Oliver 10 6 6 9 22
+Pablo Gaines 7 4 10 8 24
+Kermit Keller 8 6 2 9 19
+Bennett Guzman 5 10 10 2 21
+Ezra Costa 7 10 6 2 22
+Britt Curtis 5 6 9 5 24
+Jordan Duran 7 2 9 8 19
+Octavio Weber 5 4 4 1 15
+Esteban Key 10 7 4 7 15
+Isabelle Gould 6 2 3 8 25
+Lily Todd 9 7 3 4 17
+Frederic Norris 5 2 10 7 19
+Melanie Tanner 8 8 10 8 22
+Noemi Shepherd 6 5 7 6 20
+Daniel David 9 10 9 10 24
+Tabitha Rojas 10 3 5 4 21
+Emery Flowers 5 10 10 7 16
+Nelson Dixon 7 6 8 1 16
+Deshawn Aguirre 5 1 5 4 25
+Jo Calhoun 9 2 7 2 17
+Jeanne Mata 5 3 9 6 24
+Ramon Bridge 10 6 8 8 25
+Lorie Mclean 7 4 7 9 23
+Rory Kidd 10 4 8 9 20
