@@ -78,20 +78,6 @@ int main(){
             break;
         }
     }
-
-
-    // game.displayBoard();
-    // int i=0;
-    // bool b;
-    // while (true){
-    //     cout << "move 0-1" << endl;
-    //     cin >> i;
-    //     if (i == 0){
-    //        goto alex;
-    //     }
-    //     game.movePlayer(3);
-    //     game.displayBoard();
-    // }
-    // alex:
+    
     return 0;
 }
