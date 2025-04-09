@@ -1,6 +1,8 @@
 #include "Board.h"
 #include <iostream>
 #include <string>
+#include <cstdlib> // For rand() and srand()
+#include <ctime>   // For time()
 #define BLACK "\033[48;2;0;0;0m" // Grassland Tile
 #define YELLOW "\033[48;2;255;255;0m" // Change Advisor
 #define PURPLE "\033[48;2;128;0;128m" // Riddle Tile
@@ -23,9 +25,6 @@ void Board::initializeBoard(int player_count)
         initializeTiles(i);  // This ensures each lane has a unique tile distribution
     }
 }
-
-#include <cstdlib> // For rand() and srand()
-#include <ctime>   // For time()
 
 void Board::initializeTiles(int player_index)
 {
