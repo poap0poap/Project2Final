@@ -15,7 +15,6 @@ using namespace std;
 //rolling dice. any size - determned by int value
 int diceRoll(int dice_size){
     return 1 + rand() % dice_size;
-    
 };
 
 struct playerInfo {
@@ -37,7 +36,6 @@ class  pickEvent{
     int getEvent() {
         return rand() % totalEvents;
     }
-
 };
 
 //check for what tile you are on and applys effects
@@ -148,7 +146,7 @@ void displayAdvisor(Board& game,int player){
     cout << "Advisor is a work in progress" << endl;
 }
 
-
+//Movement
 bool movement(Board& game,int current_player,int board, int* player, playerInfo* playerData,int diceSize){
     int dice = diceRoll(diceSize);
     game.movePlayer(current_player, dice);
@@ -168,7 +166,7 @@ bool movement(Board& game,int current_player,int board, int* player, playerInfo*
     }
 }
 
-//
+//menuing
 void menuing(Board& game,int current_player,int board, int* player, playerInfo* playerData,char keypress){
     switch(keypress){
         case '1':
@@ -197,7 +195,11 @@ void displayColumn(const vector<string>& lines, int columnIndex,int player) {
     cout << "Use arrow keys to navigate pages" <<endl;
     cout << "Displaying charcters " << start + 1 << " to " << end << ":\n";
     for (int i = start; i < end; ++i) {
-        cout << (i%9)+1 << ". " << lines[i] << endl;
+        stringstream ss(lines[i]);
+        string firstName, lastName;
+        ss >> firstName >> lastName;
+
+        cout << (i%9)+1 << ". " << firstName << " " << lastName << endl;
     }
 }
 
@@ -205,7 +207,6 @@ void displayColumn(const vector<string>& lines, int columnIndex,int player) {
 //charcter selection
 bool inlitizeCharcters(playerInfo* playerData, int players){
     // random player data
-    // need to make it a class
     //data for charcters
     bool charRunning,running = true;
     fstream characterFile("charcter.txt");
@@ -245,37 +246,72 @@ bool inlitizeCharcters(playerInfo* playerData, int players){
             system("cls");
             displayColumn(lines, columnIndex,i);
             char keypress = _getch();
-
-            // uses the pressed key to select option
-            switch (keypress){
-                case 'r':
-                    selectedLine = rand() % lines.size();
-                    charRunning = false;
-                    break;
-                case '1': case '2': case '3': case '4': case '5': 
-                case '6': case '7': case '8': case '9':
-                    keyValue = keypress - '0';
-                    selectedLine = ((columnIndex*9) + (keyValue-1));
-                    charRunning = false;
-                    break;
-                case 77:
-                    if (columnIndex < totalColumns - 1){
-                        columnIndex++;
-                    }
-                    break;
-                case 75:
-                    if (columnIndex >0){
-                        columnIndex--;
-                    }
-                    break;
-                case 27:
-                    charRunning = false;
-                    running = false;
-                    break;
-                if (!charRunning){
-                    break;
+            //if arrow keys are buggin check to see if the int is not represented in this list
+            //cout << (int)keypress << endl;
+            if (keypress == -32){
+                keypress = _getch();
+                switch(keypress){
+                    case 77:
+                        if (columnIndex < totalColumns - 1){
+                            columnIndex++;
+                        }
+                        break;
+                    case 75:
+                        if (columnIndex >0){
+                            columnIndex--;
+                        }
+                        break;
                 }
             }
+            else{
+                //cout << keypress << endl;
+                // uses the pressed key to select option
+                switch (keypress){
+                    case 'r':
+                        selectedLine = rand() % lines.size();
+                        break;
+                    case '1': case '2': case '3': case '4': case '5': 
+                    case '6': case '7': case '8': case '9':
+                        keyValue = keypress - '0';
+                        selectedLine = ((columnIndex*9) + (keyValue-1));
+                        break;
+                    case 27:
+                        charRunning = false;
+                        running = false;
+                        break;
+                    if (!charRunning){
+                        break;
+                    }
+                }
+                if (selectedLine != -1){
+                    if (!running){break;}
+                    system("cls");
+                    stringstream ss(lines[selectedLine]);
+                    string firstName, lastName, age , str, sta, wis, points;
+                    ss >> firstName >> lastName >> age>>str>>sta>>wis>>points;
+                    cout << "You picked " << firstName << " " << lastName << "\n" << "They are " << age <<" turns old"<< endl;
+                    cout << "Their starting strength is " << str <<endl;
+                    cout << "Their starting stamina is " << sta <<endl;
+                    cout << "Their starting wisdom is " << wis <<endl;
+                    cout << "Their starting points are " << points <<endl;
+                    cout <<"Press Enter to confirm or any other to reselect"<< endl;
+                    int press = _getch();
+                    switch(press){
+                        case 13://enter
+                            charRunning = false;
+                            break;
+                        case 27:
+                            charRunning = false;    
+                            running = false;
+                            break;
+                        default:
+                            selectedLine = -1;
+                            charRunning = true;
+                            break;
+                    }
+                }
+            }
+            
         }
         if(!running){return false;}
         if(selectedLine != -1)
