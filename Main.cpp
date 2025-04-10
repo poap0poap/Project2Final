@@ -52,6 +52,8 @@ int main(){
     int players = 0;
     bool ready = false;
 
+    srand(time(0));
+
     for (int i = 0; i < 1;){
     cout << "How many players are there? (2-4)" << endl;
     cin >> players;
@@ -67,54 +69,52 @@ int main(){
         cout << "Invalid ammount of players. Please choose a number between 2 to 4.\n" << endl;
     }    else {
         cout << "There are " << players << " Players.\n" << endl;
-        ready = true;
+        ready = false;
         i++;
     };
 }
     Board game(players);
     game.initializeBoard(players);
 
- 
-
-
-    while (ready == true) {
-        displayMenu();
-        cin >> choice;
-
-        if (choice == 6) {
-            cout << "Exiting Game." << endl;
-            break;
-        }
-
-        switch (choice) {
-            case 1:{
-                cout << "Player Stats:\n" << endl;
-            break;
+    while (ready == 1) {
+        for (int currentPlayer = 0; currentPlayer < players; currentPlayer++) {
+            cout << "\n--- Player " << currentPlayer + 1 << "'s Turn ---\n";
+            bool turnDone = false;
+    
+            while (!turnDone) {
+                displayMenu();
+                cin >> choice;
+    
+                if (choice == 6) {
+                    cout << "Exiting Game." << endl;
+                    ready = false;
+                    break;
+                }
+    
+                switch (choice) {
+                    case 1:
+                        cout << "Player Stats:\n" << endl;
+                        // You need to pass actual player data here
+                        break;
+                    case 2:
+                        cout << "Character Information:\n" << endl;
+                        break;
+                    case 3:
+                        game.displayBoard();
+                        break;
+                    case 4:
+                        cout << "Your Advisor:\n" << endl;
+                        break;
+                    case 5:
+                        cout << "Rolling the dice...\n";
+                        // Perform movement logic here
+                        turnDone = true;  // end the current player's turn
+                        break;
+                    default:
+                        cout << "Invalid Option. Try again.\n";
+                        break;
+                }
             }
-
-            case 2:{
-                cout << "Character Information:\n" << endl;
-            break;
-            }
-
-            case 3:{
-                game.displayBoard();
-            break;
-            }
-
-            case 4:{
-                cout << "Your Advisor:\n" << endl;
-                break;
-            }
-
-            case 5:{
-                cout << "Roll the dice.\n" << endl;
-            break;
-            }
-
-            default:
-                cout << "Invalid Option. Please select a valid option.\n" << endl;
-            break;
         }
     }
     
