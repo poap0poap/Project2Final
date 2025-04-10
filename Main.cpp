@@ -150,11 +150,10 @@ void displayAdvisor(Board& game,int player){
 bool movement(Board& game,int current_player,int board, int* player, playerInfo* playerData,int diceSize){
     int dice = diceRoll(diceSize);
     game.movePlayer(current_player, dice);
-    game.displayTrack(current_player);
     //move player current_playerased on dice
     player[current_player] += dice;
-    cout  << tileAction(game, player[current_player], current_player, false, current_player,playerData) << endl;
-    cout << endl;
+    //cout  << tileAction(game, player[current_player], current_player, false, current_player,playerData) << endl;
+    //cout << endl;
 
     //if pos is farther then board stop
     if (game.getPlayerPosition(current_player) >= board){
@@ -191,8 +190,9 @@ void displayColumn(const vector<string>& lines, int columnIndex,int player) {
     int start = columnIndex * 9;
     int end = min(start + 9, static_cast<int>(lines.size()));
 
+    cout << "Press esc to quit at any menu\n" << endl;
     cout << "Player " << player+1 << " selection" <<endl;
-    cout << "Use left and right arrow keys to navigate pages" <<endl;
+    cout << "Use left and right arrow keys to navigate pages or press 'R' for random charcter" <<endl;
     cout << "Displaying charcters " << start + 1 << " to " << end << ":\n";
     for (int i = start; i < end; ++i) {
         stringstream ss(lines[i]);
@@ -205,13 +205,12 @@ void displayColumn(const vector<string>& lines, int columnIndex,int player) {
 
 
 //charcter selection
-bool inlitizeCharcters(playerInfo* playerData, int players){
+bool inlitizeCharcters(playerInfo* playerData, int total_players){
     // random player data
     //data for charcters
     bool charRunning,running = true;
     fstream characterFile("charcter.txt");
-    int selectedLine;
-    int keyValue;
+    int selectedLine, keyValue;
     string line;
     vector<string> lines;
     while(getline(characterFile,line)){lines.push_back(line);}
@@ -219,7 +218,7 @@ bool inlitizeCharcters(playerInfo* playerData, int players){
     characterFile.close();
 
     if (lines.size() <= 1) {
-        std::cout << "No valid data in the file!" << std::endl;
+        cout << "No valid data in the file!" << endl;
         return false;
     }
 
@@ -229,7 +228,7 @@ bool inlitizeCharcters(playerInfo* playerData, int players){
     int totalColumns = (lines.size() + 8) / 9; // Calculate total number of columns (round up)
     
     //loop runs each charcter
-    for (int i = 0;i<players+1;i++){
+    for (int i = 0;i<total_players;i++){
         if (!running){
             return false;
         }
@@ -242,7 +241,7 @@ bool inlitizeCharcters(playerInfo* playerData, int players){
         charRunning = true;
 
         
-        while(charRunning == true){
+        while(charRunning){
             system("cls");
             displayColumn(lines, columnIndex,i);
             char keypress = _getch();
@@ -388,6 +387,15 @@ void validatePlayerStats(playerInfo& player) {
     }
     if (player.points < 0) {
         player.points = 0;
+        if (player.strength != 0) {
+            player.strength--;
+        }
+        if (player.stamina != 0) {
+            player.stamina--;
+        }
+        if (player.wisdom != 0) {
+            player.wisdom--;
+        }
     }
 }
 
@@ -398,18 +406,57 @@ int main() {
 
     //data/variables
     int last_event;
-    int players = 1;
+    int players = 2;
     playerInfo playerData[4];
     int total_events = 3;
+    int path[4];
+    bool path_selector;
     if(inlitizeCharcters(playerData, players)){}
     else {running = false;}
 
+    for (int i = 0; i<players; i++){
+        if (!running){break;}
+        path_selector = true;
+        while(path_selector){
+            if (!running){break;}
+            cout << "Which path would player " << i+1 <<" like" <<endl;
+            cout << "1 for the easier path" << endl;
+            cout << "2 for the harder path" << endl;
+            char keypress = _getch();
+
+            if (keypress == 27) {  // ESC key
+                running = false;
+                break; // Exit inner while loop
+            }
+
+            switch (keypress){
+                case '1':
+                    path[i] = 0;
+                    path_selector = false;
+                    break;
+                case '2':
+                    path[i] = 1;
+                    path_selector = false;
+                    break;
+                default:
+                    break;
+            }
+            system("cls");
+        }
+    }
+
+    if(!running){
+        cout << "Game ended during setup\n";
+        cout << "Press any key to exit";
+        _getch();//waits until keypress to exit
+        return 0;
+    }
     int player[2] = {0}; //initlize player positions
-    Board game(players);
-    int board = game.getBoardSize();
+    Board game(players,path);
+    int board = game.getBoardSize();  
 
     while (running){
-        for (int b = 0; b < players + 1; b++) {//loop for each player - changes between 0 & 1 for each path/player
+        for (int b = 0; b < players; b++) {//loop for each player - changes between 0 & 1 for each path/player
             //the display
             running = screen(game, b, board, player, playerData);
             playerData[b].age += 1;
