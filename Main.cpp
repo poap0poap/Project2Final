@@ -420,8 +420,8 @@ int main() {
         while(path_selector){
             if (!running){break;}
             cout << "Which path would player " << i+1 <<" like" <<endl;
-            cout << "1 for the easier path" << endl;
-            cout << "2 for the harder path" << endl;
+            cout << "Press 1 for the easier path" << endl;
+            cout << "Press 2 for the harder path" << endl;
             char keypress = _getch();
 
             if (keypress == 27) {  // ESC key
