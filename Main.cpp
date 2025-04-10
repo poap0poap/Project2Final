@@ -9,14 +9,32 @@
 #include <cstdlib>
 #include <conio.h>
 #include "Board.h"
+#include "Player.h"
 
 using namespace std;
 
 //rolling dice. any size - determned by int value
 int diceRoll(int dice_size){
     return 1 + rand() % dice_size;
-};
+}
 
+void clearScreen() {
+    std::cout << "\033[2J\033[1;1H"; // Clear screen and move cursor to top-left
+}
+
+
+void moveCursorToTop() {
+    std::cout << "\033[H"; // Move cursor to top-left only
+}
+
+void clearBelowLine(int line) {
+    // Move cursor to specified line (line starts from 1)
+    std::cout << "\033[" << line << ";1H";
+    // Clear everything from cursor to end of screen
+    std::cout << "\033[J";
+}
+
+//will go to player.cpp
 struct playerInfo {
     string firstName;
     string lastName;
@@ -150,11 +168,10 @@ void displayAdvisor(Board& game,int player){
 bool movement(Board& game,int current_player,int board, int* player, playerInfo* playerData,int diceSize){
     int dice = diceRoll(diceSize);
     game.movePlayer(current_player, dice);
-    game.displayTrack(current_player);
     //move player current_playerased on dice
     player[current_player] += dice;
-    cout  << tileAction(game, player[current_player], current_player, false, current_player,playerData) << endl;
-    cout << endl;
+    //cout  << tileAction(game, player[current_player], current_player, false, current_player,playerData) << endl;
+    //cout << endl;
 
     //if pos is farther then board stop
     if (game.getPlayerPosition(current_player) >= board){
@@ -168,6 +185,7 @@ bool movement(Board& game,int current_player,int board, int* player, playerInfo*
 
 //menuing
 void menuing(Board& game,int current_player,int board, int* player, playerInfo* playerData,char keypress){
+    clearBelowLine(17); 
     switch(keypress){
         case '1':
             displayStats(game, current_player,playerData);
@@ -191,8 +209,9 @@ void displayColumn(const vector<string>& lines, int columnIndex,int player) {
     int start = columnIndex * 9;
     int end = min(start + 9, static_cast<int>(lines.size()));
 
+    cout << "Press esc to quit at any menu\n" << endl;
     cout << "Player " << player+1 << " selection" <<endl;
-    cout << "Use left and right arrow keys to navigate pages" <<endl;
+    cout << "Use left and right arrow keys to navigate pages or press 'R' for random charcter" <<endl;
     cout << "Displaying charcters " << start + 1 << " to " << end << ":\n";
     for (int i = start; i < end; ++i) {
         stringstream ss(lines[i]);
@@ -204,22 +223,22 @@ void displayColumn(const vector<string>& lines, int columnIndex,int player) {
 }
 
 
+
+//Move to player.cpp
 //charcter selection
-bool inlitizeCharcters(playerInfo* playerData, int players){
+bool inlitizeCharcters(playerInfo* playerData, int total_players){
     // random player data
     //data for charcters
     bool charRunning,running = true;
     fstream characterFile("charcter.txt");
-    int selectedLine;
-    int keyValue;
+    int selectedLine, keyValue;
     string line;
     vector<string> lines;
     while(getline(characterFile,line)){lines.push_back(line);}
-    
     characterFile.close();
 
     if (lines.size() <= 1) {
-        std::cout << "No valid data in the file!" << std::endl;
+        cout << "No valid data in the file!" << endl;
         return false;
     }
 
@@ -229,7 +248,7 @@ bool inlitizeCharcters(playerInfo* playerData, int players){
     int totalColumns = (lines.size() + 8) / 9; // Calculate total number of columns (round up)
     
     //loop runs each charcter
-    for (int i = 0;i<players+1;i++){
+    for (int i = 0;i<total_players;i++){
         if (!running){
             return false;
         }
@@ -242,8 +261,8 @@ bool inlitizeCharcters(playerInfo* playerData, int players){
         charRunning = true;
 
         
-        while(charRunning == true){
-            system("cls");
+        while(charRunning){
+            clearBelowLine(0);
             displayColumn(lines, columnIndex,i);
             char keypress = _getch();
             //if arrow keys are buggin check to see if the int is not represented in this list
@@ -285,7 +304,7 @@ bool inlitizeCharcters(playerInfo* playerData, int players){
                 }
                 if (selectedLine != -1){
                     if (!running){break;}
-                    system("cls");
+                    clearScreen();
                     stringstream ss(lines[selectedLine]);
                     string firstName, lastName, age , str, sta, wis, points;
                     ss >> firstName >> lastName >> age>>str>>sta>>wis>>points;
@@ -321,9 +340,10 @@ bool inlitizeCharcters(playerInfo* playerData, int players){
                         >> playerData[i].strength >> playerData[i].stamina >> playerData[i].wisdom >> playerData[i].points;  
         }
     }
-    system("cls");
+    clearScreen();
     return true;
 }
+
 
 //picks a random event and returns it for storage
 int randomEvent(int events,int last_event){
@@ -347,18 +367,17 @@ int randomEvent(int events,int last_event){
 
     }
     return last_event;
-
 }
 
 //creates our display
 bool screen(Board& game,int current_player,int board, int* player, playerInfo* playerData){
-    system("cls");
+    clearScreen();
     game.displayBoard();
     cout << "Player: " << current_player+1 << endl;
     menuDisplay();
     char key = _getch();
     while(true){
-        system("cls");
+        moveCursorToTop();
         game.displayBoard();
         cout << "Player: " << current_player+1 << endl;
         menuDisplay();
@@ -376,6 +395,7 @@ bool screen(Board& game,int current_player,int board, int* player, playerInfo* p
     }   
 }
 
+//move to player.cpp
 void validatePlayerStats(playerInfo& player) {
     if (player.strength < 0) {
         player.strength = 0;
@@ -388,6 +408,15 @@ void validatePlayerStats(playerInfo& player) {
     }
     if (player.points < 0) {
         player.points = 0;
+        if (player.strength != 0) {
+            player.strength--;
+        }
+        if (player.stamina != 0) {
+            player.stamina--;
+        }
+        if (player.wisdom != 0) {
+            player.wisdom--;
+        }
     }
 }
 
@@ -398,18 +427,58 @@ int main() {
 
     //data/variables
     int last_event;
-    int players = 1;
+    int players = 2;
     playerInfo playerData[4];
     int total_events = 3;
+    int path[4];
+    bool path_selector;
     if(inlitizeCharcters(playerData, players)){}
     else {running = false;}
 
+    //remove this from main
+    for (int i = 0; i<players; i++){
+        if (!running){break;}
+        path_selector = true;
+        while(path_selector){
+            if (!running){break;}
+            cout << "Which path would player " << i+1 <<" like" <<endl;
+            cout << "Press 1 for the easier path" << endl;
+            cout << "Press 2 for the harder path" << endl;
+            char keypress = _getch();
+
+            if (keypress == 27) {  // ESC key
+                running = false;
+                break; // Exit inner while loop
+            }
+
+            switch (keypress){
+                case '1':
+                    path[i] = 0;
+                    path_selector = false;
+                    break;
+                case '2':
+                    path[i] = 1;
+                    path_selector = false;
+                    break;
+                default:
+                    break;
+            }
+            clearScreen();
+        }
+    }
+
+    if(!running){
+        cout << "Game ended during setup\n";
+        cout << "Press any key to exit";
+        _getch();//waits until keypress to exit
+        return 0;
+    }
     int player[2] = {0}; //initlize player positions
-    Board game(players);
-    int board = game.getBoardSize();
+    Board game(players,path);
+    int board = game.getBoardSize();  
 
     while (running){
-        for (int b = 0; b < players + 1; b++) {//loop for each player - changes between 0 & 1 for each path/player
+        for (int b = 0; b < players; b++) {//loop for each player - changes between 0 & 1 for each path/player
             //the display
             running = screen(game, b, board, player, playerData);
             playerData[b].age += 1;
