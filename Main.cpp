@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <conio.h>
 #include "Board.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -33,6 +34,7 @@ void clearBelowLine(int line) {
     std::cout << "\033[J";
 }
 
+//will go to player.cpp
 struct playerInfo {
     string firstName;
     string lastName;
@@ -221,6 +223,8 @@ void displayColumn(const vector<string>& lines, int columnIndex,int player) {
 }
 
 
+
+//Move to player.cpp
 //charcter selection
 bool inlitizeCharcters(playerInfo* playerData, int total_players){
     // random player data
@@ -340,6 +344,7 @@ bool inlitizeCharcters(playerInfo* playerData, int total_players){
     return true;
 }
 
+
 //picks a random event and returns it for storage
 int randomEvent(int events,int last_event){
     if (rand() % 2 == 0){
@@ -362,7 +367,6 @@ int randomEvent(int events,int last_event){
 
     }
     return last_event;
-
 }
 
 //creates our display
@@ -391,6 +395,7 @@ bool screen(Board& game,int current_player,int board, int* player, playerInfo* p
     }   
 }
 
+//move to player.cpp
 void validatePlayerStats(playerInfo& player) {
     if (player.strength < 0) {
         player.strength = 0;
@@ -430,6 +435,7 @@ int main() {
     if(inlitizeCharcters(playerData, players)){}
     else {running = false;}
 
+    //remove this from main
     for (int i = 0; i<players; i++){
         if (!running){break;}
         path_selector = true;

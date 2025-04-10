@@ -53,30 +53,14 @@ void Board::initializeTiles(int path)
             // Total number of special tiles 1/2 board
             int color_choice = rand() % 8;
             switch (color_choice){
-                case 0:
-                    temp.color = 'Y'; // Yellow
-                    break;
-                case 1:
-                    temp.color = 'P'; // Purple
-                    break;
-                case 2:
-                    temp.color = 'L'; // Blue
-                    break;
-                case 3:
-                    temp.color = 'I'; // Pink
-                    break;
-                case 4:
-                    temp.color = 'G'; // Green
-                    break;
-                case 5:
-                    temp.color = 'O'; //Brown 
-                    break;
-                case 6:
-                    temp.color = 'R'; //Red 1%
-                    break;
-                case 7:
-                    temp.color = 'C'; //Cyan 1%
-                    break;
+                case 0: temp.color = 'Y'; break;
+                case 1: temp.color = 'P'; break;
+                case 2: temp.color = 'L'; break;
+                case 3: temp.color = 'I'; break;
+                case 4: temp.color = 'G'; break;
+                case 5: temp.color = 'O'; break;
+                case 6: temp.color = 'R'; break;
+                case 7: temp.color = 'C'; break;
             }
         }
 
