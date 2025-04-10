@@ -15,7 +15,23 @@ using namespace std;
 //rolling dice. any size - determned by int value
 int diceRoll(int dice_size){
     return 1 + rand() % dice_size;
-};
+}
+
+void clearScreen() {
+    std::cout << "\033[2J\033[1;1H"; // Clear screen and move cursor to top-left
+}
+
+
+void moveCursorToTop() {
+    std::cout << "\033[H"; // Move cursor to top-left only
+}
+
+void clearBelowLine(int line) {
+    // Move cursor to specified line (line starts from 1)
+    std::cout << "\033[" << line << ";1H";
+    // Clear everything from cursor to end of screen
+    std::cout << "\033[J";
+}
 
 struct playerInfo {
     string firstName;
@@ -167,6 +183,7 @@ bool movement(Board& game,int current_player,int board, int* player, playerInfo*
 
 //menuing
 void menuing(Board& game,int current_player,int board, int* player, playerInfo* playerData,char keypress){
+    clearBelowLine(19); 
     switch(keypress){
         case '1':
             displayStats(game, current_player,playerData);
@@ -242,7 +259,7 @@ bool inlitizeCharcters(playerInfo* playerData, int total_players){
 
         
         while(charRunning){
-            system("cls");
+            clearScreen();
             displayColumn(lines, columnIndex,i);
             char keypress = _getch();
             //if arrow keys are buggin check to see if the int is not represented in this list
@@ -284,7 +301,7 @@ bool inlitizeCharcters(playerInfo* playerData, int total_players){
                 }
                 if (selectedLine != -1){
                     if (!running){break;}
-                    system("cls");
+                    clearScreen();
                     stringstream ss(lines[selectedLine]);
                     string firstName, lastName, age , str, sta, wis, points;
                     ss >> firstName >> lastName >> age>>str>>sta>>wis>>points;
@@ -320,7 +337,7 @@ bool inlitizeCharcters(playerInfo* playerData, int total_players){
                         >> playerData[i].strength >> playerData[i].stamina >> playerData[i].wisdom >> playerData[i].points;  
         }
     }
-    system("cls");
+    clearScreen();
     return true;
 }
 
@@ -351,13 +368,13 @@ int randomEvent(int events,int last_event){
 
 //creates our display
 bool screen(Board& game,int current_player,int board, int* player, playerInfo* playerData){
-    system("cls");
+    clearScreen();
     game.displayBoard();
     cout << "Player: " << current_player+1 << endl;
     menuDisplay();
     char key = _getch();
     while(true){
-        system("cls");
+        moveCursorToTop();
         game.displayBoard();
         cout << "Player: " << current_player+1 << endl;
         menuDisplay();
@@ -441,7 +458,7 @@ int main() {
                 default:
                     break;
             }
-            system("cls");
+            clearScreen();
         }
     }
 

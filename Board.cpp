@@ -2,14 +2,14 @@
 #include <iostream>
 #include <string>
 #define BLACK "\033[48;2;0;0;0m" // Grassland Tile
-#define YELLOW "\033[48;2;255;255;0m" // Change Advisor
+#define YELLOW "\033[48;2;186;142;35m" // Change Advisor
 #define PURPLE "\033[48;2;128;0;128m" // Riddle Tile
 #define BLUE "\033[48;2;10;10;230m" // Calm Tile +2 Stat
-#define PINK "\033[48;2;255;105;180m" // Calm Tile +3 Stat
+#define PINK "\033[48;2;200;105;180m" // Calm Tile +3 Stat
 #define GREEN "\033[48;2;0;128;0m"  // Graveyard Tile Move Back 10 and -1 Stat
 #define BROWN "\033[48;2;139;69;19m" // Hyena Tile Move back to original position -3 Stamina
 #define RED "\033[48;2;230;10;10m" // Custom Negative Tile -5 All Stats -50% Points
-#define CYAN "\033[48;2;0;255;255m" // Custom Positive Tile +5 All Stats +50% Points
+#define CYAN "\033[48;2;0;139;139m" // Custom Positive Tile +5 All Stats +50% Points
 #define ORANGE "\033[48;2;230;115;0m" // End Tile
 #define GREY "\033[48;2;128;128;128m" // Start Tile
 #define RESET "\033[0m"
@@ -178,7 +178,7 @@ void Board::displayTile(int player_path, int pos)
         player_symbol += " ";
     }
 
-    std::cout << color << "|" << player_symbol << "|" << RESET;
+    std::cout << "\033[97m" << color << "|" << "\033[97m" << player_symbol << color << "|" << RESET;
 }
 
 void Board::displayTrack(int player_path)
