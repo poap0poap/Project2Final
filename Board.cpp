@@ -1,8 +1,6 @@
 #include "Board.h"
 #include <iostream>
 #include <string>
-#include <cstdlib> // For rand() and srand()
-#include <ctime>   // For time()
 #define BLACK "\033[48;2;0;0;0m" // Grassland Tile
 #define YELLOW "\033[48;2;255;255;0m" // Change Advisor
 #define PURPLE "\033[48;2;128;0;128m" // Riddle Tile
@@ -20,11 +18,14 @@
 void Board::initializeBoard(int player_count)
 {
     // Seed random number generator in your main function once
-    for (int i = 0; i < player_count; i++)
+    for (int i = 0; i < 2; i++)
     {
         initializeTiles(i);  // This ensures each lane has a unique tile distribution
     }
 }
+
+#include <cstdlib> // For rand() and srand()
+#include <ctime>   // For time()
 
 void Board::initializeTiles(int player_index)
 {
@@ -34,7 +35,7 @@ void Board::initializeTiles(int player_index)
 
     // Keep track of green tile positions to ensure we place exactly 30 greens
     for (int i = 0; i < total_tiles; i++)
-    {
+    {   
         if (i == total_tiles - 1) {
             // Set the last tile as Orange
             temp.color = 'E';
@@ -43,7 +44,7 @@ void Board::initializeTiles(int player_index)
             // Set the Start tile as Grey
             temp.color = 'S';
         } 
-        else if (black_count < 20 && (rand() % (total_tiles - i) < 20 - black_count)) {
+        else if (black_count < 40 && (rand() % (total_tiles - i) < 40 - black_count)) {
             temp.color = 'B';
             black_count++;
         }
@@ -106,10 +107,6 @@ Board::Board(int player_count)
     if (player_count > _MAX_PLAYERS)
     {
         _player_count = _MAX_PLAYERS;
-    } 
-    else if (player_count < _MIN_PLAYERS)
-    {
-        _player_count = _MIN_PLAYERS;
     }
     else
     {
@@ -209,6 +206,7 @@ void Board::displayTrack(int player_index)
 {
     for (int i = 0; i < _BOARD_SIZE; i++)
     {
+        if (i==_BOARD_SIZE/2){std::cout << std::endl;}
         displayTile(player_index, i);
     }
     std::cout << std::endl;
@@ -216,7 +214,7 @@ void Board::displayTrack(int player_index)
 
 void Board::displayBoard()
 {
-    for (int i = 0; i < _player_count; i++)
+    for (int i = 0; i < 2; i++)
     {
         displayTrack(i);
         if (i == 0) {

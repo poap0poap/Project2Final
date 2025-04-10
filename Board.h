@@ -5,9 +5,8 @@
 class Board
 {
 private:
-    static const int _BOARD_SIZE = 52;
+    static const int _BOARD_SIZE = 102;
     Tile _tiles[2][_BOARD_SIZE];
-    static const int _MIN_PLAYERS = 2;
     static const int _MAX_PLAYERS = 4;
     int _player_count;
     int _player_position[_MAX_PLAYERS];
@@ -18,7 +17,7 @@ private:
 public:
     Board();
     Board(int player_count);
-    int getBoardSize() const; // Declaration of the getter method
+    int getBoardSize() const;
     void displayTrack(int player_index);
     void initializeBoard(int player_count);
     void displayBoard();
