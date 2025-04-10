@@ -1,1 +1,4 @@
+Normal Path
 
+
+Easy Path
