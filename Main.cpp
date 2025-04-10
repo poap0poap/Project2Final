@@ -168,7 +168,8 @@ bool movement(Board& game,int current_player,int board, int* player, playerInfo*
     }
 }
 
-void menuing(Board& game,int current_player,int board, int* player, playerInfo* playerData,char keypress){\
+//
+void menuing(Board& game,int current_player,int board, int* player, playerInfo* playerData,char keypress){
     switch(keypress){
         case '1':
             displayStats(game, current_player,playerData);
@@ -245,9 +246,10 @@ bool inlitizeCharcters(playerInfo* playerData, int players){
             displayColumn(lines, columnIndex,i);
             char keypress = _getch();
 
+            // uses the pressed key to select option
             switch (keypress){
                 case 'r':
-                    selectedLine = rand() % line.size();
+                    selectedLine = rand() % lines.size();
                     charRunning = false;
                     break;
                 case '1': case '2': case '3': case '4': case '5': 
