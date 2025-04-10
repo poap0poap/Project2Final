@@ -3,10 +3,10 @@ Cub Training: 102 Tiles Total - 2 For the Start/End Tiles
             25 Black Tiles (Normal)
             3 Yellow Tiles (Change Advisors)
             2 Purple Tiles (Riddles Tiles)
-            5 Blue Tiles (Calm Tiles +2 Stats)
+            7 Blue Tiles (Calm Tiles +2 Stats)
             3 Pink Tiles (Calm Tile +3 Stats)
             2 Green Tiles (Graveyard Tile Move back 10 and -1 Stats)
-            5 Brown Tiles (Hyena Tile Move back to original spot and -3 Stamina)
+            3 Brown Tiles (Hyena Tile Move back to original spot and -3 Stamina)
             2 Red Tiles (Custom Negative Tile -5 Stats and -50% of Points)
             3 Cyan Tiles (Custom Positive Tile +5 Stats and +50% of Points)
             
@@ -14,12 +14,12 @@ Cub Training: 102 Tiles Total - 2 For the Start/End Tiles
             25 Black Tiles (Normal)
             3 Yellow Tiles (Change Advisors)
             2 Purple Tiles (Riddle Tiles)
-            7 Blue Tiles (Calm Tile +2 Stats)
-            3 Pink Tiles (Calm Tile +3 Stats)
-            7 Green Tiles (Graveyard Tile Move back 10 and -1 Stats)
-            13 Brown Tiles (Hyena Tile Move back to original spot and -3 Stamina)
-            5 Red Tiles (Custom Negative Tile -5 Stats and -50% of Points)
-            5 Cyan Tiles Custom Positive Tile +5 Stats and +50% of Points)
+            3 Blue Tiles (Calm Tile +2 Stats)
+            2 Pink Tiles (Calm Tile +3 Stats)
+            3 Green Tiles (Graveyard Tile Move back 10 and -1 Stats)
+            7 Brown Tiles (Hyena Tile Move back to original spot and -3 Stamina)
+            3 Red Tiles (Custom Negative Tile -5 Stats and -50% of Points)
+            2 Cyan Tiles Custom Positive Tile +5 Stats and +50% of Points)
             
 
 Pride Lands: 102 Tiles Total - 2 For the Start/End Tiles
