@@ -183,7 +183,7 @@ bool movement(Board& game,int current_player,int board, int* player, playerInfo*
 
 //menuing
 void menuing(Board& game,int current_player,int board, int* player, playerInfo* playerData,char keypress){
-    clearBelowLine(19); 
+    clearBelowLine(17); 
     switch(keypress){
         case '1':
             displayStats(game, current_player,playerData);
@@ -231,7 +231,6 @@ bool inlitizeCharcters(playerInfo* playerData, int total_players){
     string line;
     vector<string> lines;
     while(getline(characterFile,line)){lines.push_back(line);}
-    
     characterFile.close();
 
     if (lines.size() <= 1) {
@@ -259,7 +258,7 @@ bool inlitizeCharcters(playerInfo* playerData, int total_players){
 
         
         while(charRunning){
-            clearScreen();
+            clearBelowLine(0);
             displayColumn(lines, columnIndex,i);
             char keypress = _getch();
             //if arrow keys are buggin check to see if the int is not represented in this list

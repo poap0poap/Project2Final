@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #define BLACK "\033[48;2;0;0;0m" // Grassland Tile
-#define YELLOW "\033[48;2;186;142;35m" // Change Advisor
+#define YELLOW "\033[48;2;225;175;35m" // Change Advisor
 #define PURPLE "\033[48;2;128;0;128m" // Riddle Tile
 #define BLUE "\033[48;2;10;10;230m" // Calm Tile +2 Stat
 #define PINK "\033[48;2;200;105;180m" // Calm Tile +3 Stat
@@ -185,7 +185,7 @@ void Board::displayTrack(int player_path)
 {
     for (int i = 0; i < _BOARD_SIZE; i++)
     {
-        if (i==_BOARD_SIZE/2){std::cout << std::endl;}
+        if (i==_BOARD_SIZE/3||i==_BOARD_SIZE*2/3){std::cout << std::endl;}
         displayTile(player_path, i);
     }
     std::cout << std::endl;
