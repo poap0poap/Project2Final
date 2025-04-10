@@ -192,7 +192,7 @@ void displayColumn(const vector<string>& lines, int columnIndex,int player) {
     int end = min(start + 9, static_cast<int>(lines.size()));
 
     cout << "Player " << player+1 << " selection" <<endl;
-    cout << "Use arrow keys to navigate pages" <<endl;
+    cout << "Use left and right arrow keys to navigate pages" <<endl;
     cout << "Displaying charcters " << start + 1 << " to " << end << ":\n";
     for (int i = start; i < end; ++i) {
         stringstream ss(lines[i]);
