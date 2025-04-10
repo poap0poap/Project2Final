@@ -42,67 +42,86 @@ class  pickEvent{
 };
 
 //check for what tile you are on and applys effects
-string tileAction(Board& game, int player_position, int player_path, int player, playerInfo* playerData)
+string tileAction(Board& game, int player_position, int player_path, bool viewing, int player, playerInfo* playerData)
 {
     char p = game.getTileIndex(player_path,player_position);// find landed tile using chosen path and current position
     cout << endl;
     //describes events based on landed tile
-    if (p == 'B')
-    {
+    switch(p){
+        case 'B':
         return "nothing happend";
-    }
-    else if (p == 'Y')
-    {
+        break;
+        case 'Y':
         return "advisor change";
-    }
-    else if (p == 'P')
-    {
+        break;
+        case 'P':
         return "riddle";
-    }
-    else if (p == 'L')
-    {
-        playerData[player].strength += 2;
-        playerData[player].stamina += 2;
-        playerData[player].wisdom += 2;
+        break;
+        case 'L':
+        if (!viewing){
+            playerData[player].strength += 2;
+            playerData[player].stamina += 2;
+            playerData[player].wisdom += 2;
+        }
         return "+2 to stats";
-    }
-    else if (p == 'I')
-    {
-        playerData[player].strength += 3;
-        playerData[player].stamina += 3;
-        playerData[player].wisdom += 3;
+        break;
+        case 'I':
+        if (!viewing){
+            playerData[player].strength += 3;
+            playerData[player].stamina += 3;
+            playerData[player].wisdom += 3;
+        }
         return "+3 to stats";
-    }
-    else if (p == 'G')
-    {
+        break;
+        case 'G':
+        if (!viewing){
+            playerData[player].strength -= 1;
+            playerData[player].stamina -= 1;
+            playerData[player].wisdom -= 1;
+        }
         return "Graveyard";
-    }
-    else if (p == 'O')
-    {
+        break;
+        case 'O':
+        if (!viewing){
+            playerData[player].stamina -= 5;
+        }
         return "Hyena";
-    }
-    else if (p == 'R')
-    {
+        break;
+        case 'R':
+        if (!viewing){
+            playerData[player].strength -= 5;
+            playerData[player].stamina -= 5;
+            playerData[player].wisdom -= 5;
+            playerData[player].points = (playerData[player].points + 1)/2;
+        }
         return "Custom negitive";
-    }
-    else if (p == 'C')
-    {
+        break;
+        case 'C':
+        playerData[player].strength += 5;
+            playerData[player].stamina += 5;
+            playerData[player].wisdom += 5;
+            playerData[player].points += (playerData[player].points + 1)/2;
         return "Custom Postive";
+        break;
+        case 'S':
+        return "Start";
+        default:
+        return string(1,p);
+        return "Exceeded Board Size";
+        break;
     }
-    else
-    {
-        return "Exceeded Board Size Ending";
-    }
+    return " ";
 }
 
 //menu display
 void menuDisplay(){
     cout << endl;
-    cout << "Press space to roll for turn" << endl;
-    cout << "Press 1 for Stats" << endl;
-    cout << "Press 2 for current Charcter" << endl;
-    cout << "Press 3 for current Boardstate" << endl;
-    cout << "Press 4 for current Advisor" << endl;
+    cout << "Space to roll for turn" << endl;
+    cout << "1. Stats" << endl;
+    cout << "2. Current Charcter" << endl;
+    cout << "3. Current Advisor" << endl;
+    cout << "4. Current tile effects" << endl;
+    cout << "5. Last event" << endl;
     cout << endl;
 }
 
@@ -131,64 +150,60 @@ void displayAdvisor(Board& game,int player){
     cout << "Advisor is a work in progress" << endl;
 }
 
-//rolling turn actions
-int turn(Board& game,int current_player,int board, int* player, playerInfo* playerData){
-    char keypress = _getch();
-    if (keypress == ' '){
-        int move = diceRoll(6);//dice size is 6 may change later
-        game.movePlayer(current_player, move);
-        //cout << "Player " << current_player + 1 << " path: ";
-        game.displayTrack(current_player);
-        //move player current_playerased on dice
-        player[current_player] += move;
-        cout  << tileAction(game, player[current_player], current_player, current_player,  playerData) << endl;
-        cout << endl;
 
-        //if pos is farther then board stop
-        if (game.getPlayerPosition(current_player) >= board){
-            cout << "\nGame over\n";
-            return -1;
-        }
-        return 0;
+bool movement(Board& game,int current_player,int board, int* player, playerInfo* playerData,int diceSize){
+    int dice = diceRoll(diceSize);
+    game.movePlayer(current_player, dice);
+    game.displayTrack(current_player);
+    //move player current_playerased on dice
+    player[current_player] += dice;
+    cout  << tileAction(game, player[current_player], current_player, false, current_player,playerData) << endl;
+    cout << endl;
+
+    //if pos is farther then board stop
+    if (game.getPlayerPosition(current_player) >= board){
+        cout << "\nGame over\n";
+        return false;
     }
     else{
-        switch (keypress){
-            case '1':
-                displayStats(game, current_player,playerData);
-                break;
-            case '2':
-                charInfo(game, current_player, playerData);
-                break;
-            case '3':
-                displayBoard(game, current_player);
-                break;
-            case '4':
-                displayAdvisor(game, current_player);
-                break;
-            case '5':
-                cout << "just press space" << endl;
-                break;
-            case 27: //if esc press stop
-                return -1;
-            default:
-                cout << "issues" << endl;
-                break;
-        }
+        return true;
     }
-    cout << endl;
-    return 1;
 }
 
-void displayColumn(const vector<string>& lines, int columnIndex) {
+void menuing(Board& game,int current_player,int board, int* player, playerInfo* playerData,char keypress){\
+    switch(keypress){
+        case '1':
+            displayStats(game, current_player,playerData);
+            break;
+        case '2':
+            charInfo(game, current_player, playerData);
+            break;
+        case '3':
+            displayAdvisor(game, current_player);
+            break;
+        case '4':
+            cout << tileAction(game,player[current_player],current_player,true,current_player,playerData) << endl;
+            break;
+        case '5':
+            break;
+    }
+}
+
+//diplay the column of names to select
+void displayColumn(const vector<string>& lines, int columnIndex,int player) {
     int start = columnIndex * 9;
     int end = min(start + 9, static_cast<int>(lines.size()));
 
-    cout << "Displaying lines " << start + 1 << " to " << end << ":\n";
+    cout << "Player " << player+1 << " selection" <<endl;
+    cout << "Use arrow keys to navigate pages" <<endl;
+    cout << "Displaying charcters " << start + 1 << " to " << end << ":\n";
     for (int i = start; i < end; ++i) {
-        cout << lines[i] << endl;
+        cout << (i%9)+1 << ". " << lines[i] << endl;
     }
 }
 
+
+//charcter selection
 bool inlitizeCharcters(playerInfo* playerData, int players){
     // random player data
     // need to make it a class
@@ -229,7 +244,7 @@ bool inlitizeCharcters(playerInfo* playerData, int players){
         
         while(charRunning == true){
             system("cls");
-            displayColumn(lines, columnIndex);
+            displayColumn(lines, columnIndex,i);
             char keypress = _getch();
 
             switch (keypress){
@@ -274,7 +289,8 @@ bool inlitizeCharcters(playerInfo* playerData, int players){
     return true;
 }
 
-void randomEvent(int events){
+//picks a random event and returns it for storage
+int randomEvent(int events,int last_event){
     if (rand() % 2 == 0){
         pickEvent picker(events);
         int event = picker.getEvent();
@@ -291,13 +307,53 @@ void randomEvent(int events){
             default:
                 std::cout << "Unknown event" << std::endl;
         }
+        return event;
 
     }
+    return last_event;
+
 }
 
+//creates our display
+bool screen(Board& game,int current_player,int board, int* player, playerInfo* playerData){
+    system("cls");
+    game.displayBoard();
+    cout << "Player: " << current_player+1 << endl;
+    menuDisplay();
+    char key = _getch();
+    while(true){
+        system("cls");
+        game.displayBoard();
+        cout << "Player: " << current_player+1 << endl;
+        menuDisplay();
+        switch (key){
+            case 27:
+                return false;
+                break;
+            case ' ':
+                return movement(game, current_player , board, player, playerData, 6);
+            default:
+                menuing(game, current_player , board, player, playerData, key);
+                break;
+        }
+        key = _getch();
+    }   
+}
 
-
-
+void validatePlayerStats(playerInfo& player) {
+    if (player.strength < 0) {
+        player.strength = 0;
+    }
+    if (player.stamina < 0) {
+        player.stamina = 0;
+    }
+    if (player.wisdom < 0) {
+        player.wisdom = 0;
+    }
+    if (player.points < 0) {
+        player.points = 0;
+    }
+}
 
 int main() {
    
@@ -305,6 +361,7 @@ int main() {
     srand(time(0)); //Seed RNG once
 
     //data/variables
+    int last_event;
     int players = 1;
     playerInfo playerData[4];
     int total_events = 3;
@@ -315,38 +372,21 @@ int main() {
     Board game(players);
     int board = game.getBoardSize();
 
-    game.displayBoard(); //display board
-
     while (running){
-        for (int i = 0; i < board; i++) {//loop for each tile - if get unlucky will reach end
-            for (int b = 0; b < players + 1; b++) {//loop for each player - changes between 0 & 1 for each path/player
-                //only rolling if space pressed
-                cout << "Player: " << b+1 << endl;
-                menuDisplay();
-                while (running){
-                    int run = turn(game, b, board, player, playerData);
-                    if (run == -1){
-                        running = false;
-                        break;
-                    }
-                    else if (run == 0){
-                        break;
-                    }
-                    else if (run == 1){}
-                }
-            }  
-            randomEvent(total_events);
+        for (int b = 0; b < players + 1; b++) {//loop for each player - changes between 0 & 1 for each path/player
+            //the display
+            running = screen(game, b, board, player, playerData);
+            playerData[b].age += 1;
             if (!running) break;
-            
-        }
-
-        
+            validatePlayerStats(playerData[b]);
+        }  
+        last_event = randomEvent(total_events,last_event);
     }
 
     //ending text
-    cout << "Game terminated.\n";
+    cout << "Game ended\n";
     cout << "Press any key to exit";
-    _getch();//waits until keypress to end
+    _getch();//waits until keypress to exit
     return 0;
 
 }
