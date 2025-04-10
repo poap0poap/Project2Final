@@ -1,4 +1,16 @@
-Normal Path
+Cub Training: 102 Tiles Total - 2 For the Start/End Tiles
+    Easy Path (First Half):
+      50 Black Tiles (Normal)
+      
+
+    Hard Path (Second Half):
+      50 Black Tiles (Normal)
 
 
-Easy Path
+
+Straight to the Pride Lands: 102 Tiles Total - 2 For the Start/End Tiles
+    Hard Path (First Half):
+      50 Black Tiles (Normal)
+
+    Easy Path (Second Half):
+      50 Black Tiles (Normal)
