@@ -8,7 +8,6 @@
 #include <ctime>
 #include <cstdlib>
 #include <conio.h>
-#include <thread>
 #include "Board.h"
 
 using namespace std;
@@ -45,7 +44,6 @@ class  pickEvent{
 string tileAction(Board& game, int player_position, int player_path, bool viewing, int player, playerInfo* playerData)
 {
     char p = game.getTileIndex(player_path,player_position);// find landed tile using chosen path and current position
-    cout << endl;
     //describes events based on landed tile
     switch(p){
         case 'B':
@@ -182,7 +180,7 @@ void menuing(Board& game,int current_player,int board, int* player, playerInfo* 
             displayAdvisor(game, current_player);
             break;
         case '4':
-            cout << tileAction(game,player[current_player],current_player,true,current_player,playerData) << endl;
+            cout << "You are on a(n) " << tileAction(game,player[current_player],current_player,true,current_player,playerData) << " tile." << endl;
             break;
         case '5':
             break;
