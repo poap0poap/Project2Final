@@ -172,6 +172,6 @@ void validatePlayerStats(playerInfo& player) {
     }
 }
 
-void displayAdvisor(int player_index){
+void playerAdvisor::displayAdvisor(int player_index){
 
 }

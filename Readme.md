@@ -38,8 +38,8 @@ tile displacement
 5 - pink
 5 - green
 10 - brown
-2 - red
-3 - cyan
+3 - red
+2 - cyan
 
 Side
 tile displacement
