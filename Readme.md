@@ -2,9 +2,8 @@
 made player index on the correct path
 
 Still need to do for the board
-  - path chosing
-  - menuing - complete
   - skip turn after reach end
+  - diffrent paths diffrent tilesets
 
 # Changes
 created struct to hold player data
