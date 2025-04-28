@@ -1,10 +1,10 @@
 # Board working
-made the board work and allow you to move on both paths. 
-
-Still need to do for the board
-  - path chosing
-  - menuing - complete
-  - skip turn after reach end
+To Do List:
+1. Board Distribution between both the harder and easier path.
+2. Advisors with Implementation and Initializing on Game Start Up.
+3. Events with Implmementation and Interaction with Advisors. 
+4. Riddles with the implementation of Purple Tile
+5. Ending Part when landing on the last tile. Need to make it so it skips the turn for the other play who isn't at the finish line yet.
 
 # Changes
 created struct to hold player data
