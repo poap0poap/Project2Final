@@ -26,7 +26,7 @@ public:
     void displayBoard();
     bool movePlayer(int player_index, int spaces);
     int getPlayerPosition(int player_index) const;
-    char getTileIndex(int player_index, int pos);
+    char getTileIndex(int path, int pos);
 };
 
 #endif

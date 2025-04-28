@@ -175,3 +175,15 @@ void validatePlayerStats(playerInfo& player) {
 void playerAdvisor::displayAdvisor(int player_index){
 
 }
+
+void playerScore(playerInfo& player){
+    for (int i=0;i<player.strength;i++){
+        player.points += 10;
+    }
+    for (int i=0;i<player.stamina;i++){
+        player.points += 10;
+    }
+    for (int i=0;i<player.wisdom;i++){
+        player.points += 10;
+    }
+}

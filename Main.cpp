@@ -38,7 +38,24 @@ string tileAction(Board& game, int player_position, int player_path, bool viewin
     //describes events based on landed tile
     switch(p){
         case 'B':
-        return "nothing happend";
+        if (!viewing){
+            switch(rand()%3){
+                case 1:
+                    playerData[player].strength += 1;
+                    playerData[player].stamina += 1;
+                    playerData[player].wisdom += 1;
+                    break;
+                case 2:
+                    playerData[player].strength += 2;
+                    playerData[player].stamina += 2;
+                    playerData[player].wisdom += 2;
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        return "Basic";
         break;
         case 'Y':
         return "advisor change";
@@ -86,16 +103,17 @@ string tileAction(Board& game, int player_position, int player_path, bool viewin
         return "Custom negitive";
         break;
         case 'C':
-        playerData[player].strength += 5;
+        if (!viewing){
+            playerData[player].strength += 5;
             playerData[player].stamina += 5;
             playerData[player].wisdom += 5;
             playerData[player].points += (playerData[player].points + 1)/2;
+        }
         return "Custom Postive";
         break;
         case 'S':
         return "Start";
         default:
-        return string(1,p);
         return "Exceeded Board Size";
         break;
     }
@@ -105,7 +123,7 @@ string tileAction(Board& game, int player_position, int player_path, bool viewin
 //menu display
 void menuDisplay(){
     cout << endl;
-    cout << "Space to roll for turn" << endl;
+    cout << "Press space to roll for turn" << endl;
     cout << "1. Stats" << endl;
     cout << "2. Current Charcter" << endl;
     cout << "3. Current Advisor" << endl;
@@ -128,15 +146,13 @@ void charInfo(Board& game,int player, playerInfo* playerData){
     cout << "Age: " << playerData[player].age << endl;
 }
 
-//display board
-void displayBoard(Board& game,int player){
-    cout << "current boardstate:"<< endl;
-    game.displayBoard();
-}
-
 //advisor information
 void displayAdvisor(Board& game,int player){
     cout << "Advisor is a work in progress" << endl;
+}
+
+void displayLastEvent(){
+
 }
 
 //Movement
@@ -159,7 +175,7 @@ bool movement(Board& game,int current_player,int board, int* player, playerInfo*
 }
 
 //menuing
-void menuing(Board& game,int current_player,int board, int* player, playerInfo* playerData,char keypress){
+void menuing(Board& game,int current_player,int board, int path, int* player, playerInfo* playerData,char keypress){
     clearBelowLine(17); 
     switch(keypress){
         case '1':
@@ -172,9 +188,10 @@ void menuing(Board& game,int current_player,int board, int* player, playerInfo* 
             displayAdvisor(game, current_player);
             break;
         case '4':
-            cout << "You are on a(n) " << tileAction(game,player[current_player],current_player,true,current_player,playerData) << " tile." << endl;
+            cout << "You are on a(n) " << tileAction(game,player[current_player],path,true,current_player,playerData) << " tile." << endl;
             break;
         case '5':
+            displayLastEvent();
             break;
     }
 }
@@ -204,7 +221,7 @@ int randomEvent(int events,int last_event){
 }
 
 //creates our display
-bool screen(Board& game,int current_player,int board, int* player, playerInfo* playerData){
+bool screen(Board& game,int current_player,int board, int* player, playerInfo* playerData,int player_path){
     clearScreen();
     game.displayBoard();
     cout << "Player: " << current_player+1 << endl;
@@ -222,7 +239,7 @@ bool screen(Board& game,int current_player,int board, int* player, playerInfo* p
             case ' ':
                 return movement(game, current_player , board, player, playerData, 6);
             default:
-                menuing(game, current_player , board, player, playerData, key);
+                menuing(game, current_player , board, player_path, player, playerData, key);
                 break;
         }
         key = _getch();
@@ -291,7 +308,7 @@ int main() {
     while (running){
         for (int b = 0; b < players; b++) {//loop for each player - changes between 0 & 1 for each path/player
             //the display
-            running = screen(game, b, board, player, playerData);
+            running = screen(game, b, board, player, playerData,path[b]);
             playerData[b].age += 1;
             if (!running) break;
             validatePlayerStats(playerData[b]);
