@@ -1,5 +1,0 @@
-Apollo 5 5 5 10 50
-Mane 8 9 6 6 50
-Elsa 12 9 7 5 50
-Zuri 7 6 5 9 50
-Roary 18 10 5 5 50
