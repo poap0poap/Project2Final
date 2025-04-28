@@ -10,6 +10,7 @@
 #include <conio.h>
 #include "Board.h"
 #include "Player.h"
+#include "Utility.h"
 
 using namespace std;
 
@@ -18,32 +19,6 @@ int diceRoll(int dice_size){
     return 1 + rand() % dice_size;
 }
 
-void clearScreen() {
-    std::cout << "\033[2J\033[1;1H"; // Clear screen and move cursor to top-left
-}
-
-
-void moveCursorToTop() {
-    std::cout << "\033[H"; // Move cursor to top-left only
-}
-
-void clearBelowLine(int line) {
-    // Move cursor to specified line (line starts from 1)
-    std::cout << "\033[" << line << ";1H";
-    // Clear everything from cursor to end of screen
-    std::cout << "\033[J";
-}
-
-//will go to player.cpp
-struct playerInfo {
-    string firstName;
-    string lastName;
-    int age;
-    int strength;
-    int stamina;
-    int wisdom;
-    int points;
-};
 
 class  pickEvent{
     private:
@@ -63,7 +38,24 @@ string tileAction(Board& game, int player_position, int player_path, bool viewin
     //describes events based on landed tile
     switch(p){
         case 'B':
-        return "nothing happend";
+        if (!viewing){
+            switch(rand()%3){
+                case 1:
+                    playerData[player].strength += 1;
+                    playerData[player].stamina += 1;
+                    playerData[player].wisdom += 1;
+                    break;
+                case 2:
+                    playerData[player].strength += 2;
+                    playerData[player].stamina += 2;
+                    playerData[player].wisdom += 2;
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        return "Basic";
         break;
         case 'Y':
         return "advisor change";
@@ -111,16 +103,17 @@ string tileAction(Board& game, int player_position, int player_path, bool viewin
         return "Custom negitive";
         break;
         case 'C':
-        playerData[player].strength += 5;
+        if (!viewing){
+            playerData[player].strength += 5;
             playerData[player].stamina += 5;
             playerData[player].wisdom += 5;
             playerData[player].points += (playerData[player].points + 1)/2;
+        }
         return "Custom Postive";
         break;
         case 'S':
         return "Start";
         default:
-        return string(1,p);
         return "Exceeded Board Size";
         break;
     }
@@ -130,7 +123,7 @@ string tileAction(Board& game, int player_position, int player_path, bool viewin
 //menu display
 void menuDisplay(){
     cout << endl;
-    cout << "Space to roll for turn" << endl;
+    cout << "Press space to roll for turn" << endl;
     cout << "1. Stats" << endl;
     cout << "2. Current Charcter" << endl;
     cout << "3. Current Advisor" << endl;
@@ -153,15 +146,13 @@ void charInfo(Board& game,int player, playerInfo* playerData){
     cout << "Age: " << playerData[player].age << endl;
 }
 
-//display board
-void displayBoard(Board& game,int player){
-    cout << "current boardstate:"<< endl;
-    game.displayBoard();
-}
-
 //advisor information
 void displayAdvisor(Board& game,int player){
     cout << "Advisor is a work in progress" << endl;
+}
+
+void displayLastEvent(){
+
 }
 
 //Movement
@@ -184,7 +175,7 @@ bool movement(Board& game,int current_player,int board, int* player, playerInfo*
 }
 
 //menuing
-void menuing(Board& game,int current_player,int board, int* player, playerInfo* playerData,char keypress){
+void menuing(Board& game,int current_player,int board, int path, int* player, playerInfo* playerData,char keypress){
     clearBelowLine(17); 
     switch(keypress){
         case '1':
@@ -197,153 +188,13 @@ void menuing(Board& game,int current_player,int board, int* player, playerInfo* 
             displayAdvisor(game, current_player);
             break;
         case '4':
-            cout << "You are on a(n) " << tileAction(game,player[current_player],current_player,true,current_player,playerData) << " tile." << endl;
+            cout << "You are on a(n) " << tileAction(game,player[current_player],path,true,current_player,playerData) << " tile." << endl;
             break;
         case '5':
+            displayLastEvent();
             break;
     }
 }
-
-//diplay the column of names to select
-void displayColumn(const vector<string>& lines, int columnIndex,int player) {
-    int start = columnIndex * 9;
-    int end = min(start + 9, static_cast<int>(lines.size()));
-
-    cout << "Press esc to quit at any menu\n" << endl;
-    cout << "Player " << player+1 << " selection" <<endl;
-    cout << "Use left and right arrow keys to navigate pages or press 'R' for random charcter" <<endl;
-    cout << "Displaying charcters " << start + 1 << " to " << end << ":\n";
-    for (int i = start; i < end; ++i) {
-        stringstream ss(lines[i]);
-        string firstName, lastName;
-        ss >> firstName >> lastName;
-
-        cout << (i%9)+1 << ". " << firstName << " " << lastName << endl;
-    }
-}
-
-
-
-//Move to player.cpp
-//charcter selection
-bool inlitizeCharcters(playerInfo* playerData, int total_players){
-    // random player data
-    //data for charcters
-    bool charRunning,running = true;
-    fstream characterFile("charcter.txt");
-    int selectedLine, keyValue;
-    string line;
-    vector<string> lines;
-    while(getline(characterFile,line)){lines.push_back(line);}
-    characterFile.close();
-
-    if (lines.size() <= 1) {
-        cout << "No valid data in the file!" << endl;
-        return false;
-    }
-
-    // Remove the first line (e.g., header or title)
-    lines.erase(lines.begin());
-    int columnIndex = 0;
-    int totalColumns = (lines.size() + 8) / 9; // Calculate total number of columns (round up)
-    
-    //loop runs each charcter
-    for (int i = 0;i<total_players;i++){
-        if (!running){
-            return false;
-        }
-        //reset line checker and data relating to certain player
-        characterFile.clear();
-        characterFile.seekg(0, ios::beg);
-        int currentLine = 0;
-        columnIndex = 0;
-        selectedLine = 0;
-        charRunning = true;
-
-        
-        while(charRunning){
-            clearBelowLine(0);
-            displayColumn(lines, columnIndex,i);
-            char keypress = _getch();
-            //if arrow keys are buggin check to see if the int is not represented in this list
-            //cout << (int)keypress << endl;
-            if (keypress == -32){
-                keypress = _getch();
-                switch(keypress){
-                    case 77:
-                        if (columnIndex < totalColumns - 1){
-                            columnIndex++;
-                        }
-                        break;
-                    case 75:
-                        if (columnIndex >0){
-                            columnIndex--;
-                        }
-                        break;
-                }
-            }
-            else{
-                //cout << keypress << endl;
-                // uses the pressed key to select option
-                switch (keypress){
-                    case 'r':
-                        selectedLine = rand() % lines.size();
-                        break;
-                    case '1': case '2': case '3': case '4': case '5': 
-                    case '6': case '7': case '8': case '9':
-                        keyValue = keypress - '0';
-                        selectedLine = ((columnIndex*9) + (keyValue-1));
-                        break;
-                    case 27:
-                        charRunning = false;
-                        running = false;
-                        break;
-                    if (!charRunning){
-                        break;
-                    }
-                }
-                if (selectedLine != -1){
-                    if (!running){break;}
-                    clearScreen();
-                    stringstream ss(lines[selectedLine]);
-                    string firstName, lastName, age , str, sta, wis, points;
-                    ss >> firstName >> lastName >> age>>str>>sta>>wis>>points;
-                    cout << "You picked " << firstName << " " << lastName << "\n" << "They are " << age <<" turns old"<< endl;
-                    cout << "Their starting strength is " << str <<endl;
-                    cout << "Their starting stamina is " << sta <<endl;
-                    cout << "Their starting wisdom is " << wis <<endl;
-                    cout << "Their starting points are " << points <<endl;
-                    cout <<"Press Enter to confirm or any other to reselect"<< endl;
-                    int press = _getch();
-                    switch(press){
-                        case 13://enter
-                            charRunning = false;
-                            break;
-                        case 27:
-                            charRunning = false;    
-                            running = false;
-                            break;
-                        default:
-                            selectedLine = -1;
-                            charRunning = true;
-                            break;
-                    }
-                }
-            }
-            
-        }
-        if(!running){return false;}
-        if(selectedLine != -1)
-        {
-            istringstream lineStream(lines[selectedLine]);
-            lineStream >> playerData[i].firstName >> playerData[i].lastName >> playerData[i].age 
-                        >> playerData[i].strength >> playerData[i].stamina >> playerData[i].wisdom >> playerData[i].points;  
-        }
-    }
-    clearScreen();
-    return true;
-}
-
 
 //picks a random event and returns it for storage
 int randomEvent(int events,int last_event){
@@ -370,7 +221,7 @@ int randomEvent(int events,int last_event){
 }
 
 //creates our display
-bool screen(Board& game,int current_player,int board, int* player, playerInfo* playerData){
+bool screen(Board& game,int current_player,int board, int* player, playerInfo* playerData,int player_path){
     clearScreen();
     game.displayBoard();
     cout << "Player: " << current_player+1 << endl;
@@ -388,37 +239,14 @@ bool screen(Board& game,int current_player,int board, int* player, playerInfo* p
             case ' ':
                 return movement(game, current_player , board, player, playerData, 6);
             default:
-                menuing(game, current_player , board, player, playerData, key);
+                menuing(game, current_player , board, player_path, player, playerData, key);
                 break;
         }
         key = _getch();
     }   
 }
 
-//move to player.cpp
-void validatePlayerStats(playerInfo& player) {
-    if (player.strength < 0) {
-        player.strength = 0;
-    }
-    if (player.stamina < 0) {
-        player.stamina = 0;
-    }
-    if (player.wisdom < 0) {
-        player.wisdom = 0;
-    }
-    if (player.points < 0) {
-        player.points = 0;
-        if (player.strength != 0) {
-            player.strength--;
-        }
-        if (player.stamina != 0) {
-            player.stamina--;
-        }
-        if (player.wisdom != 0) {
-            player.wisdom--;
-        }
-    }
-}
+
 
 int main() {
    
@@ -480,7 +308,7 @@ int main() {
     while (running){
         for (int b = 0; b < players; b++) {//loop for each player - changes between 0 & 1 for each path/player
             //the display
-            running = screen(game, b, board, player, playerData);
+            running = screen(game, b, board, player, playerData,path[b]);
             playerData[b].age += 1;
             if (!running) break;
             validatePlayerStats(playerData[b]);

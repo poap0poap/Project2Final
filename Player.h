@@ -1,9 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
+#include "PlayerInfo.h"
 
-class Player
-{
-
-};
+bool inlitizeCharcters(playerInfo* playerData, int total_players);
+void validatePlayerStats(playerInfo& player);
 
 #endif

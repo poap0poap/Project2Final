@@ -113,9 +113,9 @@ bool Board::isPlayerOnTile(int player_index, int pos)
     return false;
 }
 
-char Board::getTileIndex(int player_index, int pos)
+char Board::getTileIndex(int path, int pos)
 {
-    return _tiles[player_index][pos].color;
+    return _tiles[path][pos].color;
 }
 
 void Board::displayTile(int player_path, int pos)
