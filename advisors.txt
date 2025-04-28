@@ -1,4 +1,4 @@
-Name | Effects | What event they ineract with
+Name | Effects |  What events they ineract with delimintator ","
 Zara | Adds 5 Pride Points Every 3 Turns |
 Talon |
 Mira
