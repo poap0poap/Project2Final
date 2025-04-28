@@ -6,8 +6,9 @@ Still need to do for the board
   - diffrent paths diffrent tilesets
 
 # Changes
-created struct to hold player data
-need to make classes
+file for player data  
+tiles have effects  
+need to make classes  
 
 
 25% chance of random event on all tiles
