@@ -1,1 +1,6 @@
-
+Name | Effects |  What events they ineract with delimintator ","
+Zara | Adds 5 pride points every 3 turns |
+Talon | Doubles all your stats at the end of the game | 
+Mira | Cut your opponent's dice count in half |
+Selani | Adds 2 random points to a stat every 3 turns | 
+Rava | You are super intelligent and automatically answer the riddles correctly |
