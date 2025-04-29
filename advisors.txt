@@ -1,6 +1,7 @@
 Name | Effects |  What events they ineract with delimintator ","
-Zara | Adds 5 pride points every 3 turns |
+Zara | This plant like creature helps keep its master alive. | rock, shortage
 Talon | His amazing vision can see well in all conditions | darkness, sanstorm
-Mira | She is always prepared. | water shortage
+Mira | She is always prepared. | shortage, disintary
 Selani | His wings help block strong winds. | strong winds, sandstorm
-Rava | You are super intelligent and automatically answer the riddles correctly |
+Rava | This beutaful slime can control its own body tempetrure. | Heat
+Rock | Your very own pet rock | nothing
