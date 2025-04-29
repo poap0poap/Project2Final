@@ -113,6 +113,8 @@ string tileAction(Board& game, int player_position, int player_path, bool viewin
         break;
         case 'S':
         return "Start";
+        case 'E':
+        return "End";
         default:
         return "Exceeded Board Size";
         break;
@@ -151,8 +153,8 @@ void displayAdvisor(Board& game,int player){
     cout << "Advisor is a work in progress" << endl;
 }
 
-void displayLastEvent(){
-
+void displayLastEvent(int event){
+    cout << event << endl;
 }
 
 //Movement
@@ -175,7 +177,7 @@ bool movement(Board& game,int current_player,int board, int* player, playerInfo*
 }
 
 //menuing
-void menuing(Board& game,int current_player,int board, int path, int* player, playerInfo* playerData,char keypress){
+void menuing(Board& game,int current_player,int board, int path, int* player, playerInfo* playerData,char keypress, int last_event){
     clearBelowLine(17); 
     switch(keypress){
         case '1':
@@ -191,7 +193,7 @@ void menuing(Board& game,int current_player,int board, int path, int* player, pl
             cout << "You are on a(n) " << tileAction(game,player[current_player],path,true,current_player,playerData) << " tile." << endl;
             break;
         case '5':
-            displayLastEvent();
+            displayLastEvent(last_event);
             break;
     }
 }
@@ -201,19 +203,6 @@ int randomEvent(int events,int last_event){
     if (rand() % 2 == 0){
         pickEvent picker(events);
         int event = picker.getEvent();
-        switch (event) {
-            case 0:
-                std::cout << "Event 1 occurs" << std::endl;
-                break;
-            case 1:
-                std::cout << "Event 2 occurs" << std::endl;
-                break;
-            case 2:
-                std::cout << "Event 3 occurs" << std::endl;
-                break;
-            default:
-                std::cout << "Unknown event" << std::endl;
-        }
         return event;
 
     }
@@ -221,7 +210,7 @@ int randomEvent(int events,int last_event){
 }
 
 //creates our display
-bool screen(Board& game,int current_player,int board, int* player, playerInfo* playerData,int player_path){
+bool screen(Board& game,int current_player,int board, int* player, playerInfo* playerData,int player_path,int last_event){
     clearScreen();
     game.displayBoard();
     cout << "Player: " << current_player+1 << endl;
@@ -239,7 +228,7 @@ bool screen(Board& game,int current_player,int board, int* player, playerInfo* p
             case ' ':
                 return movement(game, current_player , board, player, playerData, 6);
             default:
-                menuing(game, current_player , board, player_path, player, playerData, key);
+                menuing(game, current_player , board, player_path, player, playerData, key, last_event);
                 break;
         }
         key = _getch();
@@ -254,10 +243,10 @@ int main() {
     srand(time(0)); //Seed RNG once
 
     //data/variables
-    int last_event;
+    int last_event = 0;
     int players = 2;
     playerInfo playerData[4];
-    int total_events = 3;
+    int total_events = 9;
     int path[4];
     bool path_selector;
     if(inlitizeCharcters(playerData, players)){}
@@ -306,14 +295,14 @@ int main() {
     int board = game.getBoardSize();  
 
     while (running){
+        last_event = randomEvent(total_events,last_event);
         for (int b = 0; b < players; b++) {//loop for each player - changes between 0 & 1 for each path/player
             //the display
-            running = screen(game, b, board, player, playerData,path[b]);
+            running = screen(game, b, board, player, playerData,path[b],last_event);
             playerData[b].age += 1;
             if (!running) break;
             validatePlayerStats(playerData[b]);
         }  
-        last_event = randomEvent(total_events,last_event);
     }
 
     //ending text
