@@ -1,7 +1,7 @@
-Name | Effects |  What events they ineract with delimintator ","
-Zara | This plant like creature helps keep its master alive. | rock, shortage
-Talon | His amazing vision can see well in all conditions | darkness, sanstorm
-Mira | She is always prepared. | shortage, disintary
-Selani | His wings help block strong winds. | strong winds, sandstorm
-Rava | This beutaful slime can control its own body tempetrure. | Heat
-Rock | Your very own pet rock | nothing
+Name | Description
+Zara | This plant like creature helps keep its master alive.
+Talon | His amazing vision can see well in all conditions
+Mira | She is always prepared.
+Selani | His wings help block strong winds.
+Rava | This beutaful slime can control its own body tempetrure.
+Rock | Your very own pet rock
