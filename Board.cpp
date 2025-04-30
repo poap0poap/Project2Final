@@ -1,6 +1,9 @@
 #include "Board.h"
 #include <iostream>
 #include <string>
+#include <algorithm>
+#include <random>
+
 #define BLACK "\033[48;2;0;0;0m" // Grassland Tile
 #define YELLOW "\033[48;2;225;175;35m" // Change Advisor
 #define PURPLE "\033[48;2;128;0;128m" // Riddle Tile
@@ -26,46 +29,53 @@ void Board::initializeBoard(int player_count)
 #include <cstdlib> // For rand() and srand()
 #include <ctime>   // For time()
 
-void Board::initializeTiles(int path)
-{
-    Tile temp;
-    int black_count = 0;
-    int total_tiles = _BOARD_SIZE;
+void Board::initializeTiles(int path) {
+    std::vector<Tile> tiles;
 
-    // Keep track of green tile positions to ensure we place exactly 30 greens
-    for (int i = 0; i < total_tiles; i++)
-    {   
-        if (i == total_tiles - 1) {
-            // Set the last tile as Orange
-            temp.color = 'E';
-        } 
-        else if (i == 0) {
-            // Set the Start tile as Grey
-            temp.color = 'S';
-        } 
-        else if (black_count < 50 && (rand() % (total_tiles - i) < 50 - black_count)) {
-            temp.color = 'B';
-            black_count++;
-        }
-        else
-        {
-            // Randomly assign one of the other colors: Yellow,Purple,BLue,Pink,Green,Brown,Red,Cyan
-            // Total number of special tiles 1/2 board
-            int color_choice = rand() % 8;
-            switch (color_choice){
-                case 0: temp.color = 'Y'; break;
-                case 1: temp.color = 'P'; break;
-                case 2: temp.color = 'L'; break;
-                case 3: temp.color = 'I'; break;
-                case 4: temp.color = 'G'; break;
-                case 5: temp.color = 'O'; break;
-                case 6: temp.color = 'R'; break;
-                case 7: temp.color = 'C'; break;
-            }
-        }
+    // Always push Start tile
+    tiles.push_back(Tile{'S'});
 
-        // Assign the tile to the board for the specified lane
-        _tiles[path][i] = temp;
+    // Define tile counts for each path
+    struct TileCount {
+        int black;
+        int yellow;
+        int purple;
+        int blue;
+        int pink;
+        int green;
+        int brown;
+        int red;
+        int cyan;
+    };
+
+    TileCount counts;
+
+    if (path == 0) { // Main path
+        counts = {50, 10, 5, 10, 5, 5, 10, 3, 2};
+    } else if (path == 1) { // Side path
+        counts = {50, 5, 5, 13, 7, 7, 8, 2, 3};
+    }
+
+    // Fill tiles based on counts
+    tiles.insert(tiles.end(), counts.black,  Tile{'B'});
+    tiles.insert(tiles.end(), counts.yellow, Tile{'Y'});
+    tiles.insert(tiles.end(), counts.purple, Tile{'P'});
+    tiles.insert(tiles.end(), counts.blue,   Tile{'L'});
+    tiles.insert(tiles.end(), counts.pink,   Tile{'I'});
+    tiles.insert(tiles.end(), counts.green,  Tile{'G'});
+    tiles.insert(tiles.end(), counts.brown,  Tile{'O'});
+    tiles.insert(tiles.end(), counts.red,    Tile{'R'});
+    tiles.insert(tiles.end(), counts.cyan,   Tile{'C'});
+
+    // Shuffle the range excluding Start
+    std::shuffle(tiles.begin() + 1, tiles.end(), std::default_random_engine(std::random_device{}()));
+
+    // Push End tile
+    tiles.push_back(Tile{'E'});
+
+    // Ensure board size consistency (_BOARD_SIZE = 102)
+    for (int i = 0; i < _BOARD_SIZE; ++i) {
+        _tiles[path][i] = (i < tiles.size()) ? tiles[i] : Tile{'B'};
     }
 }
 
