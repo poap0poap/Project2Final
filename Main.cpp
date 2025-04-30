@@ -11,6 +11,7 @@
 #include "Board.h"
 #include "Player.h"
 #include "Utility.h"
+#include <iomanip>
 
 using namespace std;
 
@@ -235,6 +236,14 @@ bool screen(Board& game,int current_player,int board, int* player, playerInfo* p
     }   
 }
 
+std::string getCurrentDate()
+{
+    std::time_t now = std::time(nullptr);
+    std::tm tm = *std::localtime(&now);              // copy into tm by value
+    std::ostringstream oss;
+    oss << std::put_time(&tm, "%Y-%m-%d");
+    return oss.str();                                // returned by value
+}
 
 
 int main() {
@@ -306,9 +315,31 @@ int main() {
     }
 
     //ending text
-    cout << "Game ended\n";
-    cout << "Press any key to exit";
-    _getch();//waits until keypress to exit
-    return 0;
+    std::string today = getCurrentDate();            // pass-by-value
+    for (int i = 0; i < players; ++i) {
+        playerData[i].datePlayed = today;            // stamp each player
+    }
 
+    std::ofstream out("PridePoints.txt");
+    if (!out) {
+        std::cerr << "Error opening output file\n";
+        return 1;
+    }
+
+    out << "Pride Points Report — Date: " << today << "\n\n";
+    out << "Player                  Points\n"
+           "--------------------------------\n";
+    for (int i = 0; i < players; ++i) {
+        auto& p = playerData[i];
+        out << std::left 
+    << std::setw(22) 
+    << (p.firstName + " " + p.lastName) 
+    << p.points 
+    << "\n";
+
+    }
+    out.close();
+
+    std::cout << "Saved PridePoints.txt with today’s date.\n";
+    // … clean up, _getch(), return 0, etc. …
 }
