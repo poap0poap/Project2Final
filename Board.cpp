@@ -50,9 +50,9 @@ void Board::initializeTiles(int path) {
 
     TileCount counts;
 
-    if (path == 0) { // Main path
+    if (path == 1) { // Main path
         counts = {50, 10, 5, 10, 5, 5, 10, 3, 2};
-    } else if (path == 1) { // Side path
+    } else if (path == 2) { // Side path
         counts = {50, 5, 5, 13, 7, 7, 8, 2, 3};
     }
 
