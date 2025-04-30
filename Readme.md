@@ -74,9 +74,3 @@ Boost based on advisor\
 Same tile Constraint - if both player on same tile and not start/finish battle. flip coin winner +5 points, loser - 5 points\
 Factors that alter outcome - age change loss %wise\
   wisdom + age at end
-```
-
-Final Evaluation of Pride Points by the end.  
-For every 1 points in the Stamina, Strenght, or Wisdom Stat, add 10 Pride Points to the total.  
-Whoever has the greatest ammount of Pride Points by the end will be declared the winner.   
-Make sure to display the name of the lion with the highest Pride Points as the winner, along with each player’s final stats.  
