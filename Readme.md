@@ -5,6 +5,10 @@ Still need to do for the board
   - skip turn after reach end
   - diffrent paths diffrent tilesets
 
+# Report
+
+We used the library conio to allow for collecting keypresses. There are a few other ways of doing so but cpp does not have a standard system for getting keypresses.
+
 # Changes
 file for player data  
 tiles have effects  
