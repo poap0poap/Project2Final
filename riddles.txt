@@ -1,1 +1,6 @@
-
+Question | Answer
+In C++, what keyword is used to create a constant that cannot be changed after initialization? (One word, Lowercase)|const
+What is the default access specifier for members of a class in C++? (One word, Lowercase)|private
+Which special function is automatically called when an object is called? (One word, Lowercase)|constructor
+What is the name of the standard library in C++ that is used for input and output? (One word, Lowercase)|iostream
+What is the keyword for stopping a loop immediately? (One word, Lowercase)|break

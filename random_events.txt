@@ -1,8 +1,10 @@
-Description | PathType (0 = cubTraining; 1 = straight to the pride lands; 2 = either path) | Advisor (0 = none; 1 = Rafiki; 2 = Nala; 3 = Sarabi; 4 = Zazu; 5 = Sarafina) | PridePoints (lose or gain)
-
-Desert storm sweeps through the territory|2|4|-5
-Fatigue from intense training with pride warriors|0|3|-2
-Challenging night watch duty under pitch-black conditions|1|2|-4
-Extra energy from bountiful season|1|0|8
-Observed a rare natural phenomenon|0|0|6
-Gained wisdom from observing Rafiki’s rituals|1|0|5
+Event Name | Event Effects | Advisor (0 = none; 1 = Zara; 2 = Talon; 3 = Mira; 4 = Selani; 5 = Rava;)
+Sandstorm | You got hit by a sandstorm and lost 5 stamina points. | 2 4
+Heat | You got hit by a heat wave and lost 5 strength points. | 5
+Darkness | The lights went out. Reduce movement by 2 and lose 5 wisdom points. | 2
+Shortage | Your food and water get contaminated. Lose 5 in all stats. | 1 2
+Strong Winds | You got hit by a very strong wind gust and lost 3 stamina points. | 4
+Dysentery | You have died of dysentery. | 3
+Rainbow | You see a rainbow in the distance. It does nothing. | 0
+Rock | Rock hit head. Brain go bad. Lose 10 wisdom points. | 1
+Ritual | You witness a Rafiki's Ritual and lose 5 wisdom points. | 0
