@@ -1,0 +1,17 @@
+Turn :1
+Player 1 stats: 
+Name: Finn Meadowlight
+Strength: 10
+Stamina: 6
+Wisdom: 7
+Points: 23
+Age: 6
+
+Player 2 stats: 
+Name: Jasper Sunshade
+Strength: 8
+Stamina: 6
+Wisdom: 9
+Points: 23
+Age: 9
+
