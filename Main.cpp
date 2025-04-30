@@ -340,6 +340,6 @@ int main() {
     }
     out.close();
 
-    std::cout << "Saved PridePoints.txt with today’s date.\n";
+    std::cout << "Saved PridePoints.txt with today's date.\n";
     // … clean up, _getch(), return 0, etc. …
 }
