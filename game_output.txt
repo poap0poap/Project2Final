@@ -1,17 +1,17 @@
-Turn: 8
+Turn: 24
 Player 1 stats: 
-Name: Lily Twilightwave
-Strength: 20
+Name: Ruby Stardust
+Strength: 18
 Stamina: 17
-Wisdom: 11
-Points: 20
-Age: 19
+Wisdom: 25
+Points: 9
+Age: 52
 
 Player 2 stats: 
-Name: Juno Firespark
-Strength: 12
-Stamina: 7
-Wisdom: 3
-Points: 24
-Age: 20
+Name: Aria Windwhisper
+Strength: 18
+Stamina: 23
+Wisdom: 23
+Points: 20
+Age: 55
 

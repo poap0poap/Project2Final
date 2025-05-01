@@ -614,6 +614,8 @@ int main() {
                 game.displayBoard();
                 cout << "Player: " << b+1 << endl;
                 cout << "Current Event: " << eventData[last_event].name << endl;
+                // cout << eventData[last_event].advisorID << endl;
+                // cout << last_event << endl;
                 menuDisplay();
                 key = _getch();
                 switch (key){
@@ -674,9 +676,9 @@ int main() {
                                     else{
                                         game.movePlayer(b,-dice+1);
                                     }
-                                    playerData[b].strength-=5;
-                                    playerData[b].stamina-=5;
-                                    playerData[b].wisdom-=5;
+                                    playerData[b].strength-=1;
+                                    playerData[b].stamina-=1;
+                                    playerData[b].wisdom-=1;
                                 break;
                             case 'O':
                                     game.movePlayer(b,-dice);
@@ -684,9 +686,9 @@ int main() {
                                 break;
                             case 'R':
                                     playerData[b].points -= (playerData[b].points+1)/2;
-                                    playerData[b].strength-=10;
-                                    playerData[b].stamina-=10;
-                                    playerData[b].wisdom-=10;
+                                    playerData[b].strength-=5;
+                                    playerData[b].stamina-=5;
+                                    playerData[b].wisdom-=5;
                                 break;
                             case 'C':
                                     playerData[b].points += (playerData[b].points+1)/2;
@@ -826,35 +828,35 @@ int main() {
             if (playerData[i].advisor.advisorID == eventData[last_event].advisorID){}
             else{
                 switch (last_event){
-                    case 0:
-                        playerData[i].stamina -=5;
-                        break;
                     case 1:
-                        playerData[i].strength -=5;
+                        playerData[i].stamina -=2;
                         break;
                     case 2:
-                        playerData[i].wisdom -=5;
+                        playerData[i].strength -=2;
                         break;
                     case 3:
-                        playerData[i].strength -=5;
-                        playerData[i].stamina -=5;
-                        playerData[i].wisdom -=5;
+                        playerData[i].wisdom -=2;
                         break;
                     case 4:
-                        playerData[i].stamina -=3;
+                        playerData[i].strength -=2;
+                        playerData[i].stamina -=2;
+                        playerData[i].wisdom -=2;
                         break;
                     case 5:
+                        playerData[i].stamina -=3;
                         break;
                     case 6:
                         break;
                     case 7:
-                        playerData[i].wisdom -=10;
                         break;
                     case 8:
                         playerData[i].wisdom -=5;
                         break;
+                    case 9:
+                        playerData[i].wisdom -=2;
+                        break;
                     default:
-                    break;
+                        break;
                 }  
             }
                 playerData[i].age += 1;
@@ -870,15 +872,6 @@ int main() {
                 }
                 if (playerData[i].points < 0) {
                     playerData[i].points = 0;
-                    if (playerData[i].strength != 0) {
-                        playerData[i].strength--;
-                    }
-                    if (playerData[i].stamina != 0) {
-                        playerData[i].stamina--;
-                    }
-                    if (playerData[i].wisdom != 0) {
-                        playerData[i].wisdom--;
-                    }
                 }
             
         }
@@ -887,14 +880,14 @@ int main() {
 
     clearScreen();
 
-    int playerDataFinal[players];
 
-    for (int i = 0; i < players; ++i) {
+    int playerDataFinal[players] = {0};
+
+    for (int i = 0; i < players; i++) {
         // sum up strength, wisdom, and stamina
         int totalStats = playerData[i].strength
                        + playerData[i].wisdom
-                       + playerData[i].stamina
-                       + playerData[i].age;
+                       + playerData[i].stamina;
         int bonusPoints = totalStats;
         playerDataFinal[i] += bonusPoints;
     }

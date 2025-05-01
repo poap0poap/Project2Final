@@ -1,10 +1,10 @@
 Nothing|No current events|0
-Sandstorm|You got hit by a sandstorm and lost 5 stamina points.|2
-Heat|You got hit by a heat wave and lost 5 strength points.|5
-Darkness|The lights went out. Lose 5 wisdom points.|2
-Shortage|Your food and water get contaminated. Lose 5 in all stats.|1
+Sandstorm|You got hit by a sandstorm and lost 2 stamina points.|2
+Heat|You got hit by a heat wave and lost 2 strength points.|5
+Darkness|The lights went out. Lose 2 wisdom points.|2
+Shortage|Your food and water get contaminated. Lose 2 in all stats.|1
 Strong Winds|You got hit by a very strong wind gust and lost 3 stamina points.|4
 Dysentery|You have died of dysentery.|3
 Rainbow|You see a rainbow in the distance. It does nothing.|0
-Rock|Rock hit head. Brain go bad. Lose 10 wisdom points.|1
-Ritual|You witness a Rafiki's Ritual and lose 5 wisdom points.|0
+Rock|Rock hit head. Brain go bad. Lose 5 wisdom points.|1
+Ritual|You witness a Rafiki's Ritual and lose 2 wisdom points.|0
