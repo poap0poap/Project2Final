@@ -74,8 +74,9 @@ void Board::initializeTiles(int path) {
     tiles.push_back(Tile{'E'});
 
     // Ensure board size consistency (_BOARD_SIZE = 102)
+    int tileSize = tiles.size();
     for (int i = 0; i < _BOARD_SIZE; ++i) {
-        _tiles[path][i] = (i < tiles.size()) ? tiles[i] : Tile{'B'};
+        _tiles[path][i] = (i < tileSize) ? tiles[i] : Tile{'B'};
     }
 }
 

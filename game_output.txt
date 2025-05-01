@@ -1,17 +1,17 @@
-Turn: 59
+Turn: 5
 Player 1 stats: 
-Name: Zara Twilightstone
-Strength: 32
-Stamina: 22
-Wisdom: 16
-Points: 17
-Age: 124
+Name: Theo Brightshade
+Strength: 11
+Stamina: 10
+Wisdom: 9
+Points: 14
+Age: 13
 
 Player 2 stats: 
-Name: Britt Curtis
-Strength: 30
-Stamina: 42
-Wisdom: 4
-Points: 10
-Age: 121
+Name: Emery Flowers
+Strength: 10
+Stamina: 4
+Wisdom: 0
+Points: 6
+Age: 23
 

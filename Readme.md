@@ -1,14 +1,17 @@
-# Player index correct
-made player index on the correct path
+# How to run
 
-Still need to do for the board
-  - skip turn after reach end
-  - diffrent paths diffrent tilesets
+## Using g++
+before compiling  make sure to have Board.cpp, Board.h, Main.cpp, PlayerInfo.h, Tile.h, Utility.cpp, Utility.h  
+Use this to compile  
+```
+g++ -Werror -Wall -Wpedantic -std=c++17  Main.cpp Board.cpp Utility.cpp -o Main
+```
+Once compliled make sure in include advisors.txt, charcter.txt, random_events.txt, and riddles.txt in the same directory as Main.exe  
+## running Main.exe
 
-# Changes
-file for player data  
-tiles have effects  
-need to make classes  
+make sure in the directory that has Main.exe you include advisors.txt, charcter.txt, random_events.txt, and riddles.txt  
+
+# Paths
 
 
 25% chance of random event on all tiles  

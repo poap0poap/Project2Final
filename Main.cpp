@@ -69,8 +69,15 @@ struct Advisor{
     int advisorID;
 };
 
+struct Riddle{
+    string question;
+    string answer;
+};
+
 int main() {
+    const int MAX_RIDDLES = 5;
     const int MAX_ADVISORS = 6;
+    Riddle riddle[MAX_RIDDLES];
     Advisor advisor[MAX_ADVISORS];
     srand(time(0)); //Seed RNG once
     string output_file_name;
@@ -146,6 +153,35 @@ int main() {
         advisor[n].advisorID = n+1;
     }
     }
+    lines.clear();
+
+    ifstream riddleFile("riddles.txt");
+    if (!riddleFile){
+        cerr << "Unable to open riddles.txt\n";
+    }
+    else{
+        string tmp;
+        while (getline(riddleFile, tmp)) {
+            if (!tmp.empty())
+                lines.push_back(tmp);
+        }
+    }
+    riddleFile.close();
+
+    for (int i = 0; i < MAX_RIDDLES;i++){
+        istringstream lineStream(lines[i]);
+    
+        // 1) read up to first '|'
+        string rawQuestion;
+        getline(lineStream, rawQuestion, '|');
+    
+        // 2) read up to end
+        string rawAnswer;
+        getline(lineStream, rawAnswer);
+
+        riddle[i].question = rawQuestion;
+        riddle[i].answer = rawAnswer;
+    }
 
 
 
@@ -184,7 +220,6 @@ int main() {
             //reset line checker and data relating to certain player
             characterFile.clear();
             characterFile.seekg(0, ios::beg);
-            int currentLine = 0;
             columnIndex = 0;
             selectedLine = 0;
             charRunning = true;
@@ -307,6 +342,7 @@ int main() {
             switch (keypress){
                 case '1':
                     path[i] = 0;
+                    playerData[i].age +=10;
                     selector = false;
                     break;
                 case '2':
@@ -393,7 +429,6 @@ int main() {
     int board = game.getBoardSize();  
 
     string output;
-    int out;
     bool z,t;
     int diceSize = 6;
     int player_position, dice;
@@ -475,10 +510,92 @@ int main() {
                                 }
                                 break;
                             }
-                            case 'Y':
+                            case 'Y':{
+                                bool advisorChange = true;
+                                while (advisorChange){  
+                                    clearScreen();
+                                    cout << "Player " << b+1 << ", You have stumbled across a training camp.\nYou may now choose a new advisor.\n";
+                                    for (int o = 0; o < MAX_ADVISORS; o++){
+                                        cout << o+1 << ". " << advisor[o].name << endl; 
+                                    }
+                                    char keypress = _getch();
+                                    switch (keypress){
+                                        case '1':
+                                        playerData[b].advisor.advisorID = advisor[0].advisorID;
+                                        playerData[b].advisor.advisorName = advisor[0].name;
+                                        playerData[b].advisor.advisorDetails = advisor[0].effects;
+                                        advisorChange = false;
+                                        break;
+                                        case '2':
+                                        playerData[b].advisor.advisorID = advisor[1].advisorID;
+                                        playerData[b].advisor.advisorName = advisor[1].name;
+                                        playerData[b].advisor.advisorDetails = advisor[1].effects;
+                                        advisorChange = false;
+                                        break;
+                                        case '3':
+                                        playerData[b].advisor.advisorID = advisor[2].advisorID;
+                                        playerData[b].advisor.advisorName = advisor[2].name;
+                                        playerData[b].advisor.advisorDetails = advisor[2].effects;
+                                        advisorChange = false;
+                                        break;
+                                        case '4':
+                                        playerData[b].advisor.advisorID = advisor[3].advisorID;
+                                        playerData[b].advisor.advisorName = advisor[3].name;
+                                        playerData[b].advisor.advisorDetails = advisor[3].effects;
+                                        advisorChange = false;
+                                        break;
+                                        case '5':
+                                        playerData[b].advisor.advisorID = advisor[4].advisorID;
+                                        playerData[b].advisor.advisorName = advisor[4].name;
+                                        playerData[b].advisor.advisorDetails = advisor[4].effects;
+                                        advisorChange = false;
+                                        break;
+                                        case '6':
+                                        playerData[b].advisor.advisorID = advisor[5].advisorID;
+                                        playerData[b].advisor.advisorName = advisor[5].name;
+                                        playerData[b].advisor.advisorDetails = advisor[5].effects;
+                                        advisorChange = false;
+                                        break;
+                                        case 27:
+                                        running = false;
+                                        advisorChange = false;
+                                        break;
+                                        default:
+                                            break;
+                                    }
+                                }
                                 break;
-                            case 'P':
+                                }
+                            case 'P':{
+                                bool riddleRunning = true;
+                                int randomRiddle = rand()%MAX_RIDDLES;
+                                string riddleAns;
+                                while (riddleRunning){  
+                                    clearScreen();
+                                    cout << "Player " << b+1 << ", You have stumbled across some ancient ruins.\nPlease answer carfully.\n";
+                                    cout << riddle[randomRiddle].question << endl;
+                                    cin >> riddleAns;
+
+                                    if (riddleAns == riddle[randomRiddle].answer){
+                                        riddleRunning = false;
+                                        cout << "You got it right!" << endl;
+                                        cout << riddleAns <<" is the correct answer to this riddle\n";
+                                        playerData[b].wisdom +=10;
+                                        playerData[b].points +=10;
+                                    }
+                                    else{
+                                        cout << "Oh No, You got it wrong." << endl;
+                                        cout << riddleAns << " is not the answer to this riddle.\n";
+                                        cout << "Please try again next time\n";
+                                        riddleRunning = false;
+                                        playerData[b].wisdom -=10;
+                                        playerData[b].points -=10;
+                                    }
+                                    cout << "\nPress any key to continue" << endl;
+                                    _getch();
+                                }
                                 break;
+                                }
                             case 'L':
                                     playerData[b].strength+=2;
                                     playerData[b].stamina+=2;
@@ -562,11 +679,11 @@ int main() {
                                             t=false;
                                             break;
                                         case 'Y':
-                                            output = "advisor change - non functional";
+                                            output = "Advisor change";
                                             t=false;
                                             break;
                                         case 'P':
-                                            output = "riddle";
+                                            output = "Riddle";
                                             t=false;
                                             break;
                                         case 'L':
@@ -586,11 +703,13 @@ int main() {
                                             t=false;
                                             break;
                                         case 'R':
-                                            output = "Custom negitive";
+                                            if (path[b]){output = "Poaching";}
+                                            else{output = "Pitfall";}
                                             t=false;
                                             break;
                                         case 'C':
-                                            output = "Custom Postive";
+                                        if (path[b]){output = "Ancient hunting ground";}
+                                        else{output = "Village";}
                                             t=false;
                                             break;
                                         case 'S':
@@ -694,6 +813,22 @@ int main() {
                     playerData[i].points = 0;
                 }
             
+        }
+        if (game.getPlayerPosition(0) == game.getPlayerPosition(1)&&path[0]==path[1]){
+            clearScreen();
+            cout << "A fight broke out" << endl;
+            if (playerData[0].strength>playerData[1].strength){
+                playerData[0].points +=10;
+                playerData[1].points -=10;
+                cout << "Player 1 defeated Player 2 and stole 10 points" << endl;
+            }
+            else {
+                playerData[1].points +=10;
+                playerData[0].points -=10;
+                cout << "Player 2 defeated Player 1 and stole 10 points" << endl;
+            }
+            cout << "Press anykey to continue." << endl;
+            _getch();
         }
         outputFile<<"Turn: " << turn <<"\n";
         for (int i = 0; i < players; i++) {
