@@ -1,17 +1,17 @@
-Turn: 23
+Turn: 1
 Player 1 stats: 
-Name: Rory Kidd
-Strength: 30
-Stamina: 25
-Wisdom: 20
+Name: Isaac Galebranch
+Strength: 9
+Stamina: 7
+Wisdom: 6
 Points: 12
-Age: 32
+Age: 6
 
 Player 2 stats: 
-Name: Isaac Galebranch
-Strength: 14
-Stamina: 9
-Wisdom: 1
-Points: 17
-Age: 28
+Name: Hugo Shadowstone
+Strength: 10
+Stamina: 8
+Wisdom: 6
+Points: 24
+Age: 7
 

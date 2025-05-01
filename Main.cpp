@@ -243,8 +243,15 @@ struct RandomEvent {
     int advisorID;   
 };
 
-int main() {
+struct Advisor{
+    string name;
+    string effects;
+    int advisorID;
+};
 
+int main() {
+    const int MAX_ADVISORS = 6;
+    Advisor advisor[MAX_ADVISORS];
     srand(time(0)); //Seed RNG once
     string output_file_name;
     output_file_name ="game_output";
@@ -255,7 +262,6 @@ int main() {
     
     const int MAX_EVENTS = 10;  
     RandomEvent eventData[MAX_EVENTS];
-    int totalEvents = 0;
     int selectedLine = 0;
     vector<string> lines;
     ifstream eventFIle("random_events.txt");
@@ -289,13 +295,44 @@ int main() {
         eventData[n].advisorID = lessRawAdv;
     }
 
+    playerInfo playerData[4];
+    lines.clear();
+    ifstream advisorFile("advisors.txt");
+    if (!advisorFile) {
+        cerr << "Failed to open advisors.txt\n";
+    } else {
+        string tmp;
+        while (getline(advisorFile, tmp)) {
+            if (!tmp.empty())
+                lines.push_back(tmp);
+    }
+    advisorFile.close();
+    
+    for (int n = 0; n<MAX_ADVISORS;n++){
+        istringstream lineStream(lines[n]);
+    
+        // 1) read up to first '|'
+        string rawName;
+        getline(lineStream, rawName, '|');
+    
+        // 2) read up to second '|'
+        string rawDescrip;
+        getline(lineStream, rawDescrip);
+
+        advisor[n].name = rawName;
+        advisor[n].effects = rawDescrip;
+        advisor[n].advisorID = n+1;
+    }
+    }
+
+
+
     //data/variables
     int last_event = 0;
     const int players = 2;
-    playerInfo playerData[4];
     int total_events = 10;
     int path[4];
-    bool path_selector;
+    bool selector;
         // random player data
         //data for charcters
         bool charRunning = true;
@@ -423,8 +460,8 @@ int main() {
                 lineStream >> playerData[i].firstName >> playerData[i].lastName >> playerData[i].age 
                             >> playerData[i].strength >> playerData[i].stamina >> playerData[i].wisdom >> playerData[i].points;
                             playerData[i].advisor.advisorID = 0;
-                            playerData[i].advisor.advisorDetails = " ";
-                            playerData[i].advisor.advisorName = " ";  
+                            playerData[i].advisor.advisorDetails = "No advisor selected";
+                            playerData[i].advisor.advisorName = "None";  
             }
         }
         clearScreen();
@@ -432,12 +469,12 @@ int main() {
     //path selctor
     for (int i = 0; i<players; i++){
         if (!running){break;}
-        path_selector = true;
-        while(path_selector){
+        selector = true;
+        while(selector){
             if (!running){break;}
             cout << "Which path would player " << i+1 <<" like" <<endl;
-            cout << "Press 1 for the easier path" << endl;
-            cout << "Press 2 for the harder path" << endl;
+            cout << "Press 1 for the harder path" << endl;
+            cout << "Press 2 for the easier path" << endl;
             char keypress = _getch();
 
             if (keypress == 27) {  // ESC key
@@ -448,18 +485,76 @@ int main() {
             switch (keypress){
                 case '1':
                     path[i] = 0;
-                    path_selector = false;
+                    selector = false;
                     break;
                 case '2':
                     path[i] = 1;
                     playerData[i].points-=10;
-                    path_selector = false;
+                    selector = false;
                     break;
                 default:
                     break;
             }
             clearScreen();
         }
+    }
+    selector = true;
+    for (int i = 0; i<players;i++){
+        if (path[i]==1){
+            while (selector){
+                cout << "Player " << i+1  << " select advisor:" << endl;
+                for (int o = 0; o < MAX_ADVISORS; o++){
+                    cout << o+1 << ". " << advisor[o].name << endl; 
+                }
+                char keypress = _getch();
+                switch (keypress){
+                    case '1':
+                    playerData[i].advisor.advisorID = advisor[0].advisorID;
+                    playerData[i].advisor.advisorName = advisor[0].name;
+                    playerData[i].advisor.advisorDetails = advisor[0].effects;
+                    selector = false;
+                    break;
+                    case '2':
+                    playerData[i].advisor.advisorID = advisor[1].advisorID;
+                    playerData[i].advisor.advisorName = advisor[1].name;
+                    playerData[i].advisor.advisorDetails = advisor[1].effects;
+                    selector = false;
+                    break;
+                    case '3':
+                    playerData[i].advisor.advisorID = advisor[2].advisorID;
+                    playerData[i].advisor.advisorName = advisor[2].name;
+                    playerData[i].advisor.advisorDetails = advisor[2].effects;
+                    selector = false;
+                    break;
+                    case '4':
+                    playerData[i].advisor.advisorID = advisor[3].advisorID;
+                    playerData[i].advisor.advisorName = advisor[3].name;
+                    playerData[i].advisor.advisorDetails = advisor[3].effects;
+                    selector = false;
+                    break;
+                    case '5':
+                    playerData[i].advisor.advisorID = advisor[4].advisorID;
+                    playerData[i].advisor.advisorName = advisor[4].name;
+                    playerData[i].advisor.advisorDetails = advisor[4].effects;
+                    selector = false;
+                    break;
+                    case '6':
+                    playerData[i].advisor.advisorID = advisor[5].advisorID;
+                    playerData[i].advisor.advisorName = advisor[5].name;
+                    playerData[i].advisor.advisorDetails = advisor[5].effects;
+                    selector = false;
+                    break;
+                    case 27:
+                    running = false;
+                    selector = false;
+                    break;
+                    default:
+                        break;
+                }
+            }
+        clearScreen();
+        }
+        
     }
 
     if(!running){
@@ -493,7 +588,7 @@ int main() {
                 break;
             }
         }
-        if (!running){break;}
+        if (!running)break;
         
         //save to file
         ofstream outputFile(output_file_name);
@@ -627,7 +722,8 @@ int main() {
                                 cout << "Age: " << playerData[b].age << endl;
                                 break;
                             case '3':
-                                cout << "Advisor is a work in progress" << endl;
+                                cout << "Advisor: " << playerData[b].advisor.advisorName << endl;
+                                cout << playerData[b].advisor.advisorDetails << endl;
                                 break;
                             case '4':{
                                 t = true;
@@ -640,7 +736,7 @@ int main() {
                                             t=false;
                                             break;
                                         case 'Y':
-                                            output = "advisor change";
+                                            output = "advisor change - non functional";
                                             t=false;
                                             break;
                                         case 'P':
