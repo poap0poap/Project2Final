@@ -31,96 +31,6 @@ class  pickEvent{
     }
 };
 
-// //check for what tile you are on and applys effects
-// string tileAction(Board& game, int player_position, int player_path, bool viewing, int player, playerInfo* playerData)
-// {
-//     char p = game.getTileIndex(player_path,player_position);// find landed tile using chosen path and current position
-//     //describes events based on landed tile
-//     switch(p){
-//         case 'B':
-//         if (!viewing){
-//             switch(rand()%3){
-//                 case 1:
-//                     playerData[player].strength += 1;
-//                     playerData[player].stamina += 1;
-//                     playerData[player].wisdom += 1;
-//                     break;
-//                 case 2:
-//                     playerData[player].strength += 2;
-//                     playerData[player].stamina += 2;
-//                     playerData[player].wisdom += 2;
-//                     break;
-//                 default:
-//                     break;
-//             }
-
-//         }
-//         return "Basic";
-//         break;
-//         case 'Y':
-//         return "advisor change";
-//         break;
-//         case 'P':
-//         return "riddle";
-//         break;
-//         case 'L':
-//         if (!viewing){
-//             playerData[player].strength += 2;
-//             playerData[player].stamina += 2;
-//             playerData[player].wisdom += 2;
-//         }
-//         return "+2 to stats";
-//         break;
-//         case 'I':
-//         if (!viewing){
-//             playerData[player].strength += 3;
-//             playerData[player].stamina += 3;
-//             playerData[player].wisdom += 3;
-//         }
-//         return "+3 to stats";
-//         break;
-//         case 'G':
-//         if (!viewing){
-//             playerData[player].strength -= 1;
-//             playerData[player].stamina -= 1;
-//             playerData[player].wisdom -= 1;
-//         }
-//         return "Graveyard";
-//         break;
-//         case 'O':
-//         if (!viewing){
-//             playerData[player].stamina -= 5;
-//         }
-//         return "Hyena";
-//         break;
-//         case 'R':
-//         if (!viewing){
-//             playerData[player].strength -= 5;
-//             playerData[player].stamina -= 5;
-//             playerData[player].wisdom -= 5;
-//             playerData[player].points = (playerData[player].points + 1)/2;
-//         }
-//         return "Custom negitive";
-//         break;
-//         case 'C':
-//         if (!viewing){
-//             playerData[player].strength += 5;
-//             playerData[player].stamina += 5;
-//             playerData[player].wisdom += 5;
-//             playerData[player].points += (playerData[player].points + 1)/2;
-//         }
-//         return "Custom Postive";
-//         break;
-//         case 'S':
-//         return "Start";
-//         case 'E':
-//         return "End";
-//         default:
-//         return "Exceeded Board Size";
-//         break;
-//     }
-//     return " ";
-// }
 
 //menu display
 void menuDisplay(){
@@ -134,70 +44,6 @@ void menuDisplay(){
     cout << endl;
 }
 
-//stat display
-// void displayStats(Board& game,int player,playerInfo* playerData){
-//     cout << "Strength: " << playerData[player].strength << endl;
-//     cout << "Stamina: " << playerData[player].stamina << endl;
-//     cout << "Wisdom: " << playerData[player].wisdom << endl;
-//     cout << "Points: " << playerData[player].points << endl;
-// }
-
-// //charcter inforemation
-// void charInfo(Board& game,int player, playerInfo* playerData){
-//     cout << "Name: " << playerData[player].firstName << " " << playerData[player].lastName << endl;
-//     cout << "Age: " << playerData[player].age << endl;
-// }
-
-//advisor information
-// void displayAdvisor(Board& game,int player){
-//     cout << "Advisor is a work in progress" << endl;
-// }
-
-// void displayLastEvent(int event){
-//     cout << event << endl;
-// }
-
-// //Movement
-// bool movement(Board& game,int current_player,int board, int* player, playerInfo* playerData,int diceSize){
-//     int dice = diceRoll(diceSize);
-//     game.movePlayer(current_player, dice);
-//     //move player current_playerased on dice
-//     player[current_player] += dice;
-//     //cout  << tileAction(game, player[current_player], current_player, false, current_player,playerData) << endl;
-//     //cout << endl;
-
-//     //if pos is farther then board stop
-//     if (game.getPlayerPosition(current_player) >= board){
-//         cout << "\nGame over\n";
-//         return false;
-//     }
-//     else{
-//         return true;
-//     }
-// }
-
-// //menuing
-// void menuing(Board& game,int current_player,int board, int path, int* player, playerInfo* playerData,char keypress, int last_event){
-//     clearBelowLine(17); 
-//     tile action ={}
-//     switch(keypress){
-//         case '1':
-//             displayStats(game, current_player,playerData);
-//             break;
-//         case '2':
-//             charInfo(game, current_player, playerData);
-//             break;
-//         case '3':
-//             displayAdvisor(game, current_player);
-//             break;
-//         case '4':
-//             cout << "You are on a(n) " << tileAction(game,player[current_player],path,true,current_player,playerData) << " tile." << endl;
-//             break;
-//         case '5':
-//             displayLastEvent(last_event);
-//             break;
-//     }
-// }
 
 //picks a random event and returns it for storage
 int randomEvent(int events,int last_event){
@@ -209,32 +55,6 @@ int randomEvent(int events,int last_event){
     }
     return last_event;
 }
-
-// //creates our display
-// bool screen(Board& game,int current_player,int board, int* player, playerInfo* playerData,int player_path,int last_event){
-//     clearScreen();
-//     game.displayBoard();
-//     cout << "Player: " << current_player+1 << endl;
-//     menuDisplay();
-//     char key = _getch();
-//     while(true){
-//         moveCursorToTop();
-//         game.displayBoard();
-//         cout << "Player: " << current_player+1 << endl;
-//         menuDisplay();
-//         switch (key){
-//             case 27:
-//                 return false;
-//                 break;
-//             case ' ':
-//                 return movement(game, current_player , board, player, playerData, 6);
-//             default:
-//                 menuing(game, current_player , board, player_path, player, playerData, key, last_event);
-//                 break;
-//         }
-//         key = _getch();
-//     }   
-// }
 
 
 struct RandomEvent {
@@ -887,11 +707,11 @@ int main() {
 
 
     
-    int playerDataFinal[players] = {0};
+    int playerDataFinal[players] = {1};
 
     for (int i = 0; i < players; i++) {
         // sum up strength, wisdom, and stamina
-        playerDataFinal[i] += playerData[i].strength+1;
+        playerDataFinal[i] += playerData[i].strength;
         playerDataFinal[i] += playerData[i].wisdom;
         playerDataFinal[i] += playerData[i].stamina;
         playerDataFinal[i] += playerData[i].points;
