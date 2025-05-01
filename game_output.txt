@@ -1,17 +1,17 @@
-Turn: 15
+Turn: 37
 Player 1 stats: 
-Name: Nelson Dixon
-Strength: 15
-Stamina: 15
-Wisdom: 4
-Points: 16
-Age: 35
+Name: Liam Thunderlight
+Strength: 0
+Stamina: 2
+Wisdom: 6
+Points: 24
+Age: 80
 
 Player 2 stats: 
-Name: Owen Brightmoon
-Strength: 10
-Stamina: 0
-Wisdom: 4
-Points: 9
-Age: 33
+Name: Sage Meadowshade
+Strength: 58
+Stamina: 16
+Wisdom: 15
+Points: 26
+Age: 81
 

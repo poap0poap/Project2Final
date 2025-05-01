@@ -954,18 +954,20 @@ int main() {
             
         }
     }
-
+    ofstream outputFile(output_file_name);
+    outputFile<<"Turn: " << turn <<"\n";
+    for (int i = 0; i < players; i++) {
+        outputFile<<"Player " << i+1 << " stats: " << "\nName: " << playerData[i].firstName << " " << playerData[i].lastName <<"\nStrength: " << playerData[i].strength<<"\nStamina: "<< playerData[i].stamina<<"\nWisdom: "<< playerData[i].wisdom<<"\nPoints: "<< playerData[i].points<<"\nAge: "<< playerData[i].age<< "\n\n";
+    }
+    outputFile.close();
 
     clearScreen();
 
-    int playerDataFinal[players];
+    int playerDataFinal[players] = {1};
 
-    for (int i = 0; i < players; ++i) {
+    for (int i = 1; i < players; i++) {
         // sum up strength, wisdom, and stamina
-        int totalStats = playerData[i].strength
-                       + playerData[i].wisdom
-                       + playerData[i].stamina
-                       + playerData[i].age;
+        int totalStats = playerData[i].strength + playerData[i].wisdom + playerData[i].stamina + playerData[i].points;
         int bonusPoints = totalStats;
         playerDataFinal[i] += bonusPoints;
     }
