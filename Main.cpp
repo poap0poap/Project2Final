@@ -320,26 +320,31 @@ int main() {
         playerData[i].datePlayed = today;            // stamp each player
     }
 
-    std::ofstream out("PridePoints.txt");
-    if (!out) {
-        std::cerr << "Error opening output file\n";
-        return 1;
-    }
-
-    out << "Pride Points Report — Date: " << today << "\n\n";
-    out << "Player                  Points\n"
-           "--------------------------------\n";
     for (int i = 0; i < players; ++i) {
-        auto& p = playerData[i];
-        out << std::left 
-    << std::setw(22) 
-    << (p.firstName + " " + p.lastName) 
-    << p.points 
-    << "\n";
-
+        // sum up strength, wisdom, and stamina
+        int totalStats     = playerData[i].strength
+                           + playerData[i].wisdom
+                           + playerData[i].stamina;
+        // multiply by 10 and add to current wisdom
+        int bonusWisdom    = totalStats * 10;
+        playerData[i].wisdom += bonusWisdom;
     }
+    
+    // 2) (Optional) If you want to report the new wisdom value in your file,
+    //    you could change the header and print p.wisdom instead of p.points.
+    std::ofstream out("PridePoints.txt");
+    out << "Pride Points Report — Date: " << today << "\n\n";
+    out << std::left << std::setw(22) << "Player"
+        << "Wisdom\n"
+        << "----------------------\n";
+    
+    for (int i = 0; i < players; ++i) {
+        // no pointers or pass-by-reference here—just direct array access
+        out << std::left << std::setw(22)
+            << (playerData[i].firstName + " " + playerData[i].lastName)
+            << playerData[i].wisdom << "\n";
+    }
+    
     out.close();
-
-    std::cout << "Saved PridePoints.txt with today's date.\n";
-    // … clean up, _getch(), return 0, etc. …
+    std::cout << "Saved PridePoints.txt with today's wisdom totals.\n";
 }
