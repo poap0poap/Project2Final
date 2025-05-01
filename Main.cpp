@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -12,7 +11,6 @@
 #include "Board.h"
 #include "PlayerInfo.h"
 #include "Utility.h"
-#include "Sort.h"
 
 using namespace std;
 
@@ -423,26 +421,45 @@ int main() {
         clearScreen();
         cout << "Game ended during setup\n";
         cout << "Press any key to exit";
-        getch();
+        _getch();
         return 0;
     }
-    int player[2] = {0}; //initlize player positions
+    // int player[2] = {0}; //initlize player positions
     Board game(players,path);
     int board = game.getBoardSize();  
 
     string output;
-    bool z,l;
+    int out;
+    bool z,t;
     int diceSize = 6;
     int player_position, dice;
+    int winning = 0;
+    
 
     while (running){
+        winning = 0;
+        for (int i = 0;i<players; i++){
+            if (game.getPlayerPosition(i)+1==board){
+                winning++;
+            }
+            if (winning == players){
+                running = false;
+                z=false;
+                break;
+            }
+        }
+        if (!running){break;}
+        
+        //save to file
         ofstream outputFile(output_file_name);
         turn++;
-        outputFile<<"Turn :" << turn <<"\n";
+        outputFile<<"Turn: " << turn <<"\n";
         for (int i = 0; i < players; ++i) {
             outputFile<<"Player " << i+1 << " stats: " << "\nName: " << playerData[i].firstName << " " << playerData[i].lastName <<"\nStrength: " << playerData[i].strength<<"\nStamina: "<< playerData[i].stamina<<"\nWisdom: "<< playerData[i].wisdom<<"\nPoints: "<< playerData[i].points<<"\nAge: "<< playerData[i].age<< "\n\n";
         }
         outputFile.close();
+
+
         last_event = randomEvent(total_events,last_event);
         for (int b = 0; b < players; b++) {//loop for each player - changes between 0 & 1 for each path/player
             player_position = game.getPlayerPosition(b);
@@ -455,30 +472,98 @@ int main() {
                 game.displayBoard();
                 cout << "Player: " << b+1 << endl;
                 cout << "Current Event: " << last_event << endl;
+                cout << winning << endl;
                 menuDisplay();
                 key = _getch();
                 switch (key){
-                    case 27:
+                    case 27:{
                         running = false;
                         z = false;
                         break;
-                    case ' ':
+                    }
+                    case ' ':{
                         dice = diceRoll(diceSize);
-                        game.movePlayer(b, dice);
+                        if (game.getPlayerPosition(b)+dice >= board){
+                            dice = board-game.getPlayerPosition(b)-1;
+                        }
+                        else{
+                            
+                            // player[b] += dice;
+                        }
+                    game.movePlayer(b, dice);
+                        char p = game.getTileIndex(path[b],b);
+                        switch(p){
+                            case 'B':{
+                                int basic = rand()%3;
+                                switch(basic){
+                                    case 1:
+                                        playerData[b].strength++;
+                                        playerData[b].stamina++;
+                                        playerData[b].wisdom++;
+                                        break;
+                                    case 2:
+                                        playerData[b].strength+=2;
+                                        playerData[b].stamina+=2;
+                                        playerData[b].wisdom+=2;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                break;
+                            }
+                            case 'Y':
+                                break;
+                            case 'P':
+                                break;
+                            case 'L':
+                                    playerData[b].strength+=2;
+                                    playerData[b].stamina+=2;
+                                    playerData[b].wisdom+=2;
+                                break;
+                            case 'I':
+                                    playerData[b].strength+=3;
+                                    playerData[b].stamina+=3;
+                                    playerData[b].wisdom+=3;
+                                break;
+                            case 'G':
+                                    game.movePlayer(b,-1);
+                                    playerData[b].strength-=1;
+                                    playerData[b].stamina-=1;
+                                    playerData[b].wisdom-=1;
+                                break;
+                            case 'O':
+                                    game.movePlayer(b,-dice);
+                                    playerData[b].stamina-=3;
+                                break;
+                            case 'R':
+                                    playerData[b].points -= (playerData[b].points+1)/2;
+                                    playerData[b].strength-=5;
+                                    playerData[b].stamina-=5;
+                                    playerData[b].wisdom-=5;
+                                break;
+                            case 'C':
+                                    playerData[b].points += (playerData[b].points+1)/2;
+                                    playerData[b].strength+=5;
+                                    playerData[b].stamina+=5;
+                                    playerData[b].wisdom+=5;
+                                break;
+                            case 'S':
+                                break;
+                            case 'E':
+                                break;
+                            default:
+                                break;
+                            }
+                        
                         //move player current_playerased on dice
-                        player[b] += dice;
+                        
                         //cout  << tileAction(game, player[current_player], current_player, false, current_player,playerData) << endl;
                         //cout << endl;
                     
                         //if pos is farther then board stop
-                        if (game.getPlayerPosition(b) >= board){
-                            cout << "\nGame over\n";
-                            running = false;
-                        }
-                        else{
-                            z = false;
-                            running = true;
-                        };
+                        z = false;
+                        running = true;
+                    }
                     default:
                         clearBelowLine(17); 
                         switch(key){
@@ -495,64 +580,66 @@ int main() {
                             case '3':
                                 cout << "Advisor is a work in progress" << endl;
                                 break;
-                            case '4':
-                                b =true;
-                                while(b){
+                            case '4':{
+                                t =true;
+                                while(t){
                                     char p = game.getTileIndex(path[b],player_position);// find landed tile using chosen path and current position
                                     //describes events based on landed tile
                                     switch(p){
                                         case 'B':
                                             output = "Basic";
-                                            b=false;
+                                            t=false;
                                             break;
                                         case 'Y':
                                             output = "advisor change";
-                                            b=false;
+                                            t=false;
                                             break;
                                         case 'P':
                                             output = "riddle";
-                                            b=false;
+                                            t=false;
                                             break;
                                         case 'L':
                                             output = "+2 to stats";
-                                            b=false;
+                                            t=false;
                                             break;
                                         case 'I':
                                             output = "+3 to stats";
-                                            b=false;
+                                            t=false;
                                             break;
                                         case 'G':
                                             output = "Graveyard";
-                                            b=false;
+                                            t=false;
                                             break;
                                         case 'O':
                                             output = "Hyena";
-                                            b=false;
+                                            t=false;
                                             break;
                                         case 'R':
                                             output = "Custom negitive";
-                                            b=false;
+                                            t=false;
                                             break;
                                         case 'C':
                                             output = "Custom Postive";
-                                            b=false;
+                                            t=false;
                                             break;
                                         case 'S':
                                             output = "Start";
-                                            b=false;
+                                            // output = "Start";
+                                            t=false;
                                             break;
                                         case 'E':
                                             output = "End";
-                                            b=false;
+                                            t=false;
                                             break;
                                         default:
-                                            output = "Exceeded Board Size";
-                                            b=false;
+                                            output = game.getPlayerPosition(p);
+                                            t=false;
                                             break;
                                     }
                                 }
                                 cout << "You are on a(n) " << output << " tile." << endl;
                                 break;
+                            }
                             case '5':
                                 cout << last_event << endl; 
                                 break;
@@ -587,9 +674,19 @@ int main() {
         }  
     }
 
+
     clearScreen();
-    cout << "Game ended\n";
-    cout << "Press any key to exit";
-    _getch();//waits until keypress to exit
+
+    if (winning == players){
+        game.displayBoard();
+        cout << "PLAYErs WON" << endl;
+        _getch();
+    }
+    else{
+        cout << "Game ended\n";
+        cout << "Press any key to exit";
+        _getch();//waits until keypress to exit
+    }
     return 0;
+
 }

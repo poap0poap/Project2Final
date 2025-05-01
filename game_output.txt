@@ -1,17 +1,17 @@
-Turn :9
+Turn: 32
 Player 1 stats: 
-Name: Emmett Wintershade
-Strength: 8
-Stamina: 8
-Wisdom: 9
-Points: 25
-Age: 16
+Name: Daniel David
+Strength: 10
+Stamina: 9
+Wisdom: 10
+Points: 24
+Age: 40
 
 Player 2 stats: 
-Name: Britt Curtis
-Strength: 6
-Stamina: 9
-Wisdom: 5
-Points: 24
-Age: 13
+Name: Rose Emberstream
+Strength: 0
+Stamina: 0
+Wisdom: 0
+Points: 0
+Age: 36
 

@@ -13,11 +13,4 @@ struct playerInfo {
     int points;
 };
 
-class playerAdvisor {
-    private:
-    int current_advisor[Board::_MAX_PLAYERS];
-    public:
-    void displayAdvisor(int player_index);
-};
-
 #endif
