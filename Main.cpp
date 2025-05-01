@@ -210,33 +210,41 @@ int randomEvent(int events,int last_event){
     return last_event;
 }
 
-// //creates our display
-// bool screen(Board& game,int current_player,int board, int* player, playerInfo* playerData,int player_path,int last_event){
-//     clearScreen();
-//     game.displayBoard();
-//     cout << "Player: " << current_player+1 << endl;
-//     menuDisplay();
-//     char key = _getch();
-//     while(true){
-//         moveCursorToTop();
-//         game.displayBoard();
-//         cout << "Player: " << current_player+1 << endl;
-//         menuDisplay();
-//         switch (key){
-//             case 27:
-//                 return false;
-//                 break;
-//             case ' ':
-//                 return movement(game, current_player , board, player, playerData, 6);
-//             default:
-//                 menuing(game, current_player , board, player_path, player, playerData, key, last_event);
-//                 break;
-//         }
-//         key = _getch();
-//     }   
-// }
+std::vector<Advisor> loadAdvisors(std::string filename) {
+    std::vector<Advisor> list;
+    std::ifstream in(filename);
+    if (!in) {
+        std::cerr << "Failed to open advisors.txt\n";
+        return list;               // return empty list on failure
+    }
 
+    std::string line;
+    // skip the first line:
+    std::getline(in, line);
 
+    // now read the rest into 'list':
+    while (std::getline(in, line)) {
+        if (line.empty()) continue;
+        list.push_back({ line });
+    }
+
+    return list;                   // return the filled list
+}
+
+Advisor chooseAdvisor(std::vector<Advisor> all) {
+    std::cout << "Choose your advisor:\n";
+    for (size_t i = 0; i < all.size(); ++i)
+        std::cout << "  " << (i+1) << ") " << all[i].name << "\n";
+
+    int choice;
+    while (true) {
+        std::cout << "Enter the number of your advisor: ";
+        std::cin >> choice;
+        if (choice >= 1 && choice <= (int)all.size())
+            return all[choice - 1];
+        std::cout << "Invalid choice, please try again.\n";
+    }
+}
 
 int main() {
 
@@ -245,7 +253,7 @@ int main() {
     output_file_name ="game_output";
     output_file_name += ".txt";
     int turn = 0;
-   
+    auto allAdvisors = loadAdvisors("advisors.txt");
     bool running = true;
     
 
@@ -392,8 +400,8 @@ int main() {
         while(path_selector){
             if (!running){break;}
             cout << "Which path would player " << i+1 <<" like" <<endl;
-            cout << "Press 1 for the easier path" << endl;
-            cout << "Press 2 for the harder path" << endl;
+            cout << "Press 1 for the Easier path" << endl;
+            cout << "Press 2 for the Harder path" << endl;
             char keypress = _getch();
 
             if (keypress == 27) {  // ESC key
@@ -405,6 +413,7 @@ int main() {
                 case '1':
                     path[i] = 0;
                     path_selector = false;
+                    playerData[i].advisor = chooseAdvisor(allAdvisors);
                     break;
                 case '2':
                     path[i] = 1;
@@ -416,6 +425,7 @@ int main() {
             clearScreen();
         }
     }
+
 
     if(!running){
         clearScreen();
@@ -584,9 +594,18 @@ int main() {
                                 cout << "Name: " << playerData[b].firstName << " " << playerData[b].lastName << endl;
                                 cout << "Age: " << playerData[b].age << endl;
                                 break;
-                            case '3':
-                                cout << "Advisor is a work in progress" << endl;
+                            case '3': {
+                            std::string full = playerData[b].advisor.name;      // e.g. "Talon | …"
+                            auto pos = full.find('|');
+                            std::string nameOnly = (pos == std::string::npos)
+                                                   ? full
+                                                   : full.substr(0, pos);
+                            if (!nameOnly.empty() && nameOnly.back()==' ')
+                              nameOnly.pop_back();
+                            
+                            cout << "Player " << b+1 << "'s advisor is " << nameOnly << "." << endl;
                                 break;
+                            }
                             case '4':{
                                 t = true;
                                 while(t){

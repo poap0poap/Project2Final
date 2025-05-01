@@ -3,9 +3,14 @@
 #include <string>
 #include "Board.h"
 
+struct Advisor{
+    std::string name = "None";
+};
+
 struct playerInfo {
     std::string firstName;
     std::string lastName;
+    Advisor advisor;
     int age;
     int strength;
     int stamina;

@@ -1,17 +1,17 @@
-Turn: 55
+Turn: 1
 Player 1 stats: 
-Name: Clara Sunshadow
-Strength: 54
-Stamina: 44
-Wisdom: 55
-Points: 48
-Age: 62
+Name: Knox Emberlight
+Strength: 10
+Stamina: 7
+Wisdom: 6
+Points: 23
+Age: 8
 
 Player 2 stats: 
-Name: Jasper Nightbranch
-Strength: 37
-Stamina: 17
-Wisdom: 36
-Points: 11
-Age: 60
+Name: Lorie Mclean
+Strength: 4
+Stamina: 7
+Wisdom: 9
+Points: 23
+Age: 7
 
