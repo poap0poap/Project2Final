@@ -6,5 +6,5 @@
 // Prototype must use the correct type!
 // Here we take the count and an array of playerInfo.
 void endGame(int numPlayers, playerInfo playerData[]);
-
+void sortPlayersByPoints(int numPlayers, playerInfo playerData[]);
 #endif // SORT_H

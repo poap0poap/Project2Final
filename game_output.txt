@@ -1,17 +1,17 @@
-Turn :25
+Turn :9
 Player 1 stats: 
-Name: Jasper Nightbranch
+Name: Emmett Wintershade
 Strength: 8
 Stamina: 8
-Wisdom: 7
-Points: 23
-Age: 30
+Wisdom: 9
+Points: 25
+Age: 16
 
 Player 2 stats: 
-Name: Nora Brightstream
-Strength: 7
-Stamina: 6
-Wisdom: 8
-Points: 21
-Age: 29
+Name: Britt Curtis
+Strength: 6
+Stamina: 9
+Wisdom: 5
+Points: 24
+Age: 13
 

@@ -15,3 +15,21 @@ void endGame(int numPlayers, playerInfo playerData[])
         playerData[i].points += bonusPoints;
     }
 }
+
+void sortPlayersByPoints(int numPlayers, playerInfo playerData[])
+{
+    // For each position i, find the max in [i..end) and swap into i
+    for (int i = 0; i < numPlayers - 1; ++i) {
+        int maxIdx = i;
+        for (int j = i + 1; j < numPlayers; ++j) {
+            if (playerData[j].points > playerData[maxIdx].points) {
+                maxIdx = j;
+            }
+        }
+        if (maxIdx != i) {
+            playerInfo tmp          = playerData[i];
+            playerData[i]           = playerData[maxIdx];
+            playerData[maxIdx]      = tmp;
+        }
+    }
+}
