@@ -1,0 +1,17 @@
+Turn :5
+Player 1 stats: 
+Name: Sylvie Rainstream
+Strength: 7
+Stamina: 6
+Wisdom: 8
+Points: 21
+Age: 11
+
+Player 2 stats: 
+Name: Maia Dewglade
+Strength: 7
+Stamina: 7
+Wisdom: 6
+Points: 20
+Age: 10
+

@@ -436,7 +436,6 @@ int main() {
     int player_position, dice;
 
     while (running){
-        endGame(players, playerData);
         ofstream outputFile(output_file_name);
         turn++;
         outputFile<<"Turn :" << turn <<"\n";
