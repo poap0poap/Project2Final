@@ -308,6 +308,8 @@ int main() {
     }
     advisorFile.close();
     
+
+    //advisor data inilization
     for (int n = 0; n<MAX_ADVISORS;n++){
         istringstream lineStream(lines[n]);
     
@@ -498,8 +500,10 @@ int main() {
             clearScreen();
         }
     }
-    selector = true;
+
+    //advisor selectors
     for (int i = 0; i<players;i++){
+        selector = true;
         if (path[i]==1){
             while (selector){
                 cout << "Player " << i+1  << " select advisor:" << endl;
@@ -792,34 +796,34 @@ int main() {
                         break;
                 }
             }   
-            playerData[b].age += 1;
-            if (!running) break;
-            if (playerData[b].strength <= 0) {
-                playerData[b].strength = 0;
-            }
-            if (playerData[b].stamina <= 0) {
-                playerData[b].stamina = 0;
-            }
-            if (playerData[b].wisdom <= 0) {
-                playerData[b].wisdom = 0;
-            }
-            if (playerData[b].points < 0) {
-                playerData[b].points = 0;
-                if (playerData[b].strength != 0) {
-                    playerData[b].strength--;
+                playerData[b].age += 1;
+                if (!running) break;
+                if (playerData[b].strength <= 0) {
+                    playerData[b].strength = 0;
                 }
-                if (playerData[b].stamina != 0) {
-                    playerData[b].stamina--;
+                if (playerData[b].stamina <= 0) {
+                    playerData[b].stamina = 0;
                 }
-                if (playerData[b].wisdom != 0) {
-                    playerData[b].wisdom--;
+                if (playerData[b].wisdom <= 0) {
+                    playerData[b].wisdom = 0;
                 }
+                if (playerData[b].points < 0) {
+                    playerData[b].points = 0;
+                    if (playerData[b].strength != 0) {
+                        playerData[b].strength--;
+                    }
+                    if (playerData[b].stamina != 0) {
+                        playerData[b].stamina--;
+                    }
+                    if (playerData[b].wisdom != 0) {
+                        playerData[b].wisdom--;
+                    }
             }
             
         }
         last_event = randomEvent(total_events,last_event);
         for (int i = 0; i<players; i++){
-            if (playerData[i].advisor.advisorID == eventData[last_event].advisorID);
+            if (playerData[i].advisor.advisorID == eventData[last_event].advisorID){}
             else{
                 switch (last_event){
                     case 0:
@@ -847,12 +851,36 @@ int main() {
                         playerData[i].wisdom -=10;
                         break;
                     case 8:
-                        playerData[i].wisdom -=10;
+                        playerData[i].wisdom -=5;
                         break;
                     default:
                     break;
                 }  
             }
+                playerData[i].age += 1;
+                if (!running) break;
+                if (playerData[i].strength <= 0) {
+                    playerData[i].strength = 0;
+                }
+                if (playerData[i].stamina <= 0) {
+                    playerData[i].stamina = 0;
+                }
+                if (playerData[i].wisdom <= 0) {
+                    playerData[i].wisdom = 0;
+                }
+                if (playerData[i].points < 0) {
+                    playerData[i].points = 0;
+                    if (playerData[i].strength != 0) {
+                        playerData[i].strength--;
+                    }
+                    if (playerData[i].stamina != 0) {
+                        playerData[i].stamina--;
+                    }
+                    if (playerData[i].wisdom != 0) {
+                        playerData[i].wisdom--;
+                    }
+                }
+            
         }
     }
 

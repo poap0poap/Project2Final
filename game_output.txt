@@ -1,17 +1,17 @@
-Turn: 1
+Turn: 8
 Player 1 stats: 
-Name: Isaac Galebranch
-Strength: 9
-Stamina: 7
-Wisdom: 6
-Points: 12
-Age: 6
+Name: Lily Twilightwave
+Strength: 20
+Stamina: 17
+Wisdom: 11
+Points: 20
+Age: 19
 
 Player 2 stats: 
-Name: Hugo Shadowstone
-Strength: 10
-Stamina: 8
-Wisdom: 6
+Name: Juno Firespark
+Strength: 12
+Stamina: 7
+Wisdom: 3
 Points: 24
-Age: 7
+Age: 20
 
