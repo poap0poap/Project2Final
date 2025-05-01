@@ -156,9 +156,70 @@ Advisor chooseAdvisor(std::vector<Advisor> all) {
     }
 }
 
+struct Riddle {
+    std::string question;
+    std::string answer;
+};
+
+// trim whitespace from both ends
+void trim(std::string &s) {
+    s.erase(0, s.find_first_not_of(" \t\r\n"));
+    s.erase(s.find_last_not_of(" \t\r\n") + 1);
+}
+
+// load all lines, split at '|'
+std::vector<Riddle> loadRiddles(const std::string &path) {
+    std::vector<Riddle> out;
+    std::ifstream in(path);
+    if (!in) {
+        std::cerr << "Cannot open " << path << "\n";
+        return out;
+    }
+    std::string line;
+    std::getline(in, line);            // skip header if present
+    while (std::getline(in, line)) {
+        if (line.empty()) continue;
+        auto pos = line.find('|');
+        if (pos == std::string::npos) continue;
+        std::string q = line.substr(0, pos);
+        std::string a = line.substr(pos+1);
+        trim(q); trim(a);
+        out.push_back({q,a});
+    }
+    return out;
+}
+
+// pick one at random
+Riddle pick(const std::vector<Riddle> &v) {
+    return v[ std::rand() % v.size() ];
+}
+
+void poseOne(const Riddle &r) {
+    std::string reply;
+    std::cout << "\n" << r.question << "\nYour answer: ";
+    std::getline(std::cin, reply);
+
+    // lowercase both for case‐insensitive compare
+    std::transform(reply.begin(), reply.end(), reply.begin(),
+                   [](unsigned char c){ return std::tolower(c); });
+    std::string correct = r.answer;
+    std::transform(correct.begin(), correct.end(), correct.begin(),
+                   [](unsigned char c){ return std::tolower(c); });
+
+    if (reply == correct) {
+        std::cout << "Correct!\n\n";
+    } else {
+        std::cout << "Incorrect. The right answer was: "
+                  << r.answer << "\n\n";
+    }
+}
+
+
+
 int main() {
 //Initializing Variables
     srand(time(0)); //Seed RNG once
+    auto riddles = loadRiddles("riddles.txt");
     string output_file_name;
     output_file_name ="game_output";
     output_file_name += ".txt";
@@ -430,10 +491,15 @@ int main() {
                                 }
                                 break;
                             }
-                            case 'Y':
+                            case 'Y': {
+                                Advisor chooseAdvisor(std::vector<Advisor> all);
                                 break;
-                            case 'P':
+                            }
+                            case 'P': {
+                                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                                poseOne(pick(riddles));
                                 break;
+                            }
                             case 'L':
                                     playerData[b].strength+=2;
                                     playerData[b].stamina+=2;

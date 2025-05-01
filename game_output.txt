@@ -1,17 +1,17 @@
-Turn: 1
+Turn: 15
 Player 1 stats: 
-Name: Hugo Shadowstone
-Strength: 10
-Stamina: 8
-Wisdom: 6
-Points: 24
-Age: 7
+Name: Rowan Mistshade
+Strength: 20
+Stamina: 6
+Wisdom: 21
+Points: 25
+Age: 21
 
 Player 2 stats: 
-Name: Finn Riverstone
-Strength: 8
-Stamina: 8
-Wisdom: 9
-Points: 25
-Age: 7
+Name: Hugo Shadowstone
+Strength: 21
+Stamina: 16
+Wisdom: 17
+Points: 24
+Age: 21
 
