@@ -381,7 +381,7 @@ int main() {
                 std::istringstream lineStream(lines[selectedLine]);
                 lineStream >> playerData[i].firstName >> playerData[i].lastName >> playerData[i].age 
                             >> playerData[i].strength >> playerData[i].stamina >> playerData[i].wisdom >> playerData[i].points;
-                            playerData[i].advisor = 0;  
+                            playerData[i].advisor.advisorID = 0;  
             }
         }
         clearScreen();
