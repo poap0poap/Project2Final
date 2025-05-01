@@ -380,7 +380,8 @@ int main() {
             {
                 std::istringstream lineStream(lines[selectedLine]);
                 lineStream >> playerData[i].firstName >> playerData[i].lastName >> playerData[i].age 
-                            >> playerData[i].strength >> playerData[i].stamina >> playerData[i].wisdom >> playerData[i].points;  
+                            >> playerData[i].strength >> playerData[i].stamina >> playerData[i].wisdom >> playerData[i].points;
+                            playerData[i].advisor = 0;  
             }
         }
         clearScreen();
@@ -408,6 +409,7 @@ int main() {
                     break;
                 case '2':
                     path[i] = 1;
+                    playerData[i].points-=10;
                     path_selector = false;
                     break;
                 default:
@@ -528,28 +530,28 @@ int main() {
                                 break;
                             case 'G':
                                     if (game.getPlayerPosition(b)>=10){
-                                    game.movePlayer(b,-10);
+                                        game.movePlayer(b,-10);
                                     }
                                     else{
                                         game.movePlayer(b,-dice+1);
                                     }
-                                    playerData[b].strength-=1;
-                                    playerData[b].stamina-=1;
-                                    playerData[b].wisdom-=1;
-                                break;
-                            case 'O':
-                                    game.movePlayer(b,-dice);
-                                    playerData[b].stamina-=3;
-                                break;
-                            case 'R':
-                                    playerData[b].points -= (playerData[b].points+1)/2;
                                     playerData[b].strength-=5;
                                     playerData[b].stamina-=5;
                                     playerData[b].wisdom-=5;
                                 break;
+                            case 'O':
+                                    game.movePlayer(b,-dice);
+                                    playerData[b].stamina-=2;
+                                break;
+                            case 'R':
+                                    playerData[b].points -= (playerData[b].points+1)/2;
+                                    playerData[b].strength-=10;
+                                    playerData[b].stamina-=10;
+                                    playerData[b].wisdom-=10;
+                                break;
                             case 'C':
                                     playerData[b].points += (playerData[b].points+1)/2;
-                                    playerData[b].strength+=5;
+                                    playerData[b].strength+=5   ;
                                     playerData[b].stamina+=5;
                                     playerData[b].wisdom+=5;
                                 break;
@@ -654,9 +656,7 @@ int main() {
                         break;
                 }
             }   
-            if (!(game.getPlayerPosition(b)>=board)){
             playerData[b].age += 1;
-            }
             if (!running) break;
             if (playerData[b].strength <= 0) {
                 playerData[b].strength = 0;
@@ -680,6 +680,10 @@ int main() {
                 }
             }
             
+        }
+        switch (last_event){
+            default:
+            break;
         }  
     }
 
@@ -692,34 +696,19 @@ int main() {
         // sum up strength, wisdom, and stamina
         int totalStats = playerData[i].strength
                        + playerData[i].wisdom
-                       + playerData[i].stamina;
-        // multiply by 10 and add to current wisdom
-        int bonusPoints = totalStats * 10;
+                       + playerData[i].stamina
+                       + playerData[i].age;
+        int bonusPoints = totalStats;
         playerDataFinal[i] += bonusPoints;
     }
 
-    // For each position i, find the max in [i..end) and swap into i
-    for (int i = 0; i < players; ++i) {
-        int maxIdx = i;
-        for (int j = i + 1; j < players; ++j) {
-            if (playerDataFinal[j] > playerDataFinal[maxIdx]) {
-                maxIdx = j; 
-            }
-        }
-        if (maxIdx != i) {
-            int tmp          = playerDataFinal[i];
-            playerDataFinal[i]           = playerDataFinal[maxIdx];
-            playerDataFinal[maxIdx]      = tmp;
+
+    int winner = 0;
+    for (int i = 0; i < players; i++){
+        if (playerDataFinal[i]>playerDataFinal[i-1]){
+            winner = i;
         }
     }
-
-
-        int winner = 0;
-        for (int i = 0; i < players; i++){
-            if (playerDataFinal[i]>playerDataFinal[i-1]){
-                winner = i;
-            }
-        }
 
     if (winning == players){
         game.displayBoard();

@@ -12,6 +12,7 @@ class playerInfo {
     int stamina;
     int wisdom;
     int points;
+    int advisor;
 };
 
 #endif

@@ -1,17 +1,17 @@
-Turn: 53
+Turn: 46
 Player 1 stats: 
-Name: Cora Firestone
-Strength: 50
-Stamina: 36
-Wisdom: 46
-Points: 36
-Age: 9
+Name: Mira Goldstream
+Strength: 21
+Stamina: 13
+Wisdom: 21
+Points: 24
+Age: 54
 
 Player 2 stats: 
-Name: Maia Dewglade
-Strength: 36
-Stamina: 12
-Wisdom: 35
-Points: 7
-Age: 6
+Name: Nico Frostbright
+Strength: 11
+Stamina: 7
+Wisdom: 11
+Points: 3
+Age: 54
 
