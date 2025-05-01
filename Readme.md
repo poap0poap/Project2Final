@@ -10,3 +10,4 @@ Once compliled make sure in include advisors.txt, charcter.txt, random_events.tx
 ## Running Main.exe
 
 make sure in the directory that has Main.exe you include advisors.txt, charcter.txt, random_events.txt, and riddles.txt  
+Use this to compile the code:  g++ Main.cpp Board.cpp Utility.cpp -o Main
