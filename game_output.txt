@@ -1,17 +1,17 @@
-Turn: 46
+Turn: 23
 Player 1 stats: 
-Name: Mira Goldstream
-Strength: 21
-Stamina: 13
-Wisdom: 21
-Points: 24
-Age: 54
+Name: Rory Kidd
+Strength: 30
+Stamina: 25
+Wisdom: 20
+Points: 12
+Age: 32
 
 Player 2 stats: 
-Name: Nico Frostbright
-Strength: 11
-Stamina: 7
-Wisdom: 11
-Points: 3
-Age: 54
+Name: Isaac Galebranch
+Strength: 14
+Stamina: 9
+Wisdom: 1
+Points: 17
+Age: 28
 

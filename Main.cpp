@@ -237,6 +237,11 @@ int randomEvent(int events,int last_event){
 // }
 
 
+struct RandomEvent {
+    string name;        
+    string effects;   
+    int advisorID;   
+};
 
 int main() {
 
@@ -248,26 +253,62 @@ int main() {
    
     bool running = true;
     
+    const int MAX_EVENTS = 10;  
+    RandomEvent eventData[MAX_EVENTS];
+    int totalEvents = 0;
+    int selectedLine = 0;
+    vector<string> lines;
+    ifstream eventFIle("random_events.txt");
+    if (!eventFIle) {
+        cerr << "Failed to open random_events.txt\n";
+    } else {
+        string tmp;
+        while (getline(eventFIle, tmp)) {
+            if (!tmp.empty())
+                lines.push_back(tmp);
+    }
+    eventFIle.close();
+}
+    for (int n = 0; n<MAX_EVENTS;n++){
+        istringstream lineStream(lines[n]);
+    
+        // 1) read up to first '|'
+        string rawName;
+        getline(lineStream, rawName, '|');
+    
+        // 2) read up to second '|'
+        string rawEffects;
+        getline(lineStream, rawEffects, '|');
+    
+        // 3) read the rest (the advisor ID)
+        string rawAdv;
+        getline(lineStream, rawAdv);
+        int lessRawAdv = std::stoi(rawAdv);
+        eventData[n].name = rawName;
+        eventData[n].effects = rawEffects;
+        eventData[n].advisorID = lessRawAdv;
+    }
 
     //data/variables
     int last_event = 0;
     const int players = 2;
     playerInfo playerData[4];
-    int total_events = 9;
+    int total_events = 10;
     int path[4];
     bool path_selector;
         // random player data
         //data for charcters
         bool charRunning = true;
-        std::fstream characterFile("charcter.txt");
-        int selectedLine, keyValue;
-        std::string line;
-        std::vector<std::string> lines;
+        fstream characterFile("charcter.txt");
+        int keyValue;
+        selectedLine = 0;
+        string line;
+        lines.clear();
         while(getline(characterFile,line)){lines.push_back(line);}
         characterFile.close();
 
         if (lines.size() <= 1) {
-            std::cout << "No valid data in the file" << std::endl;
+            cout << "No valid data in the file" << endl;
             running = false;
         }
 
@@ -283,7 +324,7 @@ int main() {
             }
             //reset line checker and data relating to certain player
             characterFile.clear();
-            characterFile.seekg(0, std::ios::beg);
+            characterFile.seekg(0, ios::beg);
             int currentLine = 0;
             columnIndex = 0;
             selectedLine = 0;
@@ -293,18 +334,18 @@ int main() {
             while(charRunning){
                 clearBelowLine(0);
                 int start = columnIndex * 9;
-                int end = std::min(start + 9, static_cast<int>(lines.size()));
+                int end = min(start + 9, static_cast<int>(lines.size()));
 
-                std::cout << "Press esc to quit at any menu\n" << std::endl;
-                std::cout << "Player " << i+1 << " selection" <<std::endl;
-                std::cout << "Use left and right arrow keys to navigate pages or press 'R' for random charcter" <<std::endl;
-                std::cout << "Displaying charcters " << start + 1 << " to " << end << ":\n";
+                cout << "Press esc to quit at any menu\n" << endl;
+                cout << "Player " << i+1 << " selection" <<endl;
+                cout << "Use left and right arrow keys to navigate pages or press 'R' for random charcter" <<endl;
+                cout << "Displaying charcters " << start + 1 << " to " << end << ":\n";
                 for (int i = start; i < end; ++i) {
-                    std::stringstream ss(lines[i]);
-                    std::string firstName, lastName;
+                    stringstream ss(lines[i]);
+                    string firstName, lastName;
                     ss >> firstName >> lastName;
 
-                    std::cout << (i%9)+1 << ". " << firstName << " " << lastName << std::endl;
+                    cout << (i%9)+1 << ". " << firstName << " " << lastName << endl;
                 }
                 char keypress = _getch();
                 //if arrow keys are buggin check to see if the int is not represented in this list
@@ -347,15 +388,15 @@ int main() {
                     if (selectedLine != -1){
                         if (!running){break;}
                         clearScreen();
-                        std::stringstream ss(lines[selectedLine]);
-                        std::string firstName, lastName, age , str, sta, wis, points;
+                        stringstream ss(lines[selectedLine]);
+                        string firstName, lastName, age , str, sta, wis, points;
                         ss >> firstName >> lastName >> age>>str>>sta>>wis>>points;
-                        std::cout << "You picked " << firstName << " " << lastName << "\n" << "They are " << age <<" turns old"<< std::endl;
-                        std::cout << "Their starting strength is " << str <<std::endl;
-                        std::cout << "Their starting stamina is " << sta <<std::endl;
-                        std::cout << "Their starting wisdom is " << wis <<std::endl;
-                        std::cout << "Their starting points are " << points <<std::endl;
-                        std::cout <<"Press Enter to confirm or any other to reselect"<< std::endl;
+                        cout << "You picked " << firstName << " " << lastName << "\n" << "They are " << age <<" turns old"<< endl;
+                        cout << "Their starting strength is " << str <<endl;
+                        cout << "Their starting stamina is " << sta <<endl;
+                        cout << "Their starting wisdom is " << wis <<endl;
+                        cout << "Their starting points are " << points <<endl;
+                        cout <<"Press Enter to confirm or any other to reselect"<< endl;
                         int press = _getch();
                         switch(press){
                             case 13://enter
@@ -378,10 +419,12 @@ int main() {
             if(!running){break;}
             if(selectedLine != -1)
             {
-                std::istringstream lineStream(lines[selectedLine]);
+                istringstream lineStream(lines[selectedLine]);
                 lineStream >> playerData[i].firstName >> playerData[i].lastName >> playerData[i].age 
                             >> playerData[i].strength >> playerData[i].stamina >> playerData[i].wisdom >> playerData[i].points;
-                            playerData[i].advisor.advisorID = 0;  
+                            playerData[i].advisor.advisorID = 0;
+                            playerData[i].advisor.advisorDetails = " ";
+                            playerData[i].advisor.advisorName = " ";  
             }
         }
         clearScreen();
@@ -461,8 +504,6 @@ int main() {
         }
         outputFile.close();
 
-
-        last_event = randomEvent(total_events,last_event);
         for (int b = 0; b < players; b++) {//loop for each player - changes between 0 & 1 for each path/player
             player_position = game.getPlayerPosition(b);
             //the display
@@ -473,8 +514,7 @@ int main() {
                 moveCursorToTop();
                 game.displayBoard();
                 cout << "Player: " << b+1 << endl;
-                cout << "Current Event: " << last_event << endl;
-                cout << winning << endl;
+                cout << "Current Event: " << eventData[last_event].name << endl;
                 menuDisplay();
                 key = _getch();
                 switch (key){
@@ -650,7 +690,7 @@ int main() {
                                 break;
                             }
                             case '5':
-                                cout << last_event << endl; 
+                                cout << eventData[last_event].effects << endl; 
                                 break;
                         }
                         break;
@@ -681,10 +721,43 @@ int main() {
             }
             
         }
-        switch (last_event){
-            default:
-            break;
-        }  
+        last_event = randomEvent(total_events,last_event);
+        for (int i = 0; i<players; i++){
+            if (playerData[i].advisor.advisorID == eventData[last_event].advisorID);
+            else{
+                switch (last_event){
+                    case 0:
+                        playerData[i].stamina -=5;
+                        break;
+                    case 1:
+                        playerData[i].strength -=5;
+                        break;
+                    case 2:
+                        playerData[i].wisdom -=5;
+                        break;
+                    case 3:
+                        playerData[i].strength -=5;
+                        playerData[i].stamina -=5;
+                        playerData[i].wisdom -=5;
+                        break;
+                    case 4:
+                        playerData[i].stamina -=3;
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                    case 7:
+                        playerData[i].wisdom -=10;
+                        break;
+                    case 8:
+                        playerData[i].wisdom -=10;
+                        break;
+                    default:
+                    break;
+                }  
+            }
+        }
     }
 
 
