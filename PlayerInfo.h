@@ -3,19 +3,20 @@
 #include <string>
 #include "Board.h"
 
-struct Advisor{
-    std::string name = "None";
-};
-
-struct playerInfo {
+class playerInfo {
+    public:
     std::string firstName;
     std::string lastName;
-    Advisor advisor;
     int age;
     int strength;
     int stamina;
     int wisdom;
     int points;
+    struct Advisor{
+        int advisorID;
+        std::string advisorName;
+        std::string advisorDetails;
+    } advisor;
 };
 
 #endif

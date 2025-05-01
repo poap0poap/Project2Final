@@ -19,6 +19,7 @@ int diceRoll(int dice_size){
     return 1 + rand() % dice_size;
 }
 
+
 class  pickEvent{
     private:
     const int totalEvents;
@@ -29,6 +30,97 @@ class  pickEvent{
         return rand() % totalEvents;
     }
 };
+
+// //check for what tile you are on and applys effects
+// string tileAction(Board& game, int player_position, int player_path, bool viewing, int player, playerInfo* playerData)
+// {
+//     char p = game.getTileIndex(player_path,player_position);// find landed tile using chosen path and current position
+//     //describes events based on landed tile
+//     switch(p){
+//         case 'B':
+//         if (!viewing){
+//             switch(rand()%3){
+//                 case 1:
+//                     playerData[player].strength += 1;
+//                     playerData[player].stamina += 1;
+//                     playerData[player].wisdom += 1;
+//                     break;
+//                 case 2:
+//                     playerData[player].strength += 2;
+//                     playerData[player].stamina += 2;
+//                     playerData[player].wisdom += 2;
+//                     break;
+//                 default:
+//                     break;
+//             }
+
+//         }
+//         return "Basic";
+//         break;
+//         case 'Y':
+//         return "advisor change";
+//         break;
+//         case 'P':
+//         return "riddle";
+//         break;
+//         case 'L':
+//         if (!viewing){
+//             playerData[player].strength += 2;
+//             playerData[player].stamina += 2;
+//             playerData[player].wisdom += 2;
+//         }
+//         return "+2 to stats";
+//         break;
+//         case 'I':
+//         if (!viewing){
+//             playerData[player].strength += 3;
+//             playerData[player].stamina += 3;
+//             playerData[player].wisdom += 3;
+//         }
+//         return "+3 to stats";
+//         break;
+//         case 'G':
+//         if (!viewing){
+//             playerData[player].strength -= 1;
+//             playerData[player].stamina -= 1;
+//             playerData[player].wisdom -= 1;
+//         }
+//         return "Graveyard";
+//         break;
+//         case 'O':
+//         if (!viewing){
+//             playerData[player].stamina -= 5;
+//         }
+//         return "Hyena";
+//         break;
+//         case 'R':
+//         if (!viewing){
+//             playerData[player].strength -= 5;
+//             playerData[player].stamina -= 5;
+//             playerData[player].wisdom -= 5;
+//             playerData[player].points = (playerData[player].points + 1)/2;
+//         }
+//         return "Custom negitive";
+//         break;
+//         case 'C':
+//         if (!viewing){
+//             playerData[player].strength += 5;
+//             playerData[player].stamina += 5;
+//             playerData[player].wisdom += 5;
+//             playerData[player].points += (playerData[player].points + 1)/2;
+//         }
+//         return "Custom Postive";
+//         break;
+//         case 'S':
+//         return "Start";
+//         case 'E':
+//         return "End";
+//         default:
+//         return "Exceeded Board Size";
+//         break;
+//     }
+//     return " ";
+// }
 
 //menu display
 void menuDisplay(){
@@ -118,133 +210,142 @@ int randomEvent(int events,int last_event){
     return last_event;
 }
 
-//Opens Up Advisor.txt for the advisor information.
-std::vector<Advisor> loadAdvisors(std::string filename) {
-    std::vector<Advisor> list;
-    std::ifstream in(filename);
-    if (!in) {
-        std::cerr << "Failed to open advisors.txt\n";
-        return list;               // return empty list on failure
-    }
+// //creates our display
+// bool screen(Board& game,int current_player,int board, int* player, playerInfo* playerData,int player_path,int last_event){
+//     clearScreen();
+//     game.displayBoard();
+//     cout << "Player: " << current_player+1 << endl;
+//     menuDisplay();
+//     char key = _getch();
+//     while(true){
+//         moveCursorToTop();
+//         game.displayBoard();
+//         cout << "Player: " << current_player+1 << endl;
+//         menuDisplay();
+//         switch (key){
+//             case 27:
+//                 return false;
+//                 break;
+//             case ' ':
+//                 return movement(game, current_player , board, player, playerData, 6);
+//             default:
+//                 menuing(game, current_player , board, player_path, player, playerData, key, last_event);
+//                 break;
+//         }
+//         key = _getch();
+//     }   
+// }
 
-    std::string line;
-    // skip the first line:
-    std::getline(in, line);
 
-    // now read the rest into 'list':
-    while (std::getline(in, line)) {
-        if (line.empty()) continue;
-        list.push_back({ line });
-    }
-
-    return list;                   // return the filled list
-}
-
-//Let's you choose your advisor and store it.
-Advisor chooseAdvisor(std::vector<Advisor> all) {
-    std::cout << "Choose your advisor:\n";
-    for (size_t i = 0; i < all.size(); ++i)
-        std::cout << "  " << (i+1) << ") " << all[i].name << "\n";
-
-    int choice;
-    while (true) {
-        std::cout << "Enter the number of your advisor: ";
-        std::cin >> choice;
-        if (choice >= 1 && choice <= (int)all.size())
-            return all[choice - 1];
-        std::cout << "Invalid choice, please try again.\n";
-    }
-}
-
-struct Riddle {
-    std::string question;
-    std::string answer;
+struct RandomEvent {
+    string name;        
+    string effects;   
+    int advisorID;   
 };
 
-// trim whitespace from both ends
-void trim(std::string &s) {
-    s.erase(0, s.find_first_not_of(" \t\r\n"));
-    s.erase(s.find_last_not_of(" \t\r\n") + 1);
-}
-
-// load all lines, split at '|'
-std::vector<Riddle> loadRiddles(const std::string &path) {
-    std::vector<Riddle> out;
-    std::ifstream in(path);
-    if (!in) {
-        std::cerr << "Cannot open " << path << "\n";
-        return out;
-    }
-    std::string line;
-    std::getline(in, line);            // skip header if present
-    while (std::getline(in, line)) {
-        if (line.empty()) continue;
-        auto pos = line.find('|');
-        if (pos == std::string::npos) continue;
-        std::string q = line.substr(0, pos);
-        std::string a = line.substr(pos+1);
-        trim(q); trim(a);
-        out.push_back({q,a});
-    }
-    return out;
-}
-
-// pick one at random
-Riddle pick(const std::vector<Riddle> &v) {
-    return v[ std::rand() % v.size() ];
-}
-
-void poseOne(const Riddle &r) {
-    std::string reply;
-    std::cout << "\n" << r.question << "\nYour answer: ";
-    std::getline(std::cin, reply);
-
-    // lowercase both for case‐insensitive compare
-    std::transform(reply.begin(), reply.end(), reply.begin(),
-                   [](unsigned char c){ return std::tolower(c); });
-    std::string correct = r.answer;
-    std::transform(correct.begin(), correct.end(), correct.begin(),
-                   [](unsigned char c){ return std::tolower(c); });
-
-    if (reply == correct) {
-        std::cout << "Correct!\n\n";
-    } else {
-        std::cout << "Incorrect. The right answer was: "
-                  << r.answer << "\n\n";
-    }
-}
-
-
+struct Advisor{
+    string name;
+    string effects;
+    int advisorID;
+};
 
 int main() {
-//Initializing Variables
+    const int MAX_ADVISORS = 6;
+    Advisor advisor[MAX_ADVISORS];
     srand(time(0)); //Seed RNG once
-    auto riddles = loadRiddles("riddles.txt");
     string output_file_name;
     output_file_name ="game_output";
     output_file_name += ".txt";
     int turn = 0;
-    auto allAdvisors = loadAdvisors("advisors.txt");
+   
     bool running = true;
     
+    const int MAX_EVENTS = 10;  
+    RandomEvent eventData[MAX_EVENTS];
+    int selectedLine = 0;
+    vector<string> lines;
+    ifstream eventFIle("random_events.txt");
+    if (!eventFIle) {
+        cerr << "Failed to open random_events.txt\n";
+    } else {
+        string tmp;
+        while (getline(eventFIle, tmp)) {
+            if (!tmp.empty())
+                lines.push_back(tmp);
+    }
+    eventFIle.close();
+}
+    for (int n = 0; n<MAX_EVENTS;n++){
+        istringstream lineStream(lines[n]);
+    
+        // 1) read up to first '|'
+        string rawName;
+        getline(lineStream, rawName, '|');
+    
+        // 2) read up to second '|'
+        string rawEffects;
+        getline(lineStream, rawEffects, '|');
+    
+        // 3) read the rest (the advisor ID)
+        string rawAdv;
+        getline(lineStream, rawAdv);
+        int lessRawAdv = std::stoi(rawAdv);
+        eventData[n].name = rawName;
+        eventData[n].effects = rawEffects;
+        eventData[n].advisorID = lessRawAdv;
+    }
+
+    playerInfo playerData[4];
+    lines.clear();
+    ifstream advisorFile("advisors.txt");
+    if (!advisorFile) {
+        cerr << "Failed to open advisors.txt\n";
+    } else {
+        string tmp;
+        while (getline(advisorFile, tmp)) {
+            if (!tmp.empty())
+                lines.push_back(tmp);
+    }
+    advisorFile.close();
+    
+    for (int n = 0; n<MAX_ADVISORS;n++){
+        istringstream lineStream(lines[n]);
+    
+        // 1) read up to first '|'
+        string rawName;
+        getline(lineStream, rawName, '|');
+    
+        // 2) read up to second '|'
+        string rawDescrip;
+        getline(lineStream, rawDescrip);
+
+        advisor[n].name = rawName;
+        advisor[n].effects = rawDescrip;
+        advisor[n].advisorID = n+1;
+    }
+    }
+
+
+
+    //data/variables
     int last_event = 0;
     const int players = 2;
-    playerInfo playerData[4];
-    int total_events = 9;
+    int total_events = 10;
     int path[4];
-    bool path_selector;
+    bool selector;
         // random player data
         //data for charcters
         bool charRunning = true;
-        std::fstream characterFile("charcter.txt");
-        int selectedLine, keyValue;
-        std::string line;
-        std::vector<std::string> lines;
+        fstream characterFile("charcter.txt");
+        int keyValue;
+        selectedLine = 0;
+        string line;
+        lines.clear();
         while(getline(characterFile,line)){lines.push_back(line);}
         characterFile.close();
 
         if (lines.size() <= 1) {
-            std::cout << "No valid data in the file" << std::endl;
+            cout << "No valid data in the file" << endl;
             running = false;
         }
 
@@ -260,7 +361,7 @@ int main() {
             }
             //reset line checker and data relating to certain player
             characterFile.clear();
-            characterFile.seekg(0, std::ios::beg);
+            characterFile.seekg(0, ios::beg);
             int currentLine = 0;
             columnIndex = 0;
             selectedLine = 0;
@@ -270,18 +371,18 @@ int main() {
             while(charRunning){
                 clearBelowLine(0);
                 int start = columnIndex * 9;
-                int end = std::min(start + 9, static_cast<int>(lines.size()));
+                int end = min(start + 9, static_cast<int>(lines.size()));
 
-                std::cout << "Press esc to quit at any menu\n" << std::endl;
-                std::cout << "Player " << i+1 << " selection" <<std::endl;
-                std::cout << "Use left and right arrow keys to navigate pages or press 'R' for random charcter" <<std::endl;
-                std::cout << "Displaying charcters " << start + 1 << " to " << end << ":\n";
+                cout << "Press esc to quit at any menu\n" << endl;
+                cout << "Player " << i+1 << " selection" <<endl;
+                cout << "Use left and right arrow keys to navigate pages or press 'R' for random charcter" <<endl;
+                cout << "Displaying charcters " << start + 1 << " to " << end << ":\n";
                 for (int i = start; i < end; ++i) {
-                    std::stringstream ss(lines[i]);
-                    std::string firstName, lastName;
+                    stringstream ss(lines[i]);
+                    string firstName, lastName;
                     ss >> firstName >> lastName;
 
-                    std::cout << (i%9)+1 << ". " << firstName << " " << lastName << std::endl;
+                    cout << (i%9)+1 << ". " << firstName << " " << lastName << endl;
                 }
                 char keypress = _getch();
                 //if arrow keys are buggin check to see if the int is not represented in this list
@@ -324,15 +425,15 @@ int main() {
                     if (selectedLine != -1){
                         if (!running){break;}
                         clearScreen();
-                        std::stringstream ss(lines[selectedLine]);
-                        std::string firstName, lastName, age , str, sta, wis, points;
+                        stringstream ss(lines[selectedLine]);
+                        string firstName, lastName, age , str, sta, wis, points;
                         ss >> firstName >> lastName >> age>>str>>sta>>wis>>points;
-                        std::cout << "You picked " << firstName << " " << lastName << "\n" << "They are " << age <<" turns old"<< std::endl;
-                        std::cout << "Their starting strength is " << str <<std::endl;
-                        std::cout << "Their starting stamina is " << sta <<std::endl;
-                        std::cout << "Their starting wisdom is " << wis <<std::endl;
-                        std::cout << "Their starting points are " << points <<std::endl;
-                        std::cout <<"Press Enter to confirm or any other to reselect"<< std::endl;
+                        cout << "You picked " << firstName << " " << lastName << "\n" << "They are " << age <<" turns old"<< endl;
+                        cout << "Their starting strength is " << str <<endl;
+                        cout << "Their starting stamina is " << sta <<endl;
+                        cout << "Their starting wisdom is " << wis <<endl;
+                        cout << "Their starting points are " << points <<endl;
+                        cout <<"Press Enter to confirm or any other to reselect"<< endl;
                         int press = _getch();
                         switch(press){
                             case 13://enter
@@ -355,9 +456,12 @@ int main() {
             if(!running){break;}
             if(selectedLine != -1)
             {
-                std::istringstream lineStream(lines[selectedLine]);
+                istringstream lineStream(lines[selectedLine]);
                 lineStream >> playerData[i].firstName >> playerData[i].lastName >> playerData[i].age 
-                            >> playerData[i].strength >> playerData[i].stamina >> playerData[i].wisdom >> playerData[i].points;  
+                            >> playerData[i].strength >> playerData[i].stamina >> playerData[i].wisdom >> playerData[i].points;
+                            playerData[i].advisor.advisorID = 0;
+                            playerData[i].advisor.advisorDetails = "No advisor selected";
+                            playerData[i].advisor.advisorName = "None";  
             }
         }
         clearScreen();
@@ -365,12 +469,12 @@ int main() {
     //path selctor
     for (int i = 0; i<players; i++){
         if (!running){break;}
-        path_selector = true;
-        while(path_selector){
+        selector = true;
+        while(selector){
             if (!running){break;}
             cout << "Which path would player " << i+1 <<" like" <<endl;
-            cout << "Press 1 for the Easier path" << endl;
-            cout << "Press 2 for the Harder path" << endl;
+            cout << "Press 1 for the harder path" << endl;
+            cout << "Press 2 for the easier path" << endl;
             char keypress = _getch();
 
             if (keypress == 27) {  // ESC key
@@ -381,12 +485,12 @@ int main() {
             switch (keypress){
                 case '1':
                     path[i] = 0;
-                    path_selector = false;
-                    playerData[i].advisor = chooseAdvisor(allAdvisors);
+                    selector = false;
                     break;
                 case '2':
                     path[i] = 1;
-                    path_selector = false;
+                    playerData[i].points-=10;
+                    selector = false;
                     break;
                 default:
                     break;
@@ -394,7 +498,64 @@ int main() {
             clearScreen();
         }
     }
-
+    selector = true;
+    for (int i = 0; i<players;i++){
+        if (path[i]==1){
+            while (selector){
+                cout << "Player " << i+1  << " select advisor:" << endl;
+                for (int o = 0; o < MAX_ADVISORS; o++){
+                    cout << o+1 << ". " << advisor[o].name << endl; 
+                }
+                char keypress = _getch();
+                switch (keypress){
+                    case '1':
+                    playerData[i].advisor.advisorID = advisor[0].advisorID;
+                    playerData[i].advisor.advisorName = advisor[0].name;
+                    playerData[i].advisor.advisorDetails = advisor[0].effects;
+                    selector = false;
+                    break;
+                    case '2':
+                    playerData[i].advisor.advisorID = advisor[1].advisorID;
+                    playerData[i].advisor.advisorName = advisor[1].name;
+                    playerData[i].advisor.advisorDetails = advisor[1].effects;
+                    selector = false;
+                    break;
+                    case '3':
+                    playerData[i].advisor.advisorID = advisor[2].advisorID;
+                    playerData[i].advisor.advisorName = advisor[2].name;
+                    playerData[i].advisor.advisorDetails = advisor[2].effects;
+                    selector = false;
+                    break;
+                    case '4':
+                    playerData[i].advisor.advisorID = advisor[3].advisorID;
+                    playerData[i].advisor.advisorName = advisor[3].name;
+                    playerData[i].advisor.advisorDetails = advisor[3].effects;
+                    selector = false;
+                    break;
+                    case '5':
+                    playerData[i].advisor.advisorID = advisor[4].advisorID;
+                    playerData[i].advisor.advisorName = advisor[4].name;
+                    playerData[i].advisor.advisorDetails = advisor[4].effects;
+                    selector = false;
+                    break;
+                    case '6':
+                    playerData[i].advisor.advisorID = advisor[5].advisorID;
+                    playerData[i].advisor.advisorName = advisor[5].name;
+                    playerData[i].advisor.advisorDetails = advisor[5].effects;
+                    selector = false;
+                    break;
+                    case 27:
+                    running = false;
+                    selector = false;
+                    break;
+                    default:
+                        break;
+                }
+            }
+        clearScreen();
+        }
+        
+    }
 
     if(!running){
         clearScreen();
@@ -427,7 +588,7 @@ int main() {
                 break;
             }
         }
-        if (!running){break;}
+        if (!running)break;
         
         //save to file
         ofstream outputFile(output_file_name);
@@ -438,8 +599,6 @@ int main() {
         }
         outputFile.close();
 
-
-        last_event = randomEvent(total_events,last_event);
         for (int b = 0; b < players; b++) {//loop for each player - changes between 0 & 1 for each path/player
             player_position = game.getPlayerPosition(b);
             //the display
@@ -450,8 +609,7 @@ int main() {
                 moveCursorToTop();
                 game.displayBoard();
                 cout << "Player: " << b+1 << endl;
-                cout << "Current Event: " << last_event << endl;
-                cout << winning << endl;
+                cout << "Current Event: " << eventData[last_event].name << endl;
                 menuDisplay();
                 key = _getch();
                 switch (key){
@@ -491,15 +649,10 @@ int main() {
                                 }
                                 break;
                             }
-                            case 'Y': {
-                                Advisor chooseAdvisor(std::vector<Advisor> all);
+                            case 'Y':
                                 break;
-                            }
-                            case 'P': {
-                                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                                poseOne(pick(riddles));
+                            case 'P':
                                 break;
-                            }
                             case 'L':
                                     playerData[b].strength+=2;
                                     playerData[b].stamina+=2;
@@ -512,28 +665,28 @@ int main() {
                                 break;
                             case 'G':
                                     if (game.getPlayerPosition(b)>=10){
-                                    game.movePlayer(b,-10);
+                                        game.movePlayer(b,-10);
                                     }
                                     else{
                                         game.movePlayer(b,-dice+1);
                                     }
-                                    playerData[b].strength-=1;
-                                    playerData[b].stamina-=1;
-                                    playerData[b].wisdom-=1;
-                                break;
-                            case 'O':
-                                    game.movePlayer(b,-dice);
-                                    playerData[b].stamina-=3;
-                                break;
-                            case 'R':
-                                    playerData[b].points -= (playerData[b].points+1)/2;
                                     playerData[b].strength-=5;
                                     playerData[b].stamina-=5;
                                     playerData[b].wisdom-=5;
                                 break;
+                            case 'O':
+                                    game.movePlayer(b,-dice);
+                                    playerData[b].stamina-=2;
+                                break;
+                            case 'R':
+                                    playerData[b].points -= (playerData[b].points+1)/2;
+                                    playerData[b].strength-=10;
+                                    playerData[b].stamina-=10;
+                                    playerData[b].wisdom-=10;
+                                break;
                             case 'C':
                                     playerData[b].points += (playerData[b].points+1)/2;
-                                    playerData[b].strength+=5;
+                                    playerData[b].strength+=5   ;
                                     playerData[b].stamina+=5;
                                     playerData[b].wisdom+=5;
                                 break;
@@ -568,18 +721,10 @@ int main() {
                                 cout << "Name: " << playerData[b].firstName << " " << playerData[b].lastName << endl;
                                 cout << "Age: " << playerData[b].age << endl;
                                 break;
-                            case '3': {
-                            std::string full = playerData[b].advisor.name;      // e.g. "Talon | …"
-                            auto pos = full.find('|');
-                            std::string nameOnly = (pos == std::string::npos)
-                                                   ? full
-                                                   : full.substr(0, pos);
-                            if (!nameOnly.empty() && nameOnly.back()==' ')
-                              nameOnly.pop_back();
-                            
-                            cout << "Player " << b+1 << "'s advisor is " << nameOnly << "." << endl;
+                            case '3':
+                                cout << "Advisor: " << playerData[b].advisor.advisorName << endl;
+                                cout << playerData[b].advisor.advisorDetails << endl;
                                 break;
-                            }
                             case '4':{
                                 t = true;
                                 while(t){
@@ -591,7 +736,7 @@ int main() {
                                             t=false;
                                             break;
                                         case 'Y':
-                                            output = "advisor change";
+                                            output = "advisor change - non functional";
                                             t=false;
                                             break;
                                         case 'P':
@@ -641,15 +786,13 @@ int main() {
                                 break;
                             }
                             case '5':
-                                cout << last_event << endl; 
+                                cout << eventData[last_event].effects << endl; 
                                 break;
                         }
                         break;
                 }
             }   
-            if (!(game.getPlayerPosition(b)>=board)){
             playerData[b].age += 1;
-            }
             if (!running) break;
             if (playerData[b].strength <= 0) {
                 playerData[b].strength = 0;
@@ -673,7 +816,44 @@ int main() {
                 }
             }
             
-        }  
+        }
+        last_event = randomEvent(total_events,last_event);
+        for (int i = 0; i<players; i++){
+            if (playerData[i].advisor.advisorID == eventData[last_event].advisorID);
+            else{
+                switch (last_event){
+                    case 0:
+                        playerData[i].stamina -=5;
+                        break;
+                    case 1:
+                        playerData[i].strength -=5;
+                        break;
+                    case 2:
+                        playerData[i].wisdom -=5;
+                        break;
+                    case 3:
+                        playerData[i].strength -=5;
+                        playerData[i].stamina -=5;
+                        playerData[i].wisdom -=5;
+                        break;
+                    case 4:
+                        playerData[i].stamina -=3;
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                    case 7:
+                        playerData[i].wisdom -=10;
+                        break;
+                    case 8:
+                        playerData[i].wisdom -=10;
+                        break;
+                    default:
+                    break;
+                }  
+            }
+        }
     }
 
 
@@ -685,34 +865,19 @@ int main() {
         // sum up strength, wisdom, and stamina
         int totalStats = playerData[i].strength
                        + playerData[i].wisdom
-                       + playerData[i].stamina;
-        // multiply by 10 and add to current wisdom
-        int bonusPoints = totalStats * 1;
+                       + playerData[i].stamina
+                       + playerData[i].age;
+        int bonusPoints = totalStats;
         playerDataFinal[i] += bonusPoints;
     }
 
-    // For each position i, find the max in [i..end) and swap into i
-    for (int i = 0; i < players; ++i) {
-        int maxIdx = i;
-        for (int j = i + 1; j < players; ++j) {
-            if (playerDataFinal[j] > playerDataFinal[maxIdx]) {
-                maxIdx = j; 
-            }
-        }
-        if (maxIdx != i) {
-            int tmp          = playerDataFinal[i];
-            playerDataFinal[i]           = playerDataFinal[maxIdx];
-            playerDataFinal[maxIdx]      = tmp;
+
+    int winner = 0;
+    for (int i = 0; i < players; i++){
+        if (playerDataFinal[i]>playerDataFinal[i-1]){
+            winner = i;
         }
     }
-
-
-        int winner = 0;
-        for (int i = 0; i < players; i++){
-            if (playerDataFinal[i]>playerDataFinal[i-1]){
-                winner = i;
-            }
-        }
 
     if (winning == players){
         game.displayBoard();
