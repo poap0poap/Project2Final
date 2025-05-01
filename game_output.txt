@@ -1,17 +1,17 @@
 Turn: 1
 Player 1 stats: 
-Name: Knox Emberlight
+Name: Hugo Shadowstone
 Strength: 10
-Stamina: 7
+Stamina: 8
 Wisdom: 6
-Points: 23
-Age: 8
+Points: 24
+Age: 7
 
 Player 2 stats: 
-Name: Lorie Mclean
-Strength: 4
-Stamina: 7
+Name: Finn Riverstone
+Strength: 8
+Stamina: 8
 Wisdom: 9
-Points: 23
+Points: 25
 Age: 7
 
