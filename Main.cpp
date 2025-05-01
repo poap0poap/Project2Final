@@ -875,26 +875,31 @@ int main() {
                 }
             
         }
+        outputFile<<"Turn: " << turn <<"\n";
+        for (int i = 0; i < players; i++) {
+            outputFile<<"Player " << i+1 << " stats: " << "\nName: " << playerData[i].firstName << " " << playerData[i].lastName <<"\nStrength: " << playerData[i].strength<<"\nStamina: "<< playerData[i].stamina<<"\nWisdom: "<< playerData[i].wisdom<<"\nPoints: "<< playerData[i].points<<"\nAge: "<< playerData[i].age<< "\n\n";
+        }
+        outputFile.close();
     }
 
 
     clearScreen();
 
 
+    
     int playerDataFinal[players] = {0};
 
     for (int i = 0; i < players; i++) {
         // sum up strength, wisdom, and stamina
-        int totalStats = playerData[i].strength
-                       + playerData[i].wisdom
-                       + playerData[i].stamina;
-        int bonusPoints = totalStats;
-        playerDataFinal[i] += bonusPoints;
+        playerDataFinal[i] += playerData[i].strength+1;
+        playerDataFinal[i] += playerData[i].wisdom;
+        playerDataFinal[i] += playerData[i].stamina;
+        playerDataFinal[i] += playerData[i].points;
     }
 
 
     int winner = 0;
-    for (int i = 0; i < players; i++){
+    for (int i = 1; i < players; i++){
         if (playerDataFinal[i]>playerDataFinal[i-1]){
             winner = i;
         }

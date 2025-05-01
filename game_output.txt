@@ -1,17 +1,17 @@
-Turn: 24
+Turn: 59
 Player 1 stats: 
-Name: Ruby Stardust
-Strength: 18
-Stamina: 17
-Wisdom: 25
-Points: 9
-Age: 52
+Name: Zara Twilightstone
+Strength: 32
+Stamina: 22
+Wisdom: 16
+Points: 17
+Age: 124
 
 Player 2 stats: 
-Name: Aria Windwhisper
-Strength: 18
-Stamina: 23
-Wisdom: 23
-Points: 20
-Age: 55
+Name: Britt Curtis
+Strength: 30
+Stamina: 42
+Wisdom: 4
+Points: 10
+Age: 121
 
