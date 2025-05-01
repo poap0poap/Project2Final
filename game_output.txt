@@ -1,17 +1,17 @@
-Turn :1
+Turn: 28
 Player 1 stats: 
-Name: Finn Meadowlight
-Strength: 10
-Stamina: 6
+Name: Wren Starshadow
+Strength: 7
+Stamina: 7
 Wisdom: 7
-Points: 23
-Age: 6
+Points: 21
+Age: 35
 
 Player 2 stats: 
-Name: Jasper Sunshade
-Strength: 8
-Stamina: 6
-Wisdom: 9
-Points: 23
-Age: 9
+Name: Wren Frostmoon
+Strength: 35
+Stamina: 33
+Wisdom: 35
+Points: 22
+Age: 35
 
