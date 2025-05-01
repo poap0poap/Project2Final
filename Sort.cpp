@@ -12,6 +12,6 @@ void endGame(int numPlayers, playerInfo playerData[])
                        + playerData[i].stamina;
         // multiply by 10 and add to current wisdom
         int bonusPoints = totalStats * 10;
-        playerData[i].wisdom += bonusPoints;
+        playerData[i].points += bonusPoints;
     }
 }

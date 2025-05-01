@@ -586,10 +586,10 @@ int main() {
             
         }  
     }
+
     clearScreen();
     cout << "Game ended\n";
     cout << "Press any key to exit";
     _getch();//waits until keypress to exit
     return 0;
-
 }
