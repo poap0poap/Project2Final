@@ -1,17 +1,17 @@
-Turn: 27
+Turn: 55
 Player 1 stats: 
-Name: Bennett Guzman
-Strength: 10
-Stamina: 10
-Wisdom: 2
-Points: 21
-Age: 31
+Name: Clara Sunshadow
+Strength: 54
+Stamina: 44
+Wisdom: 55
+Points: 48
+Age: 62
 
 Player 2 stats: 
-Name: Axel Thunderstone
-Strength: 88
-Stamina: 85
-Wisdom: 85
-Points: 24
-Age: 33
+Name: Jasper Nightbranch
+Strength: 37
+Stamina: 17
+Wisdom: 36
+Points: 11
+Age: 60
 

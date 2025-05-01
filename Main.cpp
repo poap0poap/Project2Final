@@ -251,7 +251,7 @@ int main() {
 
     //data/variables
     int last_event = 0;
-    int players = 2;
+    const int players = 2;
     playerInfo playerData[4];
     int total_events = 9;
     int path[4];
@@ -454,7 +454,7 @@ int main() {
         ofstream outputFile(output_file_name);
         turn++;
         outputFile<<"Turn: " << turn <<"\n";
-        for (int i = 0; i < players; ++i) {
+        for (int i = 0; i < players; i++) {
             outputFile<<"Player " << i+1 << " stats: " << "\nName: " << playerData[i].firstName << " " << playerData[i].lastName <<"\nStrength: " << playerData[i].strength<<"\nStamina: "<< playerData[i].stamina<<"\nWisdom: "<< playerData[i].wisdom<<"\nPoints: "<< playerData[i].points<<"\nAge: "<< playerData[i].age<< "\n\n";
         }
         outputFile.close();
@@ -491,7 +491,8 @@ int main() {
                             // player[b] += dice;
                         }
                     game.movePlayer(b, dice);
-                        char p = game.getTileIndex(path[b],b);
+                    player_position = game.getPlayerPosition(b);
+                        char p = game.getTileIndex(path[b],player_position);
                         switch(p){
                             case 'B':{
                                 int basic = rand()%3;
@@ -526,7 +527,12 @@ int main() {
                                     playerData[b].wisdom+=3;
                                 break;
                             case 'G':
-                                    game.movePlayer(b,-1);
+                                    if (game.getPlayerPosition(b)>=10){
+                                    game.movePlayer(b,-10);
+                                    }
+                                    else{
+                                        game.movePlayer(b,-dice+1);
+                                    }
                                     playerData[b].strength-=1;
                                     playerData[b].stamina-=1;
                                     playerData[b].wisdom-=1;
@@ -563,9 +569,10 @@ int main() {
                         //if pos is farther then board stop
                         z = false;
                         running = true;
+                        break;
                     }
                     default:
-                        clearBelowLine(17); 
+                        clearBelowLine(18); 
                         switch(key){
                             case '1':
                                 cout << "Strength: " << playerData[b].strength << endl;
@@ -581,7 +588,7 @@ int main() {
                                 cout << "Advisor is a work in progress" << endl;
                                 break;
                             case '4':{
-                                t =true;
+                                t = true;
                                 while(t){
                                     char p = game.getTileIndex(path[b],player_position);// find landed tile using chosen path and current position
                                     //describes events based on landed tile
@@ -647,15 +654,17 @@ int main() {
                         break;
                 }
             }   
+            if (!(game.getPlayerPosition(b)>=board)){
             playerData[b].age += 1;
+            }
             if (!running) break;
-            if (playerData[b].strength < 0) {
+            if (playerData[b].strength <= 0) {
                 playerData[b].strength = 0;
             }
-            if (playerData[b].stamina < 0) {
+            if (playerData[b].stamina <= 0) {
                 playerData[b].stamina = 0;
             }
-            if (playerData[b].wisdom < 0) {
+            if (playerData[b].wisdom <= 0) {
                 playerData[b].wisdom = 0;
             }
             if (playerData[b].points < 0) {
@@ -677,9 +686,46 @@ int main() {
 
     clearScreen();
 
+    int playerDataFinal[players];
+
+    for (int i = 0; i < players; ++i) {
+        // sum up strength, wisdom, and stamina
+        int totalStats = playerData[i].strength
+                       + playerData[i].wisdom
+                       + playerData[i].stamina;
+        // multiply by 10 and add to current wisdom
+        int bonusPoints = totalStats * 1;
+        playerDataFinal[i] += bonusPoints;
+    }
+
+    // For each position i, find the max in [i..end) and swap into i
+    for (int i = 0; i < players; ++i) {
+        int maxIdx = i;
+        for (int j = i + 1; j < players; ++j) {
+            if (playerDataFinal[j] > playerDataFinal[maxIdx]) {
+                maxIdx = j; 
+            }
+        }
+        if (maxIdx != i) {
+            int tmp          = playerDataFinal[i];
+            playerDataFinal[i]           = playerDataFinal[maxIdx];
+            playerDataFinal[maxIdx]      = tmp;
+        }
+    }
+
+
+        int winner = 0;
+        for (int i = 0; i < players; i++){
+            if (playerDataFinal[i]>playerDataFinal[i-1]){
+                winner = i;
+            }
+        }
+
     if (winning == players){
         game.displayBoard();
-        cout << "PLAYErs WON" << endl;
+        cout << "Player " << winner+1 << " won." << endl;
+        cout << "They had " << playerDataFinal[winner] << " points." << endl;
+
         _getch();
     }
     else{
