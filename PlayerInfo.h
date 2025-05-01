@@ -11,7 +11,6 @@ struct playerInfo {
     int stamina;
     int wisdom;
     int points;
-    std::string datePlayed;
 };
 
 class playerAdvisor {
