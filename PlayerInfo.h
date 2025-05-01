@@ -13,7 +13,7 @@ class playerInfo {
     int wisdom;
     int points;
     struct advisor{
-        int advisor;
+        int advisorID;
         std::string advisorName;
         std::string advisorDetails;
     };
