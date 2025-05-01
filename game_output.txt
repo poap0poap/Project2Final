@@ -1,17 +1,17 @@
-Turn: 28
+Turn: 53
 Player 1 stats: 
-Name: Wren Starshadow
-Strength: 7
-Stamina: 7
-Wisdom: 7
-Points: 21
-Age: 35
+Name: Cora Firestone
+Strength: 50
+Stamina: 36
+Wisdom: 46
+Points: 36
+Age: 9
 
 Player 2 stats: 
-Name: Wren Frostmoon
-Strength: 35
-Stamina: 33
+Name: Maia Dewglade
+Strength: 36
+Stamina: 12
 Wisdom: 35
-Points: 22
-Age: 35
+Points: 7
+Age: 6
 
