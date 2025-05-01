@@ -210,33 +210,6 @@ int randomEvent(int events,int last_event){
     return last_event;
 }
 
-// //creates our display
-// bool screen(Board& game,int current_player,int board, int* player, playerInfo* playerData,int player_path,int last_event){
-//     clearScreen();
-//     game.displayBoard();
-//     cout << "Player: " << current_player+1 << endl;
-//     menuDisplay();
-//     char key = _getch();
-//     while(true){
-//         moveCursorToTop();
-//         game.displayBoard();
-//         cout << "Player: " << current_player+1 << endl;
-//         menuDisplay();
-//         switch (key){
-//             case 27:
-//                 return false;
-//                 break;
-//             case ' ':
-//                 return movement(game, current_player , board, player, playerData, 6);
-//             default:
-//                 menuing(game, current_player , board, player_path, player, playerData, key, last_event);
-//                 break;
-//         }
-//         key = _getch();
-//     }   
-// }
-
-
 struct RandomEvent {
     string name;        
     string effects;   
@@ -248,6 +221,63 @@ struct Advisor{
     string effects;
     int advisorID;
 };
+
+struct Riddle {
+    std::string question;
+    std::string answer;
+};
+
+// trim whitespace from both ends
+void trim(std::string &s) {
+    s.erase(0, s.find_first_not_of(" \t\r\n"));
+    s.erase(s.find_last_not_of(" \t\r\n") + 1);
+}
+
+// load all lines, split at '|'
+std::vector<Riddle> loadRiddles(const std::string &path) {
+    std::vector<Riddle> out;
+    std::ifstream in(path);
+    if (!in) {
+        std::cerr << "Cannot open " << path << "\n";
+        return out;
+    }
+    std::string line;
+    std::getline(in, line);            // skip header if present
+    while (std::getline(in, line)) {
+        if (line.empty()) continue;
+        auto pos = line.find('|');
+        if (pos == std::string::npos) continue;
+        std::string q = line.substr(0, pos);
+        std::string a = line.substr(pos+1);
+        trim(q); trim(a);
+        out.push_back({q,a});
+    }
+    return out;
+}
+
+Riddle pick(const std::vector<Riddle> &v) {
+    return v[ std::rand() % v.size() ];
+}
+
+void poseOne(const Riddle &r) {
+    std::string reply;
+    std::cout << "\n" << r.question << "\nYour answer: ";
+    std::getline(std::cin >> std::ws, reply);
+
+    // lowercase both for case‐insensitive compare
+    std::transform(reply.begin(), reply.end(), reply.begin(),
+                   [](unsigned char c){ return std::tolower(c); });
+    std::string correct = r.answer;
+    std::transform(correct.begin(), correct.end(), correct.begin(),
+                   [](unsigned char c){ return std::tolower(c); });
+
+    if (reply == correct) {
+        std::cout << "Correct!\n\n";
+    } else {
+        std::cout << "Incorrect. The right answer was: "
+                  << r.answer << "\n\n";
+    }
+}
 
 int main() {
     const int MAX_ADVISORS = 6;
@@ -333,6 +363,7 @@ int main() {
     int total_events = 10;
     int path[4];
     bool selector;
+    auto riddles = loadRiddles("riddles.txt");
         // random player data
         //data for charcters
         bool charRunning = true;
@@ -651,8 +682,12 @@ int main() {
                             }
                             case 'Y':
                                 break;
-                            case 'P':
-                                break;
+                            case 'P': {
+                                 poseOne(pick(riddles));
+                                 std::cout << "\n(Press any key to continue)";
+                                _getch();
+                                 break;
+                                }
                             case 'L':
                                     playerData[b].strength+=2;
                                     playerData[b].stamina+=2;
