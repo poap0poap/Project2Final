@@ -1,36 +1,17 @@
-<<<<<<< Updated upstream
 Turn: 15
 Player 1 stats: 
-Name: Rowan Mistshade
-Strength: 20
-Stamina: 6
-Wisdom: 21
-Points: 25
-Age: 21
+Name: Nelson Dixon
+Strength: 15
+Stamina: 15
+Wisdom: 4
+Points: 16
+Age: 35
 
 Player 2 stats: 
-Name: Hugo Shadowstone
-Strength: 21
-Stamina: 16
-Wisdom: 17
-Points: 24
-Age: 21
-=======
-Turn: 5
-Player 1 stats: 
-Name: Finn Riverstone
-Strength: 0
+Name: Owen Brightmoon
+Strength: 10
 Stamina: 0
-Wisdom: 0
-Points: 25
-Age: 11
-
-Player 2 stats: 
-Name: Iris Windstream
-Strength: 8
-Stamina: 4
-Wisdom: 10
-Points: 10
-Age: 13
->>>>>>> Stashed changes
+Wisdom: 4
+Points: 9
+Age: 33
 

@@ -210,6 +210,33 @@ int randomEvent(int events,int last_event){
     return last_event;
 }
 
+// //creates our display
+// bool screen(Board& game,int current_player,int board, int* player, playerInfo* playerData,int player_path,int last_event){
+//     clearScreen();
+//     game.displayBoard();
+//     cout << "Player: " << current_player+1 << endl;
+//     menuDisplay();
+//     char key = _getch();
+//     while(true){
+//         moveCursorToTop();
+//         game.displayBoard();
+//         cout << "Player: " << current_player+1 << endl;
+//         menuDisplay();
+//         switch (key){
+//             case 27:
+//                 return false;
+//                 break;
+//             case ' ':
+//                 return movement(game, current_player , board, player, playerData, 6);
+//             default:
+//                 menuing(game, current_player , board, player_path, player, playerData, key, last_event);
+//                 break;
+//         }
+//         key = _getch();
+//     }   
+// }
+
+
 struct RandomEvent {
     string name;        
     string effects;   
@@ -259,12 +286,12 @@ Riddle pick(const std::vector<Riddle> &v) {
     return v[ std::rand() % v.size() ];
 }
 
-void poseOne(const Riddle &r) {
+bool poseOne(const Riddle &r) {
     std::string reply;
     std::cout << "\n" << r.question << "\nYour answer: ";
     std::getline(std::cin >> std::ws, reply);
 
-    // lowercase both for case‐insensitive compare
+    // normalize to lowercase
     std::transform(reply.begin(), reply.end(), reply.begin(),
                    [](unsigned char c){ return std::tolower(c); });
     std::string correct = r.answer;
@@ -272,14 +299,18 @@ void poseOne(const Riddle &r) {
                    [](unsigned char c){ return std::tolower(c); });
 
     if (reply == correct) {
-        std::cout << "Correct!\n\n";
+        std::cout << "Correct!\n";
+        return true;
     } else {
         std::cout << "Incorrect. The right answer was: "
-                  << r.answer << "\n\n";
+                  << r.answer << "\n";
+        return false;
     }
 }
 
+
 int main() {
+    auto riddles = loadRiddles("riddles.txt");
     const int MAX_ADVISORS = 6;
     Advisor advisor[MAX_ADVISORS];
     srand(time(0)); //Seed RNG once
@@ -338,6 +369,8 @@ int main() {
     }
     advisorFile.close();
     
+
+    //advisor data inilization
     for (int n = 0; n<MAX_ADVISORS;n++){
         istringstream lineStream(lines[n]);
     
@@ -363,7 +396,6 @@ int main() {
     int total_events = 10;
     int path[4];
     bool selector;
-    auto riddles = loadRiddles("riddles.txt");
         // random player data
         //data for charcters
         bool charRunning = true;
@@ -529,8 +561,10 @@ int main() {
             clearScreen();
         }
     }
-    selector = true;
+
+    //advisor selectors
     for (int i = 0; i<players;i++){
+        selector = true;
         if (path[i]==1){
             while (selector){
                 cout << "Player " << i+1  << " select advisor:" << endl;
@@ -682,11 +716,17 @@ int main() {
                             }
                             case 'Y':
                                 break;
-                            case 'P': {
-                                 poseOne(pick(riddles));
-                                 std::cout << "\n(Press any key to continue)";
-                                _getch();
-                                 break;
+                                case 'P': {
+                                    // ask the riddle and see if they got it right
+                                    bool correct = poseOne(pick(riddles));
+                                
+                                    if (correct) {
+                                        playerData[b].wisdom += 5;
+                                        std::cout << "You gained 5 Wisdom!" << endl;
+                                    }
+                                    std::cout << "\n(Press any key to continue)";
+                                    _getch();
+                                    break;
                                 }
                             case 'L':
                                     playerData[b].strength+=2;
@@ -827,34 +867,34 @@ int main() {
                         break;
                 }
             }   
-            playerData[b].age += 1;
-            if (!running) break;
-            if (playerData[b].strength <= 0) {
-                playerData[b].strength = 0;
-            }
-            if (playerData[b].stamina <= 0) {
-                playerData[b].stamina = 0;
-            }
-            if (playerData[b].wisdom <= 0) {
-                playerData[b].wisdom = 0;
-            }
-            if (playerData[b].points < 0) {
-                playerData[b].points = 0;
-                if (playerData[b].strength != 0) {
-                    playerData[b].strength--;
+                playerData[b].age += 1;
+                if (!running) break;
+                if (playerData[b].strength <= 0) {
+                    playerData[b].strength = 0;
                 }
-                if (playerData[b].stamina != 0) {
-                    playerData[b].stamina--;
+                if (playerData[b].stamina <= 0) {
+                    playerData[b].stamina = 0;
                 }
-                if (playerData[b].wisdom != 0) {
-                    playerData[b].wisdom--;
+                if (playerData[b].wisdom <= 0) {
+                    playerData[b].wisdom = 0;
                 }
+                if (playerData[b].points < 0) {
+                    playerData[b].points = 0;
+                    if (playerData[b].strength != 0) {
+                        playerData[b].strength--;
+                    }
+                    if (playerData[b].stamina != 0) {
+                        playerData[b].stamina--;
+                    }
+                    if (playerData[b].wisdom != 0) {
+                        playerData[b].wisdom--;
+                    }
             }
             
         }
         last_event = randomEvent(total_events,last_event);
         for (int i = 0; i<players; i++){
-            if (playerData[i].advisor.advisorID == eventData[last_event].advisorID);
+            if (playerData[i].advisor.advisorID == eventData[last_event].advisorID){}
             else{
                 switch (last_event){
                     case 0:
@@ -882,12 +922,36 @@ int main() {
                         playerData[i].wisdom -=10;
                         break;
                     case 8:
-                        playerData[i].wisdom -=10;
+                        playerData[i].wisdom -=5;
                         break;
                     default:
                     break;
                 }  
             }
+                playerData[i].age += 1;
+                if (!running) break;
+                if (playerData[i].strength <= 0) {
+                    playerData[i].strength = 0;
+                }
+                if (playerData[i].stamina <= 0) {
+                    playerData[i].stamina = 0;
+                }
+                if (playerData[i].wisdom <= 0) {
+                    playerData[i].wisdom = 0;
+                }
+                if (playerData[i].points < 0) {
+                    playerData[i].points = 0;
+                    if (playerData[i].strength != 0) {
+                        playerData[i].strength--;
+                    }
+                    if (playerData[i].stamina != 0) {
+                        playerData[i].stamina--;
+                    }
+                    if (playerData[i].wisdom != 0) {
+                        playerData[i].wisdom--;
+                    }
+                }
+            
         }
     }
 
