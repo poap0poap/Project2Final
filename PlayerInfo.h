@@ -3,7 +3,8 @@
 #include <string>
 #include "Board.h"
 
-struct playerInfo {
+class playerInfo {
+    public:
     std::string firstName;
     std::string lastName;
     int age;
@@ -11,13 +12,11 @@ struct playerInfo {
     int stamina;
     int wisdom;
     int points;
-};
-
-class playerAdvisor {
-    private:
-    int current_advisor[Board::_MAX_PLAYERS];
-    public:
-    void displayAdvisor(int player_index);
+    struct Advisor{
+        int advisorID;
+        std::string advisorName;
+        std::string advisorDetails;
+    } advisor;
 };
 
 #endif

@@ -1,0 +1,17 @@
+Turn: 5
+Player 1 stats: 
+Name: Theo Brightshade
+Strength: 11
+Stamina: 10
+Wisdom: 9
+Points: 14
+Age: 13
+
+Player 2 stats: 
+Name: Emery Flowers
+Strength: 10
+Stamina: 4
+Wisdom: 0
+Points: 6
+Age: 23
+
