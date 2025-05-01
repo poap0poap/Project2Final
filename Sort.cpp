@@ -19,7 +19,7 @@ void endGame(int numPlayers, playerInfo playerData[])
 void sortPlayersByPoints(int numPlayers, playerInfo playerData[])
 {
     // For each position i, find the max in [i..end) and swap into i
-    for (int i = 0; i < numPlayers - 1; ++i) {
+    for (int i = 0; i < numPlayers; ++i) {
         int maxIdx = i;
         for (int j = i + 1; j < numPlayers; ++j) {
             if (playerData[j].points > playerData[maxIdx].points) {

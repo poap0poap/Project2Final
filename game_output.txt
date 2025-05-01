@@ -1,17 +1,17 @@
-Turn: 32
+Turn: 27
 Player 1 stats: 
-Name: Daniel David
+Name: Bennett Guzman
 Strength: 10
-Stamina: 9
-Wisdom: 10
-Points: 24
-Age: 40
+Stamina: 10
+Wisdom: 2
+Points: 21
+Age: 31
 
 Player 2 stats: 
-Name: Rose Emberstream
-Strength: 0
-Stamina: 0
-Wisdom: 0
-Points: 0
-Age: 36
+Name: Axel Thunderstone
+Strength: 88
+Stamina: 85
+Wisdom: 85
+Points: 24
+Age: 33
 
