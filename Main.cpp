@@ -19,7 +19,6 @@ int diceRoll(int dice_size){
     return 1 + rand() % dice_size;
 }
 
-
 class  pickEvent{
     private:
     const int totalEvents;
@@ -30,97 +29,6 @@ class  pickEvent{
         return rand() % totalEvents;
     }
 };
-
-// //check for what tile you are on and applys effects
-// string tileAction(Board& game, int player_position, int player_path, bool viewing, int player, playerInfo* playerData)
-// {
-//     char p = game.getTileIndex(player_path,player_position);// find landed tile using chosen path and current position
-//     //describes events based on landed tile
-//     switch(p){
-//         case 'B':
-//         if (!viewing){
-//             switch(rand()%3){
-//                 case 1:
-//                     playerData[player].strength += 1;
-//                     playerData[player].stamina += 1;
-//                     playerData[player].wisdom += 1;
-//                     break;
-//                 case 2:
-//                     playerData[player].strength += 2;
-//                     playerData[player].stamina += 2;
-//                     playerData[player].wisdom += 2;
-//                     break;
-//                 default:
-//                     break;
-//             }
-
-//         }
-//         return "Basic";
-//         break;
-//         case 'Y':
-//         return "advisor change";
-//         break;
-//         case 'P':
-//         return "riddle";
-//         break;
-//         case 'L':
-//         if (!viewing){
-//             playerData[player].strength += 2;
-//             playerData[player].stamina += 2;
-//             playerData[player].wisdom += 2;
-//         }
-//         return "+2 to stats";
-//         break;
-//         case 'I':
-//         if (!viewing){
-//             playerData[player].strength += 3;
-//             playerData[player].stamina += 3;
-//             playerData[player].wisdom += 3;
-//         }
-//         return "+3 to stats";
-//         break;
-//         case 'G':
-//         if (!viewing){
-//             playerData[player].strength -= 1;
-//             playerData[player].stamina -= 1;
-//             playerData[player].wisdom -= 1;
-//         }
-//         return "Graveyard";
-//         break;
-//         case 'O':
-//         if (!viewing){
-//             playerData[player].stamina -= 5;
-//         }
-//         return "Hyena";
-//         break;
-//         case 'R':
-//         if (!viewing){
-//             playerData[player].strength -= 5;
-//             playerData[player].stamina -= 5;
-//             playerData[player].wisdom -= 5;
-//             playerData[player].points = (playerData[player].points + 1)/2;
-//         }
-//         return "Custom negitive";
-//         break;
-//         case 'C':
-//         if (!viewing){
-//             playerData[player].strength += 5;
-//             playerData[player].stamina += 5;
-//             playerData[player].wisdom += 5;
-//             playerData[player].points += (playerData[player].points + 1)/2;
-//         }
-//         return "Custom Postive";
-//         break;
-//         case 'S':
-//         return "Start";
-//         case 'E':
-//         return "End";
-//         default:
-//         return "Exceeded Board Size";
-//         break;
-//     }
-//     return " ";
-// }
 
 //menu display
 void menuDisplay(){
@@ -210,6 +118,7 @@ int randomEvent(int events,int last_event){
     return last_event;
 }
 
+//Opens Up Advisor.txt for the advisor information.
 std::vector<Advisor> loadAdvisors(std::string filename) {
     std::vector<Advisor> list;
     std::ifstream in(filename);
@@ -231,6 +140,7 @@ std::vector<Advisor> loadAdvisors(std::string filename) {
     return list;                   // return the filled list
 }
 
+//Let's you choose your advisor and store it.
 Advisor chooseAdvisor(std::vector<Advisor> all) {
     std::cout << "Choose your advisor:\n";
     for (size_t i = 0; i < all.size(); ++i)
@@ -247,7 +157,7 @@ Advisor chooseAdvisor(std::vector<Advisor> all) {
 }
 
 int main() {
-
+//Initializing Variables
     srand(time(0)); //Seed RNG once
     string output_file_name;
     output_file_name ="game_output";
@@ -256,8 +166,6 @@ int main() {
     auto allAdvisors = loadAdvisors("advisors.txt");
     bool running = true;
     
-
-    //data/variables
     int last_event = 0;
     const int players = 2;
     playerInfo playerData[4];
